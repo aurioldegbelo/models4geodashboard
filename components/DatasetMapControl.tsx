@@ -1,4 +1,4 @@
-import { DatasetType } from "./Map"
+import { DatasetType } from "@/types/types"
 
 interface Props {
     datasetType: DatasetType

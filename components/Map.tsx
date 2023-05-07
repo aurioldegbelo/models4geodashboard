@@ -6,8 +6,8 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css"; // Re-uses images from ~leaflet package
 import "leaflet-defaulticon-compatibility";
 import DatasetMapControl from "./DatasetMapControl";
+import { DatasetType } from "@/types/types";
 
-export type DatasetType = "State" | "Community";
 
 const POSITION_CLASSES = {
 	bottomleft: "leaflet-bottom leaflet-left",
