@@ -1,11 +1,10 @@
-import Loader from "@/components/Loader";
 import dynamic from "next/dynamic";
 
 const MapWithNoSSR = dynamic(() => import("../../components/Map"), {
-	loading: () => <Loader />,
+    loading: () => <p>A map is loading</p>,
 	ssr: false,
 });
 
-export default function v1() {
+export default function v2() {
 	return <MapWithNoSSR />;
 }

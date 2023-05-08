@@ -6,8 +6,8 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css"; // Re-uses images from ~leaflet package
 import "leaflet-defaulticon-compatibility";
 import DatasetMapControl from "./DatasetMapControl";
-import { DatasetType } from "@/types/types";
-
+import { DatasetType, Feature } from "@/types/types";
+import { getCorrectColor } from "@/utils/getCorrectColor";
 
 const POSITION_CLASSES = {
 	bottomleft: "leaflet-bottom leaflet-left",
@@ -19,11 +19,22 @@ const POSITION_CLASSES = {
 export default function Map() {
 	const [datasetType, setDatasetType] = useState<DatasetType>("State");
 
+	const style = (state: Feature) => {
+		return {
+		  fillColor: getCorrectColor(state),
+		  weight: 1,
+		  opacity: 1,
+		  color: 'white',
+		  dashArray: '0',
+		  fillOpacity: 0.5,
+		};
+	  };
+
 	return (
 		<MapContainer
 			center={[51.0, 10.0]}
 			zoom={6}
-			style={{ height: "100vh" }}
+			style={{ height: "calc(100vh - 65px)" }}
 		>
 			<TileLayer
 				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -31,9 +42,9 @@ export default function Map() {
 			/>
 
 			{datasetType == "State"
-				? states.features.map((state, index) => (
+				? states.features.map((state: Feature, index) => (
 						<>
-							<GeoJSON data={state.geometry} key={index} />
+							<GeoJSON data={state.geometry} key={index} style={style(state)} />
 						</>
 				  ))
 				: null}

@@ -1,0 +1,19 @@
+﻿Straßennetzdichte in Gebietsfläche (2009)
+lfd. Nr.;Gebietsschlüssel;Gebietsname;Wert km/km²
+1;08;Baden-Württemberg;2,4 
+2;09;Bayern;1,9 
+3;11;Berlin;6,4 
+4;12;Brandenburg;1,1 
+5;04;Bremen;5,5 
+6;02;Hamburg;5,2 
+7;06;Hessen;2,1 
+8;13;Mecklenburg-Vorpommern;1,0 
+9;03;Niedersachsen;1,9 
+10;05;Nordrhein-Westfalen;2,8 
+11;07;Rheinland-Pfalz;1,9 
+12;10;Saarland;2,8 
+13;14;Sachsen;2,1 
+14;15;Sachsen-Anhalt;1,2 
+15;01;Schleswig-Holstein;1,5 
+16;16;Thüringen;1,6 
+;;Deutschland;1,9 
