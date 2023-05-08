@@ -51,7 +51,7 @@ export default function Map() {
 			{datasetType == "Community"
 				? communities.features.map((community, index) => (
 						<>
-							<GeoJSON data={community.geometry} key={index} />
+							<GeoJSON data={community.geometry} key={index} style={style(community)}/>
 						</>
 				  ))
 				: null}
