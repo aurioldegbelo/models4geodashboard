@@ -1,7 +1,8 @@
-import { Feature } from "@/types/types";
+import { Feature, YearType } from "@/types/types";
 
-export function getCorrectColor(feature: Feature) {
-	const value = feature.properties.values["2008"];
+export function getCorrectColor(feature: Feature, year: YearType) {
+
+	const value = feature.properties.values[`${year}`];
 
 	switch (true) {
 		case value < 1 && value >= 0:

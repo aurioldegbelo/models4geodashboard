@@ -1,11 +1,12 @@
+import { useDatasetStore } from "@/store/selectedDataSetStore";
 import { DatasetType } from "@/types/types";
 
-interface Props {
-	datasetType: DatasetType;
-	setDatasetType: (DatasetType: DatasetType) => void;
-}
 
-export default function DatasetMapControl(props: Props) {
+export default function DatasetMapControl() {
+	
+	const selectedDataset = useDatasetStore((state) => state.dataset);
+	const setDataset = useDatasetStore((state) => state.setDataset);
+	
 	return (
 		<div className="leaflet-control leaflet-bar bg-white p-5">
 			<div className="font-bold">Choose Dataset</div>
@@ -15,8 +16,8 @@ export default function DatasetMapControl(props: Props) {
 						type="radio"
 						id="state"
 						name="state"
-						checked={props.datasetType == "State"}
-						onChange={() => props.setDatasetType("State")}
+						checked={selectedDataset == "State"}
+						onChange={() => setDataset("State")}
 					/>
 					<label htmlFor="state">States</label>
 				</div>
@@ -25,8 +26,8 @@ export default function DatasetMapControl(props: Props) {
 						type="radio"
 						id="community"
 						name="communtiy"
-						checked={props.datasetType == "Community"}
-						onChange={() => props.setDatasetType("Community")}
+						checked={selectedDataset == "Community"}
+						onChange={() => setDataset("Community")}
 					/>
 					<label htmlFor="community">Communities</label>
 				</div>

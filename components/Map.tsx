@@ -1,13 +1,16 @@
 import { communities } from "../data/communities";
 import { states } from "../data/states";
-import React, { useState } from "react";
+import React from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css"; // Re-uses images from ~leaflet package
 import "leaflet-defaulticon-compatibility";
 import DatasetMapControl from "./DatasetMapControl";
-import { DatasetType, Feature } from "@/types/types";
+import { Feature } from "@/types/types";
 import { getCorrectColor } from "@/utils/getCorrectColor";
+import SelectedYearMapControl from "./SelectedYearMapControl";
+import { useYearStore } from "@/store/selectedYearStore";
+import { useDatasetStore } from "@/store/selectedDataSetStore";
 
 const POSITION_CLASSES = {
 	bottomleft: "leaflet-bottom leaflet-left",
@@ -17,18 +20,19 @@ const POSITION_CLASSES = {
 };
 
 export default function Map() {
-	const [datasetType, setDatasetType] = useState<DatasetType>("State");
+	const selectedDataset = useDatasetStore((state) => state.dataset);
+	const selectedYear = useYearStore((state) => state.year);
 
-	const style = (state: Feature) => {
+	const style = (feature: Feature) => {
 		return {
-		  fillColor: getCorrectColor(state),
-		  weight: 1,
-		  opacity: 1,
-		  color: 'white',
-		  dashArray: '0',
-		  fillOpacity: 0.5,
+			fillColor: getCorrectColor(feature, selectedYear),
+			weight: 1,
+			opacity: 1,
+			color: "white",
+			dashArray: "0",
+			fillOpacity: 0.5,
 		};
-	  };
+	};
 
 	return (
 		<MapContainer
@@ -41,26 +45,34 @@ export default function Map() {
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
 
-			{datasetType == "State"
+			{selectedDataset == "State"
 				? states.features.map((state: Feature, index) => (
 						<>
-							<GeoJSON data={state.geometry} key={index} style={style(state)} />
+							<GeoJSON
+								data={state.geometry}
+								key={index}
+								style={style(state)}
+							/>
 						</>
 				  ))
 				: null}
-			{datasetType == "Community"
+			{selectedDataset == "Community"
 				? communities.features.map((community, index) => (
 						<>
-							<GeoJSON data={community.geometry} key={index} style={style(community)}/>
+							<GeoJSON
+								data={community.geometry}
+								key={index}
+								style={style(community)}
+							/>
 						</>
 				  ))
 				: null}
 
 			<div className={POSITION_CLASSES.topright}>
-				<DatasetMapControl
-					datasetType={datasetType}
-					setDatasetType={setDatasetType}
-				/>
+				<DatasetMapControl />
+			</div>
+			<div className={`${POSITION_CLASSES.topright} mt-32`}>
+				<SelectedYearMapControl />
 			</div>
 		</MapContainer>
 	);
