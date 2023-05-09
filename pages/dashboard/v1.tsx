@@ -7,5 +7,13 @@ const MapWithNoSSR = dynamic(() => import("../../components/Map"), {
 });
 
 export default function v1() {
-	return <MapWithNoSSR />;
+	return (
+		<MapWithNoSSR
+			bounds={[
+				[58.0, 27.0],
+				[42.0, -5.0],
+			]}
+			center={[51.5, 10.5]}
+		/>
+	);
 }
