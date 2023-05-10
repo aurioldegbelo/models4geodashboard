@@ -1,6 +1,6 @@
 import { communities } from "../data/communities";
 import { states } from "../data/states";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	MapContainer,
 	TileLayer,
@@ -11,17 +11,20 @@ import {
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css"; // Re-uses images from ~leaflet package
 import "leaflet-defaulticon-compatibility";
-import DatasetMapControl from "./DatasetMapControl";
 import { Feature } from "@/types/types";
 import { getCorrectColor } from "@/utils/getCorrectColor";
 import SelectedYearMapControl from "./SelectedYearMapControl";
 import { useYearStore } from "@/store/selectedYearStore";
-import { useDatasetStore } from "@/store/selectedDataSetStore";
+import { useDatasetStore } from "@/store/selectedDatasetStore";
 import TableView from "./TableView";
+import DatasetControl from "./DatasetControl";
+import Example from "./Example";
 
 interface Props {
 	bounds: number[][];
 	center: number[];
+	tableView: boolean;
+	graphView: boolean;
 }
 
 const POSITION_CLASSES = {
@@ -37,6 +40,8 @@ export default function Map(props: Props) {
 
 	const [scrollEnabled, setScrollEnabled] = useState(true);
 
+	useEffect(() => {}, [scrollEnabled]);
+
 	const style = (feature: Feature) => {
 		return {
 			fillColor: getCorrectColor(feature, selectedYear),
@@ -49,7 +54,7 @@ export default function Map(props: Props) {
 	};
 
 	function changeScrollBehaviour(bool: boolean) {
-		setScrollEnabled(bool)
+		setScrollEnabled(bool);
 	}
 
 	return (
@@ -93,30 +98,33 @@ export default function Map(props: Props) {
 				: null}
 
 			<div className={POSITION_CLASSES.topright}>
-				<DatasetMapControl />
+				{/* <SelectedYearMapControl /> */}
+				<Example />
 			</div>
-			<div className={`${POSITION_CLASSES.topright} mt-28`}>
-				<SelectedYearMapControl />
+			<div className={`${POSITION_CLASSES.topright} mr-32`}>
+				<DatasetControl />
 			</div>
-			<div
-				className={`${POSITION_CLASSES.topleft} h-screen w-screen`}
-				onMouseEnter={() => {
-					console.log(scrollEnabled)
-					changeScrollBehaviour(true);
-				}}
-				onMouseLeave={() => {
-					console.log(scrollEnabled)
-					changeScrollBehaviour(false);
-				}}
-			>
-				<TableView
-					features={
-						selectedDataset == "State"
-							? states.features
-							: communities.features
-					}
-				/>
-			</div>
+			{props.tableView ? (
+				<div
+					className={`${POSITION_CLASSES.topleft} h-screen w-screen`}
+					onMouseEnter={() => {
+						console.log(scrollEnabled);
+						changeScrollBehaviour(true);
+					}}
+					onMouseLeave={() => {
+						console.log(scrollEnabled);
+						changeScrollBehaviour(false);
+					}}
+				>
+					<TableView
+						features={
+							selectedDataset == "State"
+								? states.features
+								: communities.features
+						}
+					/>
+				</div>
+			) : null}
 		</MapContainer>
 	);
 }
