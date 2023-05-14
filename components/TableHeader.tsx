@@ -22,13 +22,20 @@ export default function TableHeader() {
 	];
 
 	return (
-		<div className="flex sticky top-0 bg-gray-100 p-2">
-			<div className="w-56 font-bold text-gray-800 flex-shrink-0">Name</div>
-            {allYears.map((year: YearType, index: number) => (
-                <div className="w-10 font-bold text-right self-center text-gray-800 flex-shrink-0" key={index}>
-                    {year}
-                </div>
-            ))}
-		</div>
+		<thead className="sticky top-0 bg-gray-100">
+			<tr className="">
+				<th className="px-2 py-3 w-56 font-bold text-gray-800 text-left">
+					Name
+				</th>
+				{allYears.map((year: YearType, index: number) => (
+					<th
+						className="w-16 font-bold text-right self-center text-gray-800 min-w-[50px] pr-2"
+						key={index}
+					>
+						{year}
+					</th>
+				))}
+			</tr>
+		</thead>
 	);
 }

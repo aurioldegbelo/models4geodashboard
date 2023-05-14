@@ -45,12 +45,20 @@ export default function AppLayout(props: Props) {
 								Version 3
 							</NavLink>
 						</div>
+						<div className="flex sm:ml-10">
+							<NavLink
+								href="/about"
+								active={router.pathname == "/about"}
+							>
+								About
+							</NavLink>
+						</div>
 					</div>
 
 					<div className="items-center self-center">
 						<a
 							className="text-gray-500 hover:text-indigo-600"
-							href="https://github.com/tailwindlabs/headlessui"
+							href="https://github.com/SimonMeissner/geo-dashboard"
 						>
 							<span className="sr-only">GitHub repository</span>
 							<svg

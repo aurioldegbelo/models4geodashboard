@@ -13,12 +13,11 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import "leaflet-defaulticon-compatibility";
 import { Feature } from "@/types/types";
 import { getCorrectColor } from "@/utils/getCorrectColor";
-import SelectedYearMapControl from "./SelectedYearMapControl";
 import { useYearStore } from "@/store/selectedYearStore";
 import { useDatasetStore } from "@/store/selectedDatasetStore";
 import TableView from "./TableView";
 import DatasetControl from "./DatasetControl";
-import Example from "./Example";
+import Example from "./YearControl";
 
 interface Props {
 	bounds: number[][];
