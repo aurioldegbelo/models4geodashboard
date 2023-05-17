@@ -30,7 +30,7 @@ export default function TableView(props: Props) {
 	];
 
 	return (
-		<div className="leaflet-control bg-white h-1/3 px-5 pt-5 pb-14 w-1/2 rounded-lg mx-auto">
+		<div className="leaflet-control bg-white h-full px-5 pt-5 pb-14 w-1/2 rounded-lg mx-auto">
 			<div className="flex justify-between mb-2">
 				<div className="flex gap-2">
 					<h1 className="text-lg">Road network density per area |</h1>

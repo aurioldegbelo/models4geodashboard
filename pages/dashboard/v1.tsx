@@ -10,12 +10,12 @@ export default function v1() {
 	return (
 		<MapWithNoSSR
 			bounds={[
-				[58.0, 27.0],
-				[42.0, -5.0],
+				[58.0, 20.0],
+				[40.0, -20.0],
 			]}
-			center={[51.5, 10.5]}
+			center={[51.5, 0.0]}
 			tableView={false}
-			graphView={false}
+			graphView={true}
 		/>
 	);
 }

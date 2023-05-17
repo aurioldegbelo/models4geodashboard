@@ -9,14 +9,8 @@ export default function about() {
 
 
 	return (
-		<div className="">
-			<TableView
-				features={
-					selectedDataset == "State"
-						? states.features
-						: communities.features
-				}
-			/>
+		<div className="flex justify-center">
+			This is the about page
 		</div>
 	);
 }
