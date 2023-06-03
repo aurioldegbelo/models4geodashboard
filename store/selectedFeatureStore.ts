@@ -2,7 +2,6 @@ import { Feature } from "@/types/types";
 import { create } from "zustand";
 import { states } from "../data/states";
 
-
 interface SelectedFeature {
 	feature: Feature;
 	setFeature: (feature: Feature) => void;

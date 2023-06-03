@@ -15,7 +15,7 @@ export default function v1() {
 			]}
 			center={[51.5, 0.0]}
 			tableView={false}
-			graphView={true}
+			graphView={false}
 		/>
 	);
 }
