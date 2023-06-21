@@ -2,7 +2,19 @@ import csv
 import json
 
 
-def get_key_value_pairs(file_path: str):
+def initiate_empty_values_key(dictionary: dict):
+    for i, feature in enumerate(dictionary['features']):
+        
+        dictionary['features'][i]['properties']['values'] = {}
+
+
+def initiate_empty_dataset_name(dictionary: dict, datasetName: str) :
+    for i, feature in enumerate(dictionary['features']):
+
+        dictionary['features'][i]['properties']['values'][f'{datasetName}'] = {} 
+
+
+def get_key_value_pairs(file_path: str, not_last_element_in_row: bool):
     with open(file_path, 'r') as input_file:
         key_value_pairs = []
         # Create a CSV reader object
@@ -10,29 +22,27 @@ def get_key_value_pairs(file_path: str):
         
         for i, row in enumerate(reader):
             if i not in (0, 1, 18):
-            
-                # create indicies of seperating semicolons
-                first_semicolon = row[0].find(';')
-                last_semicolon = row[0].rfind(';')
-
-                # create key-value pair and append it to array
-                key_value_pairs.append({'key': row[0][:first_semicolon], 'value': float(row[0][last_semicolon+1:] + '.' + row[1][:-1])})
+                
+                if not_last_element_in_row:
+                    last_semicolon_of_first_part = row[0].rfind(';')
+                    first_semicolon_of_first_part = row[0].find(';')
+                    # create key-value pair and append it to array
+                    key_value_pairs.append({'key': row[0][:first_semicolon_of_first_part], 'value': float(f'{row[0][last_semicolon_of_first_part+1:]}.{row[1][0]}')})
+                else:
+                    first_semicolon = row[0].find(';')
+                    last_semicolon = row[0].rfind(';')
+                    # create key-value pair and append it to array
+                    key_value_pairs.append({'key': row[0][:first_semicolon], 'value': float(row[0][last_semicolon+1:] + '.' + row[1][:-1])})
                 
         return key_value_pairs
 
 
-def initiate_empty_values_key(dictonary: dict):
-    for i, feature in enumerate(dictonary['features']):
-        
-        dictonary['features'][i]['properties']['values'] = {}
+def add_values_to_dictionary(dictionary: dict, year: str, datasetName: str, fileNameString: str, not_last_element_in_row: bool):
+    key_value_pairs = get_key_value_pairs('../monitorIoer/states/' + fileNameString + year + '.csv', not_last_element_in_row)
 
+    for i, feature in enumerate(dictionary['features']):
 
-def add_values_to_dictionary(dictonary: dict, year: str):
-    key_value_pairs = get_key_value_pairs('../monitorIoer/states/V03DG__' + year + '_states.csv')
-
-    for i, feature in enumerate(dictonary['features']):
-
-        dictonary['features'][i]['properties']['values'][year] = key_value_pairs[i]['value']
+        dictionary['features'][i]['properties']['values'][f'{datasetName}'][year] = key_value_pairs[i]['value']
 
 
 if __name__ == "__main__":
@@ -40,21 +50,15 @@ if __name__ == "__main__":
         combined_states_data = json.load(file)
 
     initiate_empty_values_key(combined_states_data)
-    add_values_to_dictionary(combined_states_data, '2008')
-    add_values_to_dictionary(combined_states_data, '2009')
-    add_values_to_dictionary(combined_states_data, '2010')
-    add_values_to_dictionary(combined_states_data, '2011')
-    add_values_to_dictionary(combined_states_data, '2012')
-    add_values_to_dictionary(combined_states_data, '2013')
-    add_values_to_dictionary(combined_states_data, '2014')
-    add_values_to_dictionary(combined_states_data, '2015')
-    add_values_to_dictionary(combined_states_data, '2016')
-    add_values_to_dictionary(combined_states_data, '2017')
-    add_values_to_dictionary(combined_states_data, '2018')
-    add_values_to_dictionary(combined_states_data, '2019')
-    add_values_to_dictionary(combined_states_data, '2020')
-    add_values_to_dictionary(combined_states_data, '2021')
-    add_values_to_dictionary(combined_states_data, '2022')
+    initiate_empty_dataset_name(combined_states_data, 'roadNetworkDensity')
+    initiate_empty_dataset_name(combined_states_data, 'greenlandpercentage')
+    initiate_empty_dataset_name(combined_states_data, 'woodlandpercentage')
+    for year in range(2008, 2023):
+        add_values_to_dictionary(combined_states_data, f'{year}', 'roadNetworkDensity', 'roadnetworkdensity/roadnetworkdensity_states_', 0)
+        add_values_to_dictionary(combined_states_data, f'{year}', 'greenlandpercentage', 'greenlandpercentage/greenlandpercentage_states_', 1)
+        add_values_to_dictionary(combined_states_data, f'{year}', 'woodlandpercentage', 'woodlandpercentage/woodlandpercentage_states_', 1)
+
+    
     
     with open('combined_states.json', 'w', encoding='utf-8') as file:
         json.dump(combined_states_data, file, ensure_ascii=False)
