@@ -4,7 +4,7 @@ import { Feature } from "@/types/types";
 import { getCorrectColor } from "@/utils/getCorrectColor";
 import { useState } from "react";
 import { GeoJSON, Popup, Tooltip } from "react-leaflet";
-import PrimaryButton from "./PrimaryButton";
+import PrimaryButton from "./Button/PrimaryButton";
 import { useDatasetStore } from "@/store/selectedDatasetStore";
 
 interface Props {
@@ -71,7 +71,7 @@ export default function MapFeature(props: Props) {
 								? props.feature.properties.NUTS_NAME
 								: props.feature?.properties.GEN}
 						</div>
-						<PrimaryButton onClick={openModal}>
+						<PrimaryButton onClick={openModal} uppercase>
 							Details
 						</PrimaryButton>
 					</div>

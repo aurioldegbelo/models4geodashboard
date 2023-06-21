@@ -12,9 +12,10 @@ import DatasetControl from "./DatasetControl";
 import YearControl from "./YearControl";
 import GraphView from "./GraphView";
 import MapFeature from "./MapFeature";
-import PrimaryButton from "./PrimaryButton";
 import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
-import DetailModal from "./DetailModal";
+import DetailModal from "./Modal/DetailModal";
+import DatasetModal from "./Modal/DatasetModal";
+import DatasetInformationButton from "./Button/DatasetInformationButton";
 
 interface Props {
 	bounds: number[][];
@@ -35,15 +36,22 @@ export default function Map(props: Props) {
 
 	const selectedFeature = useSelectedFeatureStore((state) => state.feature);
 
-	const [showModal, setShowModal] = useState<boolean>(false);
+	const [showDetailModal, setShowDetailModal] = useState<boolean>(false);
+	const [showDatasetModal, setShowDatasetModal] = useState<boolean>(false);
 
 	return (
 		<>
-			{showModal ? (
+			{showDatasetModal ? (
+				<DatasetModal
+					showModal={showDatasetModal}
+					setShowModal={setShowDatasetModal}
+				/>
+			) : null}
+			{showDetailModal ? (
 				<DetailModal
 					feature={selectedFeature}
-					showModal={showModal}
-					setShowModal={setShowModal}
+					showModal={showDetailModal}
+					setShowModal={setShowDetailModal}
 				/>
 			) : null}
 			<MapContainer
@@ -67,7 +75,7 @@ export default function Map(props: Props) {
 								<MapFeature
 									feature={state}
 									index={index}
-									setShowModal={setShowModal}
+									setShowModal={setShowDetailModal}
 								/>
 							</>
 					  ))
@@ -78,7 +86,7 @@ export default function Map(props: Props) {
 								<MapFeature
 									feature={community}
 									index={index}
-									setShowModal={setShowModal}
+									setShowModal={setShowDetailModal}
 								/>
 							</>
 					  ))
@@ -89,8 +97,15 @@ export default function Map(props: Props) {
 				</div>
 
 				<div className={`${POSITION_CLASSES.topright} mr-32`}>
+					<DatasetInformationButton
+						setShowDatasetModal={setShowDatasetModal}
+					/>
+				</div>
+
+				<div className={`${POSITION_CLASSES.topright} mr-96`}>
 					<DatasetControl />
 				</div>
+
 				<div
 					className={`${POSITION_CLASSES.topleft} h-full w-screen space-y-3 pb-8`}
 				>

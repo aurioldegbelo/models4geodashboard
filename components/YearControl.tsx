@@ -29,8 +29,10 @@ export default function YearControl() {
 		<div className="leaflet-control bg-white rounded-lg w-28">
 			<Listbox value={selectedYear} onChange={setYear}>
 				<div className="">
-					<Listbox.Button className="w-full rounded-lg h-10 border-2 bg-white text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-indigo-500">
-						<span className="block truncate text-md font-medium">{selectedYear}</span>
+					<Listbox.Button className="w-full rounded-lg h-10 border-2 bg-white text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-white hover:bg-indigo-100 hover:ring-offset-indigo-600 hover:text-indigo-900 hover:ring-indigo-600 hover:border-indigo-600">
+						<span className="block truncate text-md font-semibold">
+							{selectedYear}
+						</span>
 					</Listbox.Button>
 					<Transition
 						as={Fragment}

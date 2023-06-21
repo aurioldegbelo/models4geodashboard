@@ -1,5 +1,5 @@
 import { Feature } from "@/types/types";
-import PrimaryButton from "./PrimaryButton";
+import PrimaryButton from "../Button/PrimaryButton";
 import { useDatasetStore } from "@/store/selectedDatasetStore";
 import { useEffect, useRef } from "react";
 
@@ -50,7 +50,7 @@ export default function DetailModal(props: Props) {
 					<div className="mt-4 text-sm text-gray-600">content</div>
 				</div>
 				<div className="px-6 py-4 bg-gray-100 text-right rounded-b-lg">
-					<PrimaryButton onClick={() => props.setShowModal(false)}>
+					<PrimaryButton onClick={() => props.setShowModal(false)} uppercase>
 						Close
 					</PrimaryButton>
 				</div>
