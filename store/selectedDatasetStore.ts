@@ -1,12 +1,13 @@
-import { DatasetType } from "@/types/types";
 import { create } from "zustand";
+import { Dataset } from "@/types/types";
 
 interface SelectedDataset {
-	dataset: DatasetType;
-    setDataset: (dataset: DatasetType) => void
+	dataset: Dataset;
+	setDataset: (dataset: Dataset) => void;
 }
 
-export const useDatasetStore = create<SelectedDataset>((set) => ({
-	dataset: "State",
-	setDataset: (newDatasetType: DatasetType) => set((state) => ({ ...state, dataset: newDatasetType})),
+export const useSelectedDatasetStore = create<SelectedDataset>((set) => ({
+	dataset: "roadnetworkdensity",
+	setDataset: (newSelectedDataset: Dataset) =>
+		set((state) => ({ ...state, feature: newSelectedDataset })),
 }));

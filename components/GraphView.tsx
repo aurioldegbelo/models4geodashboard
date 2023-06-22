@@ -1,4 +1,3 @@
-import { useDatasetStore } from "@/store/selectedDatasetStore";
 import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
 import {
 	CartesianGrid,
@@ -12,7 +11,6 @@ import {
 
 export default function GraphView() {
 	const selectedFeature = useSelectedFeatureStore((state) => state.feature);
-    const dataset = useDatasetStore((state) => state.dataset);
 
 	const valuesAsArray = Object.entries(
 		selectedFeature?.properties.values
@@ -23,7 +21,7 @@ export default function GraphView() {
 			<div className="flex gap-2">
 				<h1 className="text-lg">Temporal course</h1>
 				<div className="bg-indigo-200 py-1 px-3 rounded-full text-center">
-					{dataset == 'State' && selectedFeature ? selectedFeature.properties.NUTS_NAME : selectedFeature?.properties.GEN}
+					{selectedFeature.properties.NUTS_NAME}
 				</div>
 			</div>
 			<ResponsiveContainer height="100%" width="100%">

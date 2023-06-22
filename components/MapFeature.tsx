@@ -3,9 +3,8 @@ import { useYearStore } from "@/store/selectedYearStore";
 import { Feature } from "@/types/types";
 import { getCorrectColor } from "@/utils/getCorrectColor";
 import { useState } from "react";
-import { GeoJSON, Popup, Tooltip } from "react-leaflet";
+import { GeoJSON, Popup } from "react-leaflet";
 import PrimaryButton from "./Button/PrimaryButton";
-import { useDatasetStore } from "@/store/selectedDatasetStore";
 
 interface Props {
 	feature: Feature;
@@ -16,7 +15,6 @@ interface Props {
 export default function MapFeature(props: Props) {
 	const [isHovered, setIsHovered] = useState<boolean>(false);
 	const [tooltipContent, setTooltipContent] = useState<boolean>(false);
-	const dataset = useDatasetStore((state) => state.dataset);
 	const selectedYear = useYearStore((state) => state.year);
 	const setSelectedFeature = useSelectedFeatureStore(
 		(state) => state.setFeature
@@ -67,9 +65,8 @@ export default function MapFeature(props: Props) {
 				<Popup>
 					<div className="space-y-5">
 						<div className="font-bold">
-							{dataset == "State" && props.feature
-								? props.feature.properties.NUTS_NAME
-								: props.feature?.properties.GEN}
+							{props.feature &&
+								props.feature.properties.NUTS_NAME}
 						</div>
 						<PrimaryButton onClick={openModal} uppercase>
 							Details

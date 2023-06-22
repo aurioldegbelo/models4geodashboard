@@ -1,5 +1,4 @@
 import PrimaryButton from "../Button/PrimaryButton";
-import { useDatasetStore } from "@/store/selectedDatasetStore";
 import { useEffect, useRef } from "react";
 
 interface Props {
@@ -8,7 +7,6 @@ interface Props {
 }
 
 export default function DatasetInformationModal(props: Props) {
-	const dataset = useDatasetStore((state) => state.dataset);
 
 	const modalRef = useRef(null);
 

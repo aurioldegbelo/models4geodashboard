@@ -1,4 +1,3 @@
-import { useDatasetStore } from "@/store/selectedDatasetStore";
 import { Feature, YearType } from "@/types/types";
 import TableHeader from "./TableHeader";
 import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
@@ -8,7 +7,6 @@ interface Props {
 }
 
 export default function TableView(props: Props) {
-	const dataset = useDatasetStore((state) => state.dataset);
 	const selectedFeature = useSelectedFeatureStore((state) => state.feature);
 
 	const allYears: YearType[] = [
@@ -37,7 +35,7 @@ export default function TableView(props: Props) {
 					<small className="self-end pb-1">measured in: km/km²</small>
 				</div>
 				<div className="bg-indigo-200 py-1 px-3 rounded-full text-center">
-					{dataset == "State" ? "States" : "Communities"}
+					{"States"}
 				</div>
 			</div>
 			<div className="overflow-x-auto overflow-y-auto h-full w-full">
@@ -49,27 +47,17 @@ export default function TableView(props: Props) {
 								<tr
 									className={` ${
 										index % 2 != 0
-											? dataset == "State"
-												? selectedFeature?.properties.NUTS_NAME == feature.properties.NUTS_NAME
-													? " bg-indigo-100"
-													: "bg-gray-100"
-												: selectedFeature?.properties.GEN == feature.properties.GEN
-													? " bg-indigo-100"
-													: "bg-gray-100"
-											: dataset == "State"
-												? selectedFeature?.properties.NUTS_NAME == feature.properties.NUTS_NAME
-													? " bg-indigo-100"
-													: "bg-white"
-												: selectedFeature?.properties.GEN == feature.properties.GEN
-													? " bg-indigo-100"
-													: "bg-white-100"
+											? selectedFeature?.properties.NUTS_NAME == feature.properties.NUTS_NAME
+												? " bg-indigo-100"
+												: "bg-gray-100"
+											: selectedFeature?.properties.NUTS_NAME == feature.properties.NUTS_NAME
+												? " bg-indigo-100"
+												: "bg-white"
 									} `}
 									key={index}
 								>
 									<th className="w-56 p-2 text-md font-normal text-left">
-										{dataset == "State"
-											? feature.properties.NUTS_NAME
-											: feature.properties.GEN}
+										{feature.properties.NUTS_NAME}
 									</th>
 									{allYears.map((year: YearType) => (
 										<th className="w-16 text-right font-normal min-w-[50px] pr-2">

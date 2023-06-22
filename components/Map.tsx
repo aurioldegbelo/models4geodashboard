@@ -6,9 +6,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css"; // Re-uses images from ~leaflet package
 import "leaflet-defaulticon-compatibility";
 import { Feature } from "@/types/types";
-import { useDatasetStore } from "@/store/selectedDatasetStore";
 import TableView from "./TableView";
-import DatasetControl from "./DatasetControl";
 import YearControl from "./YearControl";
 import GraphView from "./GraphView";
 import MapFeature from "./MapFeature";
@@ -32,7 +30,6 @@ const POSITION_CLASSES = {
 };
 
 export default function Map(props: Props) {
-	const selectedDataset = useDatasetStore((state) => state.dataset);
 
 	const selectedFeature = useSelectedFeatureStore((state) => state.feature);
 
@@ -69,28 +66,15 @@ export default function Map(props: Props) {
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
 
-				{selectedDataset == "State"
-					? states.features.map((state: Feature, index) => (
-							<>
-								<MapFeature
-									feature={state}
-									index={index}
-									setShowModal={setShowDetailModal}
-								/>
-							</>
-					  ))
-					: null}
-				{selectedDataset == "Community"
-					? communities.features.map((community, index) => (
-							<>
-								<MapFeature
-									feature={community}
-									index={index}
-									setShowModal={setShowDetailModal}
-								/>
-							</>
-					  ))
-					: null}
+				{states.features.map((state: Feature, index) => (
+					<>
+						<MapFeature
+							feature={state}
+							index={index}
+							setShowModal={setShowDetailModal}
+						/>
+					</>
+				))}
 
 				<div className={`${POSITION_CLASSES.topright} leaflet-control`}>
 					<YearControl />
@@ -102,21 +86,13 @@ export default function Map(props: Props) {
 					/>
 				</div>
 
-				<div className={`${POSITION_CLASSES.topright} mr-96`}>
-					<DatasetControl />
-				</div>
-
 				<div
 					className={`${POSITION_CLASSES.topleft} h-full w-screen space-y-3 pb-8`}
 				>
 					{props.tableView ? (
 						<div className={`h-1/2`}>
 							<TableView
-								features={
-									selectedDataset == "State"
-										? states.features
-										: communities.features
-								}
+								features={states.features}
 							/>
 						</div>
 					) : null}

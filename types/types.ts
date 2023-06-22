@@ -1,13 +1,8 @@
-export type DatasetType = "State" | "Community";
+export type Dataset = 'roadnetworkdensity' | 'woodlandpercentage' | 'greenlandpercentage'
 
 export type Values = YearValuePair[];
 
 export type States = {
-	type: string;
-	features: Feature[];
-};
-
-export type Communities = {
 	type: string;
 	features: Feature[];
 };

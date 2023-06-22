@@ -1,6 +1,5 @@
 import { Feature } from "@/types/types";
 import PrimaryButton from "../Button/PrimaryButton";
-import { useDatasetStore } from "@/store/selectedDatasetStore";
 import { useEffect, useRef } from "react";
 
 interface Props {
@@ -10,7 +9,6 @@ interface Props {
 }
 
 export default function DetailModal(props: Props) {
-	const dataset = useDatasetStore((state) => state.dataset);
 
 	const modalRef = useRef(null);
 
@@ -43,9 +41,7 @@ export default function DetailModal(props: Props) {
 			>
 				<div className="px-6 py-4">
 					<div className="text-lg font-medium text-gray-900">
-						{dataset == "State" && props.feature
-							? props.feature.properties.NUTS_NAME
-							: props.feature.properties.GEN}
+						{props.feature && props.feature.properties.NUTS_NAME}
 					</div>
 					<div className="mt-4 text-sm text-gray-600">content</div>
 				</div>
