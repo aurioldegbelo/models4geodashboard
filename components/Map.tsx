@@ -94,14 +94,14 @@ export default function Map(props: Props) {
 				>
 					{props.tableView ? (
 						<div className={`h-1/2`}>
-							<TableView
-								features={states.features}
-							/>
+							<GraphView features={states.features}/>
 						</div>
 					) : null}
 					{props.graphView ? (
 						<div className="h-1/2">
-							<GraphView features={states.features}/>
+							<TableView
+								features={states.features}
+							/>
 						</div>
 					) : null}
 				</div>

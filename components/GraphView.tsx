@@ -1,6 +1,6 @@
+import { transformData } from "@/functions/transformDataSuitedForGraphView";
 import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
-import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
-import { Feature } from "@/types/types";
+import { Feature, TransormedData } from "@/types/types";
 import {
 	CartesianGrid,
 	Line,
@@ -15,22 +15,31 @@ interface Props {
 	features: Feature[];
 }
 
+
 export default function GraphView(props: Props) {
-	const selectedFeature = useSelectedFeatureStore((state) => state.feature);
 	const dataset = useSelectedDatasetStore((state) => state.dataset);
 
-	const valuesAsArray = Object.entries(
-		selectedFeature?.properties.values[dataset]
-	).map(([key, value]) => ({ key, value }));
+	const lines = (features: Feature[]) => {
+		const entries = transformData(features, dataset).map((option: TransormedData) => {
+		  const key = Object.keys(option);
+		  return key;
+		});
+		const flattened = entries.reduce((prev, current) => {
+			prev = prev.concat(current);
+			return prev;
+		}, []);
+		const filtered = flattened.filter((key) => key !== "year");
+		const uniqueKeys = [...new Set(filtered)];
+	  
+		return uniqueKeys.map((key) => {
+		  return <Line type="monotone" stroke={getRandomColor()} dataKey={key} />;
+		});
+	  };
 
-	const valuesAsArrayAllStates = props.features.map((feature) =>
-		Object.entries(feature.properties.values[dataset]).map(
-			([key, value]) => ({ key, value })
-		)
-	);
+	  const getRandomColor = () => {
+		return "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0");
+	  };
 
-	console.log(valuesAsArray);
-	console.log(valuesAsArrayAllStates);
 
 	return (
 		<div className="leaflet-control bg-white h-full p-5 pb-10 w-1/3 rounded-lg mx-auto">
@@ -39,14 +48,14 @@ export default function GraphView(props: Props) {
 			</div>
 			<ResponsiveContainer height="100%" width="100%">
 				<LineChart
-					data={valuesAsArray}
+					data={transformData(props.features, dataset)}
 					margin={{ top: 30, right: 0, bottom: 0, left: 0 }}
 				>
-					<Line type="monotone" dataKey="value" stroke="#8884d8" />
 					<CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-					<XAxis dataKey="key" />
+					<XAxis dataKey="year" />
 					<YAxis />
 					<Tooltip />
+					{lines(props.features)}
 				</LineChart>
 			</ResponsiveContainer>
 		</div>

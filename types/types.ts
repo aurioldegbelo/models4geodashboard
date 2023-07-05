@@ -1,5 +1,9 @@
 export type Dataset = 'roadnetworkdensity' | 'woodlandpercentage' | 'greenlandpercentage'
 
+export type TransormedData = {
+	year: string;
+	[name: string]: number | string;
+}
 
 export type States = {
 	type: string;
@@ -27,7 +31,7 @@ export type Properties = {
 	GF: number;
 	NUTS_LEVEL?: number;
 	NUTS_CODE?: string;
-	NUTS_NAME?: string;
+	NUTS_NAME: string;
 	ADE?: 4;
 	BSG?: number;
 	ARS?: string;
