@@ -1,6 +1,5 @@
 export type Dataset = 'roadnetworkdensity' | 'woodlandpercentage' | 'greenlandpercentage'
 
-export type Values = YearValuePair[];
 
 export type States = {
 	type: string;
@@ -22,7 +21,7 @@ export type Geometry = {
 export type Coordinate = [number, number];
 
 export type Properties = {
-	values: YearValuePair;
+	values: Values;
 	OBJID: string;
 	BEGINN: string;
 	GF: number;
@@ -52,7 +51,13 @@ export type Properties = {
 	WSK?: string;
 };
 
-export type YearValuePair = Record<YearType, number>;
+export type Values = {
+	roadnetworkdensity: YearValuePairs,
+	woodlandpercentage: YearValuePairs,
+	greenlandpercentage: YearValuePairs,
+}
+
+export type YearValuePairs = Record<YearType, number>;
 
 export type YearType =
 	| "2022"

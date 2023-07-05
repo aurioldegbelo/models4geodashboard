@@ -26,7 +26,7 @@ export default function YearControl() {
 	const setYear = useYearStore((state) => state.setYear);
 
 	return (
-		<div className="leaflet-control bg-white rounded-lg w-28">
+		<div className="leaflet-control bg-white rounded-lg w-20">
 			<Listbox value={selectedYear} onChange={setYear}>
 				<div className="">
 					<Listbox.Button className="w-full rounded-lg h-10 border-2 bg-white text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-white hover:bg-indigo-100 hover:ring-offset-indigo-600 hover:text-indigo-900 hover:ring-indigo-600 hover:border-indigo-600">
@@ -45,7 +45,7 @@ export default function YearControl() {
 								<Listbox.Option
 									key={index}
 									className={({ active }) =>
-										`relative cursor-default select-none py-2 pl-10 pr-4  ${
+										`relative cursor-default select-none py-2 px-6  ${
 											active
 												? "bg-indigo-300 text-indigo-900"
 												: "text-gray-900"

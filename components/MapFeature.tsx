@@ -5,6 +5,7 @@ import { getCorrectColor } from "@/utils/getCorrectColor";
 import { useState } from "react";
 import { GeoJSON, Popup } from "react-leaflet";
 import PrimaryButton from "./Button/PrimaryButton";
+import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
 
 interface Props {
 	feature: Feature;
@@ -19,6 +20,7 @@ export default function MapFeature(props: Props) {
 	const setSelectedFeature = useSelectedFeatureStore(
 		(state) => state.setFeature
 	);
+	const dataset = useSelectedDatasetStore((state) => state.dataset);
 
 	const handlePolygonClick = () => {
 		setSelectedFeature(props.feature);
@@ -41,7 +43,7 @@ export default function MapFeature(props: Props) {
 		return {
 			fillColor: isHovered
 				? "blue"
-				: getCorrectColor(props.feature, selectedYear),
+				: getCorrectColor(props.feature, selectedYear, dataset),
 			weight: 1,
 			opacity: 1,
 			color: "white",

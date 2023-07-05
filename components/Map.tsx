@@ -1,6 +1,5 @@
-import { communities } from "../data/communities";
 import { states } from "../data/states";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css"; // Re-uses images from ~leaflet package
@@ -14,6 +13,7 @@ import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
 import DetailModal from "./Modal/DetailModal";
 import DatasetModal from "./Modal/DatasetModal";
 import DatasetInformationButton from "./Button/DatasetInformationButton";
+import DatasetControl from "./DatasetControl";
 
 interface Props {
 	bounds: number[][];
@@ -66,7 +66,7 @@ export default function Map(props: Props) {
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
 
-				{states.features.map((state: Feature, index) => (
+				{states.features.map((state: Feature, index: number) => (
 					<>
 						<MapFeature
 							feature={state}
@@ -75,8 +75,11 @@ export default function Map(props: Props) {
 						/>
 					</>
 				))}
+				<div className={`${POSITION_CLASSES.topright} mr-96`}>
+					<DatasetControl />
+				</div>
 
-				<div className={`${POSITION_CLASSES.topright} leaflet-control`}>
+				<div className={`${POSITION_CLASSES.topright} `}>
 					<YearControl />
 				</div>
 
@@ -98,7 +101,7 @@ export default function Map(props: Props) {
 					) : null}
 					{props.graphView ? (
 						<div className="h-1/2">
-							<GraphView />
+							<GraphView features={states.features}/>
 						</div>
 					) : null}
 				</div>

@@ -9,5 +9,5 @@ interface SelectedDataset {
 export const useSelectedDatasetStore = create<SelectedDataset>((set) => ({
 	dataset: "roadnetworkdensity",
 	setDataset: (newSelectedDataset: Dataset) =>
-		set((state) => ({ ...state, feature: newSelectedDataset })),
+		set((state) => ({ ...state, dataset: newSelectedDataset })),
 }));

@@ -1,6 +1,7 @@
 import { Feature, YearType } from "@/types/types";
 import TableHeader from "./TableHeader";
 import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
+import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
 
 interface Props {
 	features: Feature[];
@@ -8,6 +9,7 @@ interface Props {
 
 export default function TableView(props: Props) {
 	const selectedFeature = useSelectedFeatureStore((state) => state.feature);
+	const dataset = useSelectedDatasetStore((state) => state.dataset);
 
 	const allYears: YearType[] = [
 		"2022",
@@ -28,15 +30,34 @@ export default function TableView(props: Props) {
 	];
 
 	return (
-		<div className="leaflet-control bg-white h-full px-5 pt-5 pb-14 w-1/2 rounded-lg mx-auto">
-			<div className="flex justify-between mb-2">
-				<div className="flex gap-2">
-					<h1 className="text-lg">Road network density per area |</h1>
-					<small className="self-end pb-1">measured in: km/km²</small>
-				</div>
-				<div className="bg-indigo-200 py-1 px-3 rounded-full text-center">
-					{"States"}
-				</div>
+		<div className="leaflet-control bg-white h-full px-5 pt-5 pb-14 w-1/3 rounded-lg mx-auto">
+			<div className="flex mb-2">
+				{dataset == "roadnetworkdensity" && (
+					<div className="flex gap-2">
+						<h1 className="text-lg">
+							Road network density per area |
+						</h1>
+						<small className="self-end pb-1">
+							measured in: km/km²
+						</small>
+					</div>
+				)}
+				{dataset == "greenlandpercentage" && (
+					<div className="flex gap-2">
+						<h1 className="text-lg">
+							Share of grassland in total area |
+						</h1>
+						<small className="self-end pb-1">measured in: %</small>
+					</div>
+				)}
+				{dataset == "woodlandpercentage" && (
+					<div className="flex gap-2">
+						<h1 className="text-lg">
+							Share of woodland in total area |
+						</h1>
+						<small className="self-end pb-1">measured in: %</small>
+					</div>
+				)}
 			</div>
 			<div className="overflow-x-auto overflow-y-auto h-full w-full">
 				<table className="table-auto w-full grow whitespace-nowrap">
@@ -47,12 +68,16 @@ export default function TableView(props: Props) {
 								<tr
 									className={` ${
 										index % 2 != 0
-											? selectedFeature?.properties.NUTS_NAME == feature.properties.NUTS_NAME
+											? selectedFeature?.properties
+													.NUTS_NAME ==
+											  feature.properties.NUTS_NAME
 												? " bg-indigo-100"
 												: "bg-gray-100"
-											: selectedFeature?.properties.NUTS_NAME == feature.properties.NUTS_NAME
-												? " bg-indigo-100"
-												: "bg-white"
+											: selectedFeature?.properties
+													.NUTS_NAME ==
+											  feature.properties.NUTS_NAME
+											? " bg-indigo-100"
+											: "bg-white"
 									} `}
 									key={index}
 								>
@@ -61,7 +86,15 @@ export default function TableView(props: Props) {
 									</th>
 									{allYears.map((year: YearType) => (
 										<th className="w-16 text-right font-normal min-w-[50px] pr-2">
-											{feature.properties.values[year]}
+											{dataset == "roadnetworkdensity" &&
+												feature.properties.values
+													.roadnetworkdensity[year]}
+											{dataset == "greenlandpercentage" &&
+												feature.properties.values
+													.greenlandpercentage[year]}
+											{dataset == "woodlandpercentage" &&
+												feature.properties.values
+													.woodlandpercentage[year]}
 										</th>
 									))}
 								</tr>

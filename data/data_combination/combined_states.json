@@ -796,7 +796,7 @@
 				"NUTS_CODE": "DE1",
 				"NUTS_NAME": "Baden-Württemberg",
 				"values": {
-					"roadNetworkDensity": {
+					"roadnetworkdensity": {
 						"2008": 2.5,
 						"2009": 2.4,
 						"2010": 2.4,
@@ -2047,7 +2047,7 @@
 				"NUTS_CODE": "DE2",
 				"NUTS_NAME": "Bayern",
 				"values": {
-					"roadNetworkDensity": {
+					"roadnetworkdensity": {
 						"2008": 1.9,
 						"2009": 1.9,
 						"2010": 1.9,
@@ -2226,7 +2226,7 @@
 				"NUTS_CODE": "DE3",
 				"NUTS_NAME": "Berlin",
 				"values": {
-					"roadNetworkDensity": {
+					"roadnetworkdensity": {
 						"2008": 6.5,
 						"2009": 6.4,
 						"2010": 6.4,
@@ -2968,7 +2968,7 @@
 				"NUTS_CODE": "DE4",
 				"NUTS_NAME": "Brandenburg",
 				"values": {
-					"roadNetworkDensity": {
+					"roadnetworkdensity": {
 						"2008": 1.2,
 						"2009": 1.1,
 						"2010": 1.1,
@@ -3125,7 +3125,7 @@
 				"NUTS_CODE": "DE5",
 				"NUTS_NAME": "Bremen",
 				"values": {
-					"roadNetworkDensity": {
+					"roadnetworkdensity": {
 						"2008": 5.3,
 						"2009": 5.5,
 						"2010": 5.5,
@@ -3310,7 +3310,7 @@
 				"NUTS_CODE": "DE6",
 				"NUTS_NAME": "Hamburg",
 				"values": {
-					"roadNetworkDensity": {
+					"roadnetworkdensity": {
 						"2008": 5.2,
 						"2009": 5.2,
 						"2010": 5.2,
@@ -4060,7 +4060,7 @@
 				"NUTS_CODE": "DE7",
 				"NUTS_NAME": "Hessen",
 				"values": {
-					"roadNetworkDensity": {
+					"roadnetworkdensity": {
 						"2008": 2.1,
 						"2009": 2.1,
 						"2010": 2.1,
@@ -5123,7 +5123,7 @@
 				"NUTS_CODE": "DE8",
 				"NUTS_NAME": "Mecklenburg-Vorpommern",
 				"values": {
-					"roadNetworkDensity": {
+					"roadnetworkdensity": {
 						"2008": 1.0,
 						"2009": 1.0,
 						"2010": 1.0,
@@ -6184,7 +6184,7 @@
 				"NUTS_CODE": "DE9",
 				"NUTS_NAME": "Niedersachsen",
 				"values": {
-					"roadNetworkDensity": {
+					"roadnetworkdensity": {
 						"2008": 1.9,
 						"2009": 1.9,
 						"2010": 1.9,
@@ -6948,7 +6948,7 @@
 				"NUTS_CODE": "DEA",
 				"NUTS_NAME": "Nordrhein-Westfalen",
 				"values": {
-					"roadNetworkDensity": {
+					"roadnetworkdensity": {
 						"2008": 2.8,
 						"2009": 2.8,
 						"2010": 2.8,
@@ -7614,7 +7614,7 @@
 				"NUTS_CODE": "DEB",
 				"NUTS_NAME": "Rheinland-Pfalz",
 				"values": {
-					"roadNetworkDensity": {
+					"roadnetworkdensity": {
 						"2008": 1.9,
 						"2009": 1.9,
 						"2010": 1.9,
@@ -7875,7 +7875,7 @@
 				"NUTS_CODE": "DEC",
 				"NUTS_NAME": "Saarland",
 				"values": {
-					"roadNetworkDensity": {
+					"roadnetworkdensity": {
 						"2008": 2.8,
 						"2009": 2.8,
 						"2010": 2.8,
@@ -8554,7 +8554,7 @@
 				"NUTS_CODE": "DED",
 				"NUTS_NAME": "Sachsen",
 				"values": {
-					"roadNetworkDensity": {
+					"roadnetworkdensity": {
 						"2008": 2.2,
 						"2009": 2.1,
 						"2010": 2.1,
@@ -9191,7 +9191,7 @@
 				"NUTS_CODE": "DEE",
 				"NUTS_NAME": "Sachsen-Anhalt",
 				"values": {
-					"roadNetworkDensity": {
+					"roadnetworkdensity": {
 						"2008": 1.2,
 						"2009": 1.2,
 						"2010": 1.2,
@@ -9923,7 +9923,7 @@
 				"NUTS_CODE": "DEF",
 				"NUTS_NAME": "Schleswig-Holstein",
 				"values": {
-					"roadNetworkDensity": {
+					"roadnetworkdensity": {
 						"2008": 1.5,
 						"2009": 1.5,
 						"2010": 1.5,
@@ -10664,7 +10664,7 @@
 				"NUTS_CODE": "DEG",
 				"NUTS_NAME": "Thüringen",
 				"values": {
-					"roadNetworkDensity": {
+					"roadnetworkdensity": {
 						"2008": 1.6,
 						"2009": 1.6,
 						"2010": 1.6,
