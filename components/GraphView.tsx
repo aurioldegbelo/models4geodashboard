@@ -21,18 +21,18 @@ export default function GraphView(props: Props) {
 
 	const lines = (features: Feature[]) => {
 		const entries = transformData(features, dataset).map((option: TransormedData) => {
-		  const key = Object.keys(option);
-		  return key;
-		});
+		  const key = Object.keys(option)
+		  return key
+		})
 		const flattened = entries.reduce((prev, current) => {
-			prev = prev.concat(current);
-			return prev;
-		}, []);
-		const filtered = flattened.filter((key) => key !== "year");
-		const uniqueKeys = [...new Set(filtered)];
+			prev = prev.concat(current)
+			return prev
+		}, [])
+		const filtered = flattened.filter((key: string) => key !== "year")
+		const uniqueKeys = [...new Set(filtered)]
 	  
-		return uniqueKeys.map((key) => {
-		  return <Line type="monotone" stroke={getRandomColor()} dataKey={key} />;
+		return uniqueKeys.map((key: string, index: number) => {
+		  return <Line type="monotone" stroke={getRandomColor()} dataKey={key} key={index}/>;
 		});
 	  };
 

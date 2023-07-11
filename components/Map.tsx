@@ -30,7 +30,6 @@ const POSITION_CLASSES = {
 };
 
 export default function Map(props: Props) {
-
 	const selectedFeature = useSelectedFeatureStore((state) => state.feature);
 
 	const [showDetailModal, setShowDetailModal] = useState<boolean>(false);
@@ -67,13 +66,11 @@ export default function Map(props: Props) {
 				/>
 
 				{states.features.map((state: Feature, index: number) => (
-					<>
-						<MapFeature
-							feature={state}
-							index={index}
-							setShowModal={setShowDetailModal}
-						/>
-					</>
+					<MapFeature
+						key={index}
+						feature={state}
+						setShowModal={setShowDetailModal}
+					/>
 				))}
 				<div className={`${POSITION_CLASSES.topright} mr-96`}>
 					<DatasetControl />
@@ -94,14 +91,12 @@ export default function Map(props: Props) {
 				>
 					{props.tableView ? (
 						<div className={`h-1/2`}>
-							<GraphView features={states.features}/>
+							<GraphView features={states.features} />
 						</div>
 					) : null}
 					{props.graphView ? (
 						<div className="h-1/2">
-							<TableView
-								features={states.features}
-							/>
+							<TableView features={states.features} />
 						</div>
 					) : null}
 				</div>

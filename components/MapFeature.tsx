@@ -9,7 +9,6 @@ import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
 
 interface Props {
 	feature: Feature;
-	index: number;
 	setShowModal: (boolean: boolean) => void;
 }
 
@@ -55,7 +54,6 @@ export default function MapFeature(props: Props) {
 	return (
 		<GeoJSON
 			data={props.feature.geometry}
-			key={props.index}
 			eventHandlers={{
 				click: handlePolygonClick,
 				mouseover: handleMouseOver,

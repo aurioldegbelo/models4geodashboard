@@ -84,8 +84,8 @@ export default function TableView(props: Props) {
 									<th className="w-56 p-2 text-md font-normal text-left">
 										{feature.properties.NUTS_NAME}
 									</th>
-									{allYears.map((year: YearType) => (
-										<th className="w-16 text-right font-normal min-w-[50px] pr-2">
+									{allYears.map((year: YearType, index: number) => (
+										<th className="w-16 text-right font-normal min-w-[50px] pr-2" key={index}>
 											{dataset == "roadnetworkdensity" &&
 												feature.properties.values
 													.roadnetworkdensity[year]}
