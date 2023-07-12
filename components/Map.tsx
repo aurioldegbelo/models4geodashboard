@@ -12,14 +12,15 @@ import MapFeature from "./MapFeature";
 import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
 import DetailModal from "./Modal/DetailModal";
 import DatasetModal from "./Modal/DatasetModal";
-import DatasetInformationButton from "./Button/DatasetInformationButton";
-import DatasetControl from "./DatasetControl";
+import CompareFeaturesControl from "./CompareFeaturesControl";
+import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
 
 interface Props {
 	bounds: number[][];
 	center: number[];
-	tableView: boolean;
-	graphView: boolean;
+	filtering: boolean;
+	differenceOnly: boolean;
+	filteringAndDifference: boolean;
 }
 
 const POSITION_CLASSES = {
@@ -34,6 +35,14 @@ export default function Map(props: Props) {
 
 	const [showDetailModal, setShowDetailModal] = useState<boolean>(false);
 	const [showDatasetModal, setShowDatasetModal] = useState<boolean>(false);
+
+	const comparisonFeature1 = useCompareFeaturesStore(
+		(state) => state.feature1
+	);
+
+	const comparisonFeature2 = useCompareFeaturesStore(
+		(state) => state.feature2
+	);
 
 	return (
 		<>
@@ -72,34 +81,67 @@ export default function Map(props: Props) {
 						setShowModal={setShowDetailModal}
 					/>
 				))}
-				<div className={`${POSITION_CLASSES.topright} mr-96`}>
-					<DatasetControl />
-				</div>
-
-				<div className={`${POSITION_CLASSES.topright} `}>
-					<YearControl />
-				</div>
-
-				<div className={`${POSITION_CLASSES.topright} mr-32`}>
-					<DatasetInformationButton
-						setShowDatasetModal={setShowDatasetModal}
-					/>
-				</div>
 
 				<div
-					className={`${POSITION_CLASSES.topleft} h-full w-screen space-y-3 pb-8`}
+					className={`${POSITION_CLASSES.topleft} h-full w-screen pb-8 flex`}
 				>
-					{props.tableView ? (
+					<div className="w-1/3">
 						<div className={`h-1/2`}>
-							<GraphView features={states.features} />
+							{props.differenceOnly &&
+							comparisonFeature1 &&
+							comparisonFeature2 ? (
+								<GraphView
+									features={[
+										comparisonFeature1,
+										comparisonFeature2,
+									]}
+								/>
+							) : (
+								<GraphView features={states.features} />
+							)}
 						</div>
-					) : null}
-					{props.graphView ? (
+
 						<div className="h-1/2">
 							<TableView features={states.features} />
 						</div>
-					) : null}
+					</div>
+					<div className="mx-3 w-1/3 h-fit flex">
+						{/* <DatasetInformationButton
+							setShowDatasetModal={setShowDatasetModal}
+						/> */}
+						<YearControl />
+						<CompareFeaturesControl />
+					</div>
+					<div className="mx-10 w-1/3"></div>
 				</div>
+				{props.filteringAndDifference &&
+				comparisonFeature1 &&
+				comparisonFeature2 ? (
+					<div
+						className={`${POSITION_CLASSES.topright} h-full w-screen pb-8 flex`}
+					>
+						<div className="w-2/3"></div>
+						<div className="w-1/3">
+							<div className={`h-1/2`}>
+								<GraphView
+									features={[
+										comparisonFeature1,
+										comparisonFeature2,
+									]}
+								/>
+							</div>
+
+							<div className="h-1/2">
+								<TableView
+									features={[
+										comparisonFeature1,
+										comparisonFeature2,
+									]}
+								/>
+							</div>
+						</div>
+					</div>
+				) : null}
 			</MapContainer>
 		</>
 	);

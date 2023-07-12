@@ -42,7 +42,7 @@ export default function GraphView(props: Props) {
 
 
 	return (
-		<div className="leaflet-control bg-white h-full p-5 pb-10 w-1/3 rounded-lg mx-auto">
+		<div className="leaflet-control bg-white h-full p-5 pb-10 w-full rounded-lg mx-auto">
 			<div className="flex gap-2">
 				<h1 className="text-lg">Temporal course</h1>
 			</div>

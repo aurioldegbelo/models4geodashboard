@@ -10,12 +10,13 @@ export default function v3() {
 	return (
 		<MapWithNoSSR
 			bounds={[
-				[58.0, 20.0],
+				[58.0, 40.0],
 				[40.0, -20.0],
 			]}
-			center={[51.5, 0.0]}
-			tableView={true}
-			graphView={true}
+			center={[51.5, 10.0]}
+			filtering={false}
+			differenceOnly={false}
+			filteringAndDifference={true}
 		/>
 	);
 }

@@ -30,7 +30,7 @@ export default function TableView(props: Props) {
 	];
 
 	return (
-		<div className="leaflet-control bg-white h-full px-5 pt-5 pb-14 w-1/3 rounded-lg mx-auto">
+		<div className="leaflet-control bg-white h-full px-5 pt-5 w-full pb-14 rounded-lg mx-auto">
 			<div className="flex mb-2">
 				{dataset == "roadnetworkdensity" && (
 					<div className="flex gap-2">

@@ -9,7 +9,6 @@ interface Props {
 }
 
 export default function DetailModal(props: Props) {
-
 	const modalRef = useRef(null);
 
 	useEffect(() => {
@@ -46,7 +45,10 @@ export default function DetailModal(props: Props) {
 					<div className="mt-4 text-sm text-gray-600">content</div>
 				</div>
 				<div className="px-6 py-4 bg-gray-100 text-right rounded-b-lg">
-					<PrimaryButton onClick={() => props.setShowModal(false)} uppercase>
+					<PrimaryButton
+						onClick={() => props.setShowModal(false)}
+						uppercase
+					>
 						Close
 					</PrimaryButton>
 				</div>

@@ -14,8 +14,9 @@ export default function v2() {
 				[40.0, -20.0],
 			]}
 			center={[51.5, 0.0]}
-			tableView={true}
-			graphView={false}
+			filtering={false}
+			differenceOnly={true}
+			filteringAndDifference={false}
 		/>
 	);
 }
