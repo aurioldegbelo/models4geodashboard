@@ -1,6 +1,5 @@
 import { Feature, YearType } from "@/types/types";
 import TableHeader from "./TableHeader";
-import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
 import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
 
 interface Props {
@@ -8,7 +7,6 @@ interface Props {
 }
 
 export default function TableView(props: Props) {
-	const selectedFeature = useSelectedFeatureStore((state) => state.feature);
 	const dataset = useSelectedDatasetStore((state) => state.dataset);
 
 	const allYears: YearType[] = [
@@ -68,15 +66,7 @@ export default function TableView(props: Props) {
 								<tr
 									className={` ${
 										index % 2 != 0
-											? selectedFeature?.properties
-													.NUTS_NAME ==
-											  feature.properties.NUTS_NAME
-												? " bg-indigo-100"
-												: "bg-gray-100"
-											: selectedFeature?.properties
-													.NUTS_NAME ==
-											  feature.properties.NUTS_NAME
-											? " bg-indigo-100"
+											? "bg-gray-100"
 											: "bg-white"
 									} `}
 									key={index}

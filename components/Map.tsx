@@ -9,8 +9,6 @@ import TableView from "./TableView";
 import YearControl from "./YearControl";
 import GraphView from "./GraphView";
 import MapFeature from "./MapFeature";
-import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
-import DetailModal from "./Modal/DetailModal";
 import DatasetModal from "./Modal/DatasetModal";
 import CompareFeaturesControl from "./CompareFeaturesControl";
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
@@ -31,9 +29,7 @@ const POSITION_CLASSES = {
 };
 
 export default function Map(props: Props) {
-	const selectedFeature = useSelectedFeatureStore((state) => state.feature);
 
-	const [showDetailModal, setShowDetailModal] = useState<boolean>(false);
 	const [showDatasetModal, setShowDatasetModal] = useState<boolean>(false);
 
 	const comparisonFeature1 = useCompareFeaturesStore(
@@ -50,13 +46,6 @@ export default function Map(props: Props) {
 				<DatasetModal
 					showModal={showDatasetModal}
 					setShowModal={setShowDatasetModal}
-				/>
-			) : null}
-			{showDetailModal ? (
-				<DetailModal
-					feature={selectedFeature}
-					showModal={showDetailModal}
-					setShowModal={setShowDetailModal}
 				/>
 			) : null}
 			<MapContainer
@@ -78,7 +67,6 @@ export default function Map(props: Props) {
 					<MapFeature
 						key={index}
 						feature={state}
-						setShowModal={setShowDetailModal}
 					/>
 				))}
 

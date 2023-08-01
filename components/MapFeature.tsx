@@ -1,4 +1,3 @@
-import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
 import { useYearStore } from "@/store/selectedYearStore";
 import { Feature } from "@/types/types";
 import { getCorrectColor } from "@/utils/getCorrectColor";
@@ -10,16 +9,13 @@ import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
 
 interface Props {
 	feature: Feature;
-	setShowModal: (boolean: boolean) => void;
 }
 
 export default function MapFeature(props: Props) {
 	const [isHovered, setIsHovered] = useState<boolean>(false);
 	const [tooltipContent, setTooltipContent] = useState<boolean>(false);
 	const selectedYear = useYearStore((state) => state.year);
-	const setSelectedFeature = useSelectedFeatureStore(
-		(state) => state.setFeature
-	);
+	
 	const dataset = useSelectedDatasetStore((state) => state.dataset);
 
 	const comparisonFeature1 = useCompareFeaturesStore(
@@ -71,12 +67,7 @@ export default function MapFeature(props: Props) {
 	};
 
 	const handlePolygonClick = () => {
-		setSelectedFeature(props.feature);
 		setTooltipContent(true);
-	};
-
-	const openModal = () => {
-		props.setShowModal(true);
 	};
 
 	const handleMouseOver = () => {
@@ -117,9 +108,6 @@ export default function MapFeature(props: Props) {
 							{props.feature &&
 								props.feature.properties.NUTS_NAME}
 						</div>
-						<PrimaryButton onClick={openModal} uppercase>
-							Details
-						</PrimaryButton>
 						<div className="space-y-2">
 							<div className="flex items-center gap-3">
 								<div className="font-bold text-md">
