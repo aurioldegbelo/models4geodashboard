@@ -86,33 +86,38 @@ export default function Map(props: Props) {
 					className={`${POSITION_CLASSES.topleft} h-full w-screen pb-8 flex`}
 				>
 					<div className="w-1/3">
-						<div className={`h-1/2`}>
-							{props.differenceOnly &&
-							comparisonFeature1 &&
-							comparisonFeature2 ? (
-								<GraphView
-									features={[
-										comparisonFeature1,
-										comparisonFeature2,
-									]}
-								/>
-							) : (
-								<GraphView features={states.features} />
-							)}
-						</div>
-
-						<div className="h-1/2">
-							<TableView features={states.features} />
-						</div>
+						{props.differenceOnly &&
+						comparisonFeature1 &&
+						comparisonFeature2 ? (
+							<GraphView
+								features={[
+									comparisonFeature1,
+									comparisonFeature2,
+								]}
+							/>
+						) : (
+							<GraphView
+								features={states.features}
+								usedOnFiltering={
+									props.filtering &&
+									comparisonFeature1 &&
+									comparisonFeature2
+										? true
+										: false
+								}
+							/>
+						)}
+						<TableView features={states.features} />
 					</div>
+				</div>
+				<div
+					className={`${POSITION_CLASSES.topleft} h-full w-screen pb-8 flex`}
+				>
+					<div className="w-1/3"></div>
 					<div className="mx-3 w-1/3 h-fit flex">
-						{/* <DatasetInformationButton
-							setShowDatasetModal={setShowDatasetModal}
-						/> */}
 						<YearControl />
 						<CompareFeaturesControl />
 					</div>
-					<div className="mx-10 w-1/3"></div>
 				</div>
 				{props.filteringAndDifference &&
 				comparisonFeature1 &&
@@ -122,23 +127,19 @@ export default function Map(props: Props) {
 					>
 						<div className="w-2/3"></div>
 						<div className="w-1/3">
-							<div className={`h-1/2`}>
-								<GraphView
-									features={[
-										comparisonFeature1,
-										comparisonFeature2,
-									]}
-								/>
-							</div>
+							<GraphView
+								features={[
+									comparisonFeature1,
+									comparisonFeature2,
+								]}
+							/>
 
-							<div className="h-1/2">
-								<TableView
-									features={[
-										comparisonFeature1,
-										comparisonFeature2,
-									]}
-								/>
-							</div>
+							<TableView
+								features={[
+									comparisonFeature1,
+									comparisonFeature2,
+								]}
+							/>
 						</div>
 					</div>
 				) : null}
