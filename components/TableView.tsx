@@ -1,13 +1,23 @@
 import { Feature, YearType } from "@/types/types";
 import TableHeader from "./TableHeader";
 import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
+import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
 
 interface Props {
 	features: Feature[];
+	usedOnFiltering?: boolean;
 }
 
 export default function TableView(props: Props) {
 	const dataset = useSelectedDatasetStore((state) => state.dataset);
+
+	const comparisonFeature1 = useCompareFeaturesStore(
+		(state) => state.feature1
+	);
+
+	const comparisonFeature2 = useCompareFeaturesStore(
+		(state) => state.feature2
+	);
 
 	const allYears: YearType[] = [
 		"2022",
@@ -26,6 +36,22 @@ export default function TableView(props: Props) {
 		"2009",
 		"2008",
 	];
+
+	const colorizeRow = (name: string, index: number) => {
+		if (
+			props.usedOnFiltering &&
+			comparisonFeature1 &&
+			comparisonFeature2 &&
+			(comparisonFeature1?.properties.NUTS_NAME == name ||
+				comparisonFeature2?.properties.NUTS_NAME == name)
+		) {
+			return "bg-indigo-200";
+		} else {
+			if (index % 2 != 0) {
+				return "bg-gray-100";
+			} else return "bg-white";
+		}
+	};
 
 	return (
 		<div className="leaflet-control bg-white h-1/2 px-5 pt-5 w-full pb-14 rounded-lg">
@@ -64,11 +90,10 @@ export default function TableView(props: Props) {
 						{props.features.map(
 							(feature: Feature, index: number) => (
 								<tr
-									className={` ${
-										index % 2 != 0
-											? "bg-gray-100"
-											: "bg-white"
-									} `}
+									className={` ${colorizeRow(
+										feature.properties.NUTS_NAME,
+										index
+									)} `}
 									key={index}
 								>
 									<th className="w-56 p-2 text-md font-normal text-left">

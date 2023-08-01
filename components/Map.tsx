@@ -29,7 +29,6 @@ const POSITION_CLASSES = {
 };
 
 export default function Map(props: Props) {
-
 	const [showDatasetModal, setShowDatasetModal] = useState<boolean>(false);
 
 	const comparisonFeature1 = useCompareFeaturesStore(
@@ -64,10 +63,7 @@ export default function Map(props: Props) {
 				/>
 
 				{states.features.map((state: Feature, index: number) => (
-					<MapFeature
-						key={index}
-						feature={state}
-					/>
+					<MapFeature key={index} feature={state} />
 				))}
 
 				<div
@@ -86,16 +82,24 @@ export default function Map(props: Props) {
 						) : (
 							<GraphView
 								features={states.features}
-								usedOnFiltering={
-									props.filtering &&
-									comparisonFeature1 &&
-									comparisonFeature2
-										? true
-										: false
-								}
+								usedOnFiltering={props.filtering}
 							/>
 						)}
-						<TableView features={states.features} />
+						{props.differenceOnly &&
+						comparisonFeature1 &&
+						comparisonFeature2 ? (
+							<TableView
+								features={[
+									comparisonFeature1,
+									comparisonFeature2,
+								]}
+							/>
+						) : (
+							<TableView
+								features={states.features}
+								usedOnFiltering={props.filtering}
+							/>
+						)}
 					</div>
 				</div>
 				<div
