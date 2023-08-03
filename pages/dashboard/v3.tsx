@@ -14,9 +14,9 @@ export default function v3() {
 				[40.0, -20.0],
 			]}
 			center={[51.5, 10.0]}
-			filtering={false}
+			filteringOnly={false}
 			differenceOnly={false}
-			filteringAndDifference={true}
+			highlightingAndDifference={true}
 		/>
 	);
 }

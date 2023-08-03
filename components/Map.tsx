@@ -12,13 +12,15 @@ import MapFeature from "./MapFeature";
 import DatasetModal from "./Modal/DatasetModal";
 import CompareFeaturesControl from "./CompareFeaturesControl";
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
+import { getFeatureAsDifferenceOfTwoFeatures } from "@/utils/getFeatureAsDifferenceOfTwoFeatures";
+import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
 
 interface Props {
 	bounds: number[][];
 	center: number[];
-	filtering: boolean;
+	filteringOnly: boolean;
 	differenceOnly: boolean;
-	filteringAndDifference: boolean;
+	highlightingAndDifference: boolean;
 }
 
 const POSITION_CLASSES = {
@@ -31,6 +33,8 @@ const POSITION_CLASSES = {
 export default function Map(props: Props) {
 	const [showDatasetModal, setShowDatasetModal] = useState<boolean>(false);
 
+	const dataset = useSelectedDatasetStore((state) => state.dataset);
+
 	const comparisonFeature1 = useCompareFeaturesStore(
 		(state) => state.feature1
 	);
@@ -38,6 +42,69 @@ export default function Map(props: Props) {
 	const comparisonFeature2 = useCompareFeaturesStore(
 		(state) => state.feature2
 	);
+
+	function correctLeftViewVariant(): React.ReactNode {
+		if (comparisonFeature1 && comparisonFeature2 && props.filteringOnly) {
+			return (
+				<>
+					<GraphView
+						features={[comparisonFeature1, comparisonFeature2]}
+					/>
+					<TableView
+						features={[comparisonFeature1, comparisonFeature2]}
+					/>
+				</>
+			);
+		}
+		if (comparisonFeature1 && comparisonFeature2 && props.differenceOnly) {
+
+			return (
+				<>
+					<GraphView
+						features={getFeatureAsDifferenceOfTwoFeatures(
+							comparisonFeature1,
+							comparisonFeature2,
+							dataset
+						)}
+						usedOnDifferenceOnlyView
+					/>
+					<TableView
+						features={getFeatureAsDifferenceOfTwoFeatures(
+							comparisonFeature1,
+							comparisonFeature2,
+							dataset
+						)}
+						usedOnDifferenceOnlyView
+					/>
+				</>
+			);
+		}
+		if (
+			comparisonFeature1 &&
+			comparisonFeature2 &&
+			props.highlightingAndDifference
+		) {
+			return (
+				<>
+					<GraphView
+						features={states.features}
+						usedOnHighlightingView
+					/>
+					<TableView
+						features={states.features}
+						usedOnHighlightingView
+					/>
+				</>
+			);
+		} else {
+			return (
+				<>
+					<GraphView features={states.features} />
+					<TableView features={states.features} />
+				</>
+			);
+		}
+	}
 
 	return (
 		<>
@@ -69,38 +136,7 @@ export default function Map(props: Props) {
 				<div
 					className={`${POSITION_CLASSES.topleft} h-full w-screen pb-8 flex`}
 				>
-					<div className="w-1/3">
-						{props.differenceOnly &&
-						comparisonFeature1 &&
-						comparisonFeature2 ? (
-							<GraphView
-								features={[
-									comparisonFeature1,
-									comparisonFeature2,
-								]}
-							/>
-						) : (
-							<GraphView
-								features={states.features}
-								usedOnFiltering={props.filtering}
-							/>
-						)}
-						{props.differenceOnly &&
-						comparisonFeature1 &&
-						comparisonFeature2 ? (
-							<TableView
-								features={[
-									comparisonFeature1,
-									comparisonFeature2,
-								]}
-							/>
-						) : (
-							<TableView
-								features={states.features}
-								usedOnFiltering={props.filtering}
-							/>
-						)}
-					</div>
+					<div className="w-1/3">{correctLeftViewVariant()}</div>
 				</div>
 				<div
 					className={`${POSITION_CLASSES.topleft} h-full w-screen pb-8 flex`}
@@ -111,7 +147,7 @@ export default function Map(props: Props) {
 						<CompareFeaturesControl />
 					</div>
 				</div>
-				{props.filteringAndDifference &&
+				{props.highlightingAndDifference &&
 				comparisonFeature1 &&
 				comparisonFeature2 ? (
 					<div
@@ -137,5 +173,21 @@ export default function Map(props: Props) {
 				) : null}
 			</MapContainer>
 		</>
+	);
+}
+
+interface CorrectLeftViewsProps {
+	filteringOnly: boolean;
+	differenceOnly: boolean;
+	highlightingAndFiltering: boolean;
+}
+
+export function CorrectLeftViews(props: CorrectLeftViewsProps) {
+	const comparisonFeature1 = useCompareFeaturesStore(
+		(state) => state.feature1
+	);
+
+	const comparisonFeature2 = useCompareFeaturesStore(
+		(state) => state.feature2
 	);
 }

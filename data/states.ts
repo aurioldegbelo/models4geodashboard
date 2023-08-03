@@ -791,11 +791,6 @@ export const states: States = {
 				],
 			},
 			properties: {
-				OBJID: "DEBKGNU5000000C8",
-				BEGINN: "2021-10-04T00:00:00.000Z",
-				GF: 9,
-				NUTS_LEVEL: 1,
-				NUTS_CODE: "DE1",
 				NUTS_NAME: "Baden-Württemberg",
 				values: {
 					roadnetworkdensity: {
@@ -2042,11 +2037,6 @@ export const states: States = {
 				],
 			},
 			properties: {
-				OBJID: "DEBKGNU5000000C9",
-				BEGINN: "2021-10-04T00:00:00.000Z",
-				GF: 9,
-				NUTS_LEVEL: 1,
-				NUTS_CODE: "DE2",
 				NUTS_NAME: "Bayern",
 				values: {
 					roadnetworkdensity: {
@@ -2221,11 +2211,6 @@ export const states: States = {
 				],
 			},
 			properties: {
-				OBJID: "DEBKGNU5000000CA",
-				BEGINN: "2021-10-04T00:00:00.000Z",
-				GF: 9,
-				NUTS_LEVEL: 1,
-				NUTS_CODE: "DE3",
 				NUTS_NAME: "Berlin",
 				values: {
 					roadnetworkdensity: {
@@ -2963,11 +2948,6 @@ export const states: States = {
 				],
 			},
 			properties: {
-				OBJID: "DEBKGNU5000000CB",
-				BEGINN: "2021-10-04T00:00:00.000Z",
-				GF: 9,
-				NUTS_LEVEL: 1,
-				NUTS_CODE: "DE4",
 				NUTS_NAME: "Brandenburg",
 				values: {
 					roadnetworkdensity: {
@@ -3120,11 +3100,6 @@ export const states: States = {
 				],
 			},
 			properties: {
-				OBJID: "DEBKGNU5000000CC",
-				BEGINN: "2021-10-04T00:00:00.000Z",
-				GF: 9,
-				NUTS_LEVEL: 1,
-				NUTS_CODE: "DE5",
 				NUTS_NAME: "Bremen",
 				values: {
 					roadnetworkdensity: {
@@ -3305,11 +3280,6 @@ export const states: States = {
 				],
 			},
 			properties: {
-				OBJID: "DEBKGNU5000000CD",
-				BEGINN: "2021-10-04T00:00:00.000Z",
-				GF: 9,
-				NUTS_LEVEL: 1,
-				NUTS_CODE: "DE6",
 				NUTS_NAME: "Hamburg",
 				values: {
 					roadnetworkdensity: {
@@ -4055,11 +4025,6 @@ export const states: States = {
 				],
 			},
 			properties: {
-				OBJID: "DEBKGNU5000000CE",
-				BEGINN: "2021-10-04T00:00:00.000Z",
-				GF: 9,
-				NUTS_LEVEL: 1,
-				NUTS_CODE: "DE7",
 				NUTS_NAME: "Hessen",
 				values: {
 					roadnetworkdensity: {
@@ -5118,11 +5083,6 @@ export const states: States = {
 				],
 			},
 			properties: {
-				OBJID: "DEBKGNU5000000CF",
-				BEGINN: "2021-10-04T00:00:00.000Z",
-				GF: 9,
-				NUTS_LEVEL: 1,
-				NUTS_CODE: "DE8",
 				NUTS_NAME: "Mecklenburg-Vorpommern",
 				values: {
 					roadnetworkdensity: {
@@ -6179,11 +6139,6 @@ export const states: States = {
 				],
 			},
 			properties: {
-				OBJID: "DEBKGNU5000000CG",
-				BEGINN: "2021-10-04T00:00:00.000Z",
-				GF: 9,
-				NUTS_LEVEL: 1,
-				NUTS_CODE: "DE9",
 				NUTS_NAME: "Niedersachsen",
 				values: {
 					roadnetworkdensity: {
@@ -6943,11 +6898,6 @@ export const states: States = {
 				],
 			},
 			properties: {
-				OBJID: "DEBKGNU5000000CH",
-				BEGINN: "2021-10-04T00:00:00.000Z",
-				GF: 9,
-				NUTS_LEVEL: 1,
-				NUTS_CODE: "DEA",
 				NUTS_NAME: "Nordrhein-Westfalen",
 				values: {
 					roadnetworkdensity: {
@@ -7609,11 +7559,6 @@ export const states: States = {
 				],
 			},
 			properties: {
-				OBJID: "DEBKGNU5000000CI",
-				BEGINN: "2021-10-04T00:00:00.000Z",
-				GF: 9,
-				NUTS_LEVEL: 1,
-				NUTS_CODE: "DEB",
 				NUTS_NAME: "Rheinland-Pfalz",
 				values: {
 					roadnetworkdensity: {
@@ -7870,11 +7815,6 @@ export const states: States = {
 				],
 			},
 			properties: {
-				OBJID: "DEBKGNU5000000CJ",
-				BEGINN: "2021-10-04T00:00:00.000Z",
-				GF: 9,
-				NUTS_LEVEL: 1,
-				NUTS_CODE: "DEC",
 				NUTS_NAME: "Saarland",
 				values: {
 					roadnetworkdensity: {
@@ -8549,11 +8489,6 @@ export const states: States = {
 				],
 			},
 			properties: {
-				OBJID: "DEBKGNU5000000CK",
-				BEGINN: "2021-10-04T00:00:00.000Z",
-				GF: 9,
-				NUTS_LEVEL: 1,
-				NUTS_CODE: "DED",
 				NUTS_NAME: "Sachsen",
 				values: {
 					roadnetworkdensity: {
@@ -9186,11 +9121,6 @@ export const states: States = {
 				],
 			},
 			properties: {
-				OBJID: "DEBKGNU5000000CL",
-				BEGINN: "2021-10-04T00:00:00.000Z",
-				GF: 9,
-				NUTS_LEVEL: 1,
-				NUTS_CODE: "DEE",
 				NUTS_NAME: "Sachsen-Anhalt",
 				values: {
 					roadnetworkdensity: {
@@ -9918,11 +9848,6 @@ export const states: States = {
 				],
 			},
 			properties: {
-				OBJID: "DEBKGNU5000000CM",
-				BEGINN: "2021-10-04T00:00:00.000Z",
-				GF: 9,
-				NUTS_LEVEL: 1,
-				NUTS_CODE: "DEF",
 				NUTS_NAME: "Schleswig-Holstein",
 				values: {
 					roadnetworkdensity: {
@@ -10659,11 +10584,6 @@ export const states: States = {
 				],
 			},
 			properties: {
-				OBJID: "DEBKGNU5000000CN",
-				BEGINN: "2021-10-04T00:00:00.000Z",
-				GF: 9,
-				NUTS_LEVEL: 1,
-				NUTS_CODE: "DEG",
 				NUTS_NAME: "Thüringen",
 				values: {
 					roadnetworkdensity: {

@@ -5,7 +5,8 @@ import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
 
 interface Props {
 	features: Feature[];
-	usedOnFiltering?: boolean;
+	usedOnHighlightingView?: boolean;
+	usedOnDifferenceOnlyView?: boolean;
 }
 
 export default function TableView(props: Props) {
@@ -39,7 +40,7 @@ export default function TableView(props: Props) {
 
 	const colorizeRow = (name: string, index: number) => {
 		if (
-			props.usedOnFiltering &&
+			props.usedOnHighlightingView &&
 			comparisonFeature1 &&
 			comparisonFeature2 &&
 			(comparisonFeature1?.properties.NUTS_NAME == name ||

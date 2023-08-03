@@ -1,4 +1,4 @@
-import { transformData } from "@/functions/transformDataSuitedForGraphView";
+import { transformData } from "@/utils/transformDataSuitedForGraphView";
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
 import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
 import { Feature, TransormedData } from "@/types/types";
@@ -14,7 +14,8 @@ import {
 
 interface Props {
 	features: Feature[];
-	usedOnFiltering?: boolean;
+	usedOnHighlightingView?: boolean;
+	usedOnDifferenceOnlyView?: boolean;
 }
 
 export default function GraphView(props: Props) {
@@ -47,7 +48,7 @@ export default function GraphView(props: Props) {
 				<Line
 					type="monotone"
 					stroke={
-						props.usedOnFiltering &&
+						props.usedOnHighlightingView &&
 						comparisonFeature1 &&
 						comparisonFeature2
 							? getHighlightColor(key)
