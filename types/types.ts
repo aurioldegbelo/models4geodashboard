@@ -9,7 +9,12 @@ export type States = {
 	type: string;
 	features: Feature[];
 };
-
+export type DifferenceFeature = {
+	type: string;
+	properties: Properties;
+	featureName1: string;
+	featureName2: string;
+}
 export type Feature = {
 	id?: number;
 	type: string;

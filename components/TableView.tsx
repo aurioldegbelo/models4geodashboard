@@ -1,10 +1,11 @@
-import { Feature, YearType } from "@/types/types";
+import { DifferenceFeature, Feature, YearType } from "@/types/types";
 import TableHeader from "./TableHeader";
 import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
+import OnViewDatasetDescription from "./OnViewDatasetDescription";
 
 interface Props {
-	features: Feature[];
+	features: Feature[] | DifferenceFeature[];
 	usedOnHighlightingView?: boolean;
 	usedOnDifferenceOnlyView?: boolean;
 }
@@ -56,40 +57,13 @@ export default function TableView(props: Props) {
 
 	return (
 		<div className="leaflet-control bg-white h-1/2 px-5 pt-5 w-full pb-14 rounded-lg">
-			<div className="flex mb-2">
-				{dataset == "roadnetworkdensity" && (
-					<div className="flex gap-2">
-						<h1 className="text-lg">
-							Road network density per area |
-						</h1>
-						<small className="self-end pb-1">
-							measured in: km/km²
-						</small>
-					</div>
-				)}
-				{dataset == "greenlandpercentage" && (
-					<div className="flex gap-2">
-						<h1 className="text-lg">
-							Share of grassland in total area |
-						</h1>
-						<small className="self-end pb-1">measured in: %</small>
-					</div>
-				)}
-				{dataset == "woodlandpercentage" && (
-					<div className="flex gap-2">
-						<h1 className="text-lg">
-							Share of woodland in total area |
-						</h1>
-						<small className="self-end pb-1">measured in: %</small>
-					</div>
-				)}
-			</div>
+			<OnViewDatasetDescription />
 			<div className="h-full w-full overflow-x-auto overflow-y-auto">
 				<table className="table-auto w-full grow whitespace-nowrap">
 					<TableHeader />
 					<tbody>
 						{props.features.map(
-							(feature: Feature, index: number) => (
+							(feature: Feature | DifferenceFeature, index: number) => (
 								<tr
 									className={` ${colorizeRow(
 										feature.properties.NUTS_NAME,

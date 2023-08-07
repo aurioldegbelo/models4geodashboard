@@ -13,11 +13,11 @@ export default function about() {
 						different interface designs in the context of
 						geodashboards. More specifically it was about the
 						particular interaction strategy of comparison. One wants
-						to know the differences between two features of the
+						to know the differences between two spatial features of the
 						dataset. What are common interface design to face this
 						issue in the context of geodashboards? The application
 						provides 3 different approaches for comparing two
-						features.
+						spatial features.
 					</p>
 					<p className="font-bold text-lg mt-10">Data</p>
 					<div>

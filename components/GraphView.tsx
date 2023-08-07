@@ -1,7 +1,7 @@
 import { transformData } from "@/utils/transformDataSuitedForGraphView";
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
 import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
-import { Feature, TransormedData } from "@/types/types";
+import { DifferenceFeature, Feature, TransormedData } from "@/types/types";
 import {
 	CartesianGrid,
 	Line,
@@ -11,9 +11,10 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
+import OnViewDatasetDescription from "./OnViewDatasetDescription";
 
 interface Props {
-	features: Feature[];
+	features: Feature[] | DifferenceFeature[];
 	usedOnHighlightingView?: boolean;
 	usedOnDifferenceOnlyView?: boolean;
 }
@@ -29,7 +30,7 @@ export default function GraphView(props: Props) {
 		(state) => state.feature2
 	);
 
-	const lines = (features: Feature[]) => {
+	const lines = (features: Feature[] | DifferenceFeature[]) => {
 		const entries = transformData(features, dataset).map(
 			(option: TransormedData) => {
 				const key = Object.keys(option);
@@ -81,9 +82,7 @@ export default function GraphView(props: Props) {
 
 	return (
 		<div className="leaflet-control bg-white h-1/2 p-5 pb-10 w-full rounded-lg mx-auto">
-			<div className="flex gap-2">
-				<h1 className="text-lg">Temporal course</h1>
-			</div>
+			<OnViewDatasetDescription />
 			<ResponsiveContainer height="100%" width="100%">
 				<LineChart
 					data={transformData(props.features, dataset)}
