@@ -9,10 +9,10 @@ import TableView from "./TableView";
 import GraphView from "./GraphView";
 import MapFeature from "./MapFeature";
 import DatasetModal from "./Modal/DatasetModal";
-import CompareFeaturesControl from "./CompareFeaturesControl";
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
 import { getFeatureAsDifferenceOfTwoFeatures } from "@/utils/getFeatureAsDifferenceOfTwoFeatures";
 import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
+import ComparisonControl from "./ComparisonControl";
 
 interface Props {
 	bounds: number[][];
@@ -33,6 +33,10 @@ export default function Map(props: Props) {
 	const [showDatasetModal, setShowDatasetModal] = useState<boolean>(false);
 
 	const dataset = useSelectedDatasetStore((state) => state.dataset);
+
+	const selectionMode = useCompareFeaturesStore(
+		(state) => state.selectionMode
+	);
 
 	const comparisonFeature1 = useCompareFeaturesStore(
 		(state) => state.feature1
@@ -116,9 +120,14 @@ export default function Map(props: Props) {
 				/>
 			) : null}
 			<MapContainer
+				key={`causesRerender&CursorUpdate${selectionMode}`}
 				center={props.center}
 				zoom={6}
-				style={{ height: "calc(100vh - 65px)", zIndex: 40 }}
+				style={{
+					height: "calc(100vh - 65px)",
+					zIndex: 40,
+					cursor: selectionMode == true ? "pointer" : "default",
+				}}
 				keyboard
 				minZoom={6}
 				maxBounds={props.bounds}
@@ -144,7 +153,7 @@ export default function Map(props: Props) {
 				>
 					<div className="w-1/3"></div>
 					<div className="mx-3 w-1/3 h-fit flex">
-						<CompareFeaturesControl />
+						<ComparisonControl />
 					</div>
 				</div>
 				{props.highlightingAndDifference &&

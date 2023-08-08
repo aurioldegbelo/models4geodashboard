@@ -1,8 +1,6 @@
 import { Feature } from "@/types/types";
 import { useState } from "react";
 import { GeoJSON, Popup } from "react-leaflet";
-import PrimaryButton from "./Button/PrimaryButton";
-import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
 
 interface Props {
@@ -12,7 +10,7 @@ interface Props {
 export default function MapFeature(props: Props) {
 	const [isHovered, setIsHovered] = useState<boolean>(false);
 	const [tooltipContent, setTooltipContent] = useState<boolean>(false);
-	
+
 	const comparisonFeature1 = useCompareFeaturesStore(
 		(state) => state.feature1
 	);
@@ -24,6 +22,9 @@ export default function MapFeature(props: Props) {
 	);
 	const setComparisonFeature2 = useCompareFeaturesStore(
 		(state) => state.setFeature2
+	);
+	const selectionMode = useCompareFeaturesStore(
+		(state) => state.selectionMode
 	);
 
 	const addToComparisonProcess = () => {
@@ -62,7 +63,15 @@ export default function MapFeature(props: Props) {
 	};
 
 	const handlePolygonClick = () => {
-		setTooltipContent(true);
+		if (selectionMode) {
+			if (checkIfSelectedForComparison()) {
+				removeFromComparisonProcess();
+			} else {
+				addToComparisonProcess();
+			}
+		} else {
+			setTooltipContent(true);
+		}
 	};
 
 	const handleMouseOver = () => {
@@ -77,7 +86,9 @@ export default function MapFeature(props: Props) {
 		return {
 			fillColor: isHovered
 				? "blue"
-				: 'gray',
+				: checkIfSelectedForComparison()
+				? "blue"
+				: "gray",
 			weight: 1,
 			opacity: 1,
 			color: "white",
@@ -102,39 +113,6 @@ export default function MapFeature(props: Props) {
 						<div className="font-bold text-xl">
 							{props.feature &&
 								props.feature.properties.NUTS_NAME}
-						</div>
-						<div className="space-y-2">
-							<div className="flex items-center gap-3">
-								<div className="font-bold text-md">
-									Comparison:
-								</div>
-								<div
-									className={`${
-										checkIfSelectedForComparison()
-											? "bg-green-500"
-											: "bg-gray-400"
-									} rounded-full px-2 py-0.5`}
-								>
-									{checkIfSelectedForComparison()
-										? "Selected"
-										: "Not Selected"}
-								</div>
-							</div>
-							{checkIfSelectedForComparison() ? (
-								<PrimaryButton
-									onClick={removeFromComparisonProcess}
-									uppercase
-								>
-									Remove
-								</PrimaryButton>
-							) : (
-								<PrimaryButton
-									onClick={addToComparisonProcess}
-									uppercase
-								>
-									Start Comparing
-								</PrimaryButton>
-							)}
 						</div>
 					</div>
 				</Popup>
