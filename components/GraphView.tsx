@@ -12,6 +12,7 @@ import {
 	YAxis,
 } from "recharts";
 import OnViewDatasetDescription from "./OnViewDatasetDescription";
+import GraphViewHoverTooltip from "./GraphViewHoverTooltip";
 
 interface Props {
 	features: Feature[] | DifferenceFeature[];
@@ -91,7 +92,10 @@ export default function GraphView(props: Props) {
 					<CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
 					<XAxis dataKey="year" />
 					<YAxis />
-					<Tooltip />
+					<Tooltip
+						content={<GraphViewHoverTooltip />}
+						allowEscapeViewBox={{ x: true, y: false }}
+					/>
 					{lines(props.features)}
 				</LineChart>
 			</ResponsiveContainer>

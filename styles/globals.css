@@ -25,3 +25,20 @@ body {
     )
     rgb(var(--background-start-rgb));
 } */
+
+.custom-z-index {
+	z-index: 10;
+}
+.leaflet-control {
+	z-index: 10 !important;
+}
+.leaflet-pane {
+	z-index: 10 !important;
+}
+.leaflet-top {
+    z-index: 10 !important;
+}
+.leaflet-bottom {
+	z-index: 10 !important;
+}
+
