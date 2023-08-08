@@ -93,7 +93,7 @@ export default function MapFeature(props: Props) {
 			opacity: 1,
 			color: "white",
 			dashArray: "0",
-			fillOpacity: isHovered ? 0.5 : 0.7,
+			fillOpacity: isHovered ? 0.6 : 0.5,
 		};
 	};
 
@@ -110,7 +110,7 @@ export default function MapFeature(props: Props) {
 			{tooltipContent ? (
 				<Popup>
 					<div className="space-y-5">
-						<div className="font-bold text-xl">
+						<div className="font-bold text-lg">
 							{props.feature &&
 								props.feature.properties.NUTS_NAME}
 						</div>

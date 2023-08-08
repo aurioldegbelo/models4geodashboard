@@ -1,4 +1,10 @@
-import { Dataset, DifferenceFeature, Feature, YearType, YearValuePairs } from "@/types/types";
+import {
+	Dataset,
+	DifferenceFeature,
+	Feature,
+	YearType,
+	YearValuePairs,
+} from "@/types/types";
 
 export function getFeatureAsDifferenceOfTwoFeatures(
 	feature1: Feature,
@@ -8,7 +14,7 @@ export function getFeatureAsDifferenceOfTwoFeatures(
 	const differenceFeature: DifferenceFeature = {
 		type: "Feature",
 		featureName1: feature1.properties.NUTS_NAME,
-    featureName2: feature2.properties.NUTS_NAME,
+		featureName2: feature2.properties.NUTS_NAME,
 		properties: {
 			NUTS_NAME: feature1.properties.NUTS_NAME.concat(" - ").concat(
 				feature2.properties.NUTS_NAME
@@ -79,7 +85,7 @@ export function getFeatureAsDifferenceOfTwoFeatures(
 					feature1.properties.values[dataset][year as YearType] -
 					feature2.properties.values[dataset][year as YearType];
 				differenceFeature.properties.values[dataset][year as YearType] =
-					Math.abs(roundFloatNumberToTwoDecimalPlaces(difference));
+					roundFloatNumberToTwoDecimalPlaces(difference);
 			}
 		});
 	}

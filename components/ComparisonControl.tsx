@@ -26,7 +26,7 @@ export default function ComparisonControl() {
 	}
 	return (
 		<>
-			<div className="leaflet-control bg-white rounded-lg w-48">
+			<div className="leaflet-control bg-white rounded-lg w-52">
 				{selectionMode == false ? (
 					<div
 						className="flex items-center justify-center cursor-pointer text-md font-semibold w-full rounded-lg h-10 border-2 bg-white text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-white hover:bg-indigo-100 hover:ring-offset-indigo-600 hover:text-indigo-900 hover:ring-indigo-600 hover:border-indigo-600"
@@ -43,7 +43,7 @@ export default function ComparisonControl() {
 					</div>
 				)}
 				{selectionMode == true ? (
-					<div className="absolute mt-1 p-2 w-48 overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+					<div className="absolute mt-1 p-2 w-52 rounded-md bg-white text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm flex flex-wrap gap-1">
 						{comparisonFeature1 == undefined &&
 						comparisonFeature2 == undefined ? (
 							<p>
@@ -52,12 +52,12 @@ export default function ComparisonControl() {
 							</p>
 						) : null}
 						{comparisonFeature1 != undefined ? (
-							<p className="bg-indigo-300 px-2 py-1 my-1 rounded-xl text-indigo-800">
+							<p className="bg-indigo-300 px-2 py-1 rounded-xl text-indigo-800 w-fit">
 								{comparisonFeature1.properties.NUTS_NAME}
 							</p>
 						) : null}
 						{comparisonFeature2 != undefined ? (
-							<p className="bg-indigo-300 px-2 py-1 my-1 rounded-xl text-indigo-800">
+							<p className="bg-indigo-300 px-2 py-1 rounded-xl text-indigo-800 w-fit">
 								{comparisonFeature2.properties.NUTS_NAME}
 							</p>
 						) : null}
