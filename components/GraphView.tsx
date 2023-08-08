@@ -18,6 +18,7 @@ interface Props {
 	features: Feature[] | DifferenceFeature[];
 	usedOnHighlightingView?: boolean;
 	usedOnDifferenceOnlyView?: boolean;
+	allowEscapeViewBox?: boolean
 }
 
 export default function GraphView(props: Props) {
@@ -94,7 +95,7 @@ export default function GraphView(props: Props) {
 					<YAxis />
 					<Tooltip
 						content={<GraphViewHoverTooltip />}
-						allowEscapeViewBox={{ x: true, y: false }}
+						allowEscapeViewBox={{ x: props.allowEscapeViewBox, y: false }}
 					/>
 					{lines(props.features)}
 				</LineChart>

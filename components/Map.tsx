@@ -49,6 +49,7 @@ export default function Map(props: Props) {
 				<>
 					<GraphView
 						features={[comparisonFeature1, comparisonFeature2]}
+						allowEscapeViewBox
 					/>
 					<TableView
 						features={[comparisonFeature1, comparisonFeature2]}
@@ -57,7 +58,6 @@ export default function Map(props: Props) {
 			);
 		}
 		if (comparisonFeature1 && comparisonFeature2 && props.differenceOnly) {
-
 			return (
 				<>
 					<GraphView
@@ -67,6 +67,7 @@ export default function Map(props: Props) {
 							dataset
 						)}
 						usedOnDifferenceOnlyView
+						allowEscapeViewBox
 					/>
 					<TableView
 						features={getFeatureAsDifferenceOfTwoFeatures(
@@ -89,6 +90,7 @@ export default function Map(props: Props) {
 					<GraphView
 						features={states.features}
 						usedOnHighlightingView
+						allowEscapeViewBox
 					/>
 					<TableView
 						features={states.features}
@@ -99,7 +101,7 @@ export default function Map(props: Props) {
 		} else {
 			return (
 				<>
-					<GraphView features={states.features} />
+					<GraphView features={states.features} allowEscapeViewBox />
 					<TableView features={states.features} />
 				</>
 			);
@@ -156,38 +158,26 @@ export default function Map(props: Props) {
 						<div className="w-2/3"></div>
 						<div className="w-1/3">
 							<GraphView
-								features={[
+								features={getFeatureAsDifferenceOfTwoFeatures(
 									comparisonFeature1,
 									comparisonFeature2,
-								]}
+									dataset
+								)}
+								usedOnDifferenceOnlyView
+								allowEscapeViewBox={false}
 							/>
-
 							<TableView
-								features={[
+								features={getFeatureAsDifferenceOfTwoFeatures(
 									comparisonFeature1,
 									comparisonFeature2,
-								]}
+									dataset
+								)}
+								usedOnDifferenceOnlyView
 							/>
 						</div>
 					</div>
 				) : null}
 			</MapContainer>
 		</>
-	);
-}
-
-interface CorrectLeftViewsProps {
-	filteringOnly: boolean;
-	differenceOnly: boolean;
-	highlightingAndFiltering: boolean;
-}
-
-export function CorrectLeftViews(props: CorrectLeftViewsProps) {
-	const comparisonFeature1 = useCompareFeaturesStore(
-		(state) => state.feature1
-	);
-
-	const comparisonFeature2 = useCompareFeaturesStore(
-		(state) => state.feature2
 	);
 }
