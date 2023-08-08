@@ -13,11 +13,11 @@ export default function about() {
 						different interface designs in the context of
 						geodashboards. More specifically it was about the
 						particular interaction strategy of comparison. One wants
-						to know the differences between two spatial features of the
-						dataset. What are common interface design to face this
-						issue in the context of geodashboards? The application
-						provides 3 different approaches for comparing two
-						spatial features.
+						to know the differences between two spatial features of
+						the dataset. What are common interface design to face
+						this issue in the context of geodashboards? The
+						application provides 3 different approaches for
+						comparing two spatial features.
 					</p>
 					<p className="font-bold text-lg mt-10">Data</p>
 					<div>
@@ -25,11 +25,12 @@ export default function about() {
 							The application uses a different datasets for each
 							dashboard version, three in total. This should
 							prevent learning effects for the study participants
-							when using the dashboards. The use of complex
-							spatial-temporal data justifies the use of multiple
-							coordinated views. In our case: Map, Graph, Table.
-							All datasets are free and open to use and were
-							provided by
+							when using the dashboards. All three datasets
+							consist of values from the years of 2008 to 2022.
+							The use of complex spatial-temporal data justifies
+							the use of multiple coordinated views. In our case:
+							Map, Graph, Table. All datasets are free and open to
+							use and were provided by
 							<a
 								href="https://www.ioer-monitor.de/"
 								className="text-indigo-600 hover:underline ml-1"
