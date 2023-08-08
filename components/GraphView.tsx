@@ -88,7 +88,7 @@ export default function GraphView(props: Props) {
 			<ResponsiveContainer height="100%" width="100%">
 				<LineChart
 					data={transformData(props.features, dataset)}
-					margin={{ top: 30, right: 0, bottom: 0, left: 0 }}
+					margin={{ top: 0, right: 0, bottom: 0, left: -15 }}
 				>
 					<CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
 					<XAxis dataKey="year" />
