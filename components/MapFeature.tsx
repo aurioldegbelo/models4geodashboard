@@ -1,6 +1,4 @@
-import { useYearStore } from "@/store/selectedYearStore";
 import { Feature } from "@/types/types";
-import { getCorrectColor } from "@/utils/getCorrectColor";
 import { useState } from "react";
 import { GeoJSON, Popup } from "react-leaflet";
 import PrimaryButton from "./Button/PrimaryButton";
@@ -14,10 +12,7 @@ interface Props {
 export default function MapFeature(props: Props) {
 	const [isHovered, setIsHovered] = useState<boolean>(false);
 	const [tooltipContent, setTooltipContent] = useState<boolean>(false);
-	const selectedYear = useYearStore((state) => state.year);
 	
-	const dataset = useSelectedDatasetStore((state) => state.dataset);
-
 	const comparisonFeature1 = useCompareFeaturesStore(
 		(state) => state.feature1
 	);
@@ -82,7 +77,7 @@ export default function MapFeature(props: Props) {
 		return {
 			fillColor: isHovered
 				? "blue"
-				: getCorrectColor(props.feature, selectedYear, dataset),
+				: 'gray',
 			weight: 1,
 			opacity: 1,
 			color: "white",

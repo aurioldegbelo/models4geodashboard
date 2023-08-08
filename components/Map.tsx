@@ -6,7 +6,6 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import "leaflet-defaulticon-compatibility";
 import { Feature } from "@/types/types";
 import TableView from "./TableView";
-import YearControl from "./YearControl";
 import GraphView from "./GraphView";
 import MapFeature from "./MapFeature";
 import DatasetModal from "./Modal/DatasetModal";
@@ -145,7 +144,6 @@ export default function Map(props: Props) {
 				>
 					<div className="w-1/3"></div>
 					<div className="mx-3 w-1/3 h-fit flex">
-						<YearControl />
 						<CompareFeaturesControl />
 					</div>
 				</div>
