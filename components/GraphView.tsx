@@ -83,45 +83,9 @@ export default function GraphView(props: Props) {
 		}
 	};
 
-	const getLabelStringForYAxis = (): string => {
-		let labelString = "";
-		if (dataset == "roadnetworkdensity") {
-			if (
-				comparisonFeature1 &&
-				comparisonFeature2 &&
-				props.usedOnDifferenceOnlyView
-			) {
-				labelString = "difference in density in km/km²";
-			} else {
-				labelString = "density in km/km²";
-			}
-		} else if (dataset == "greenlandpercentage") {
-			if (
-				comparisonFeature1 &&
-				comparisonFeature2 &&
-				props.usedOnDifferenceOnlyView
-			) {
-				labelString = "difference in coverage in %";
-			} else {
-				labelString = "coverage in %";
-			}
-		} else if (dataset == "woodlandpercentage") {
-			if (
-				comparisonFeature1 &&
-				comparisonFeature2 &&
-				props.usedOnDifferenceOnlyView
-			) {
-				labelString = "difference in coverage in %";
-			} else {
-				labelString = "coverage in %";
-			}
-		}
-		return labelString;
-	};
-
 	return (
 		<div className="leaflet-control bg-white h-1/2 p-5 pb-10 w-full rounded-lg mx-auto">
-			<OnViewDatasetDescription />
+			<OnViewDatasetDescription usedOnDifferenceOnlyView={props.usedOnDifferenceOnlyView ? true : false} />
 			<ResponsiveContainer height="100%" width="100%">
 				<LineChart
 					data={transformData(props.features, dataset)}
@@ -129,15 +93,7 @@ export default function GraphView(props: Props) {
 				>
 					<CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
 					<XAxis dataKey="year" />
-					<YAxis>
-						<Label
-							value={getLabelStringForYAxis()}
-							angle={-90}
-							position="outside"
-							fill="#676767"
-							fontSize={10}
-						/>
-					</YAxis>
+					<YAxis />
 					<Tooltip
 						content={<GraphViewHoverTooltip />}
 						allowEscapeViewBox={{

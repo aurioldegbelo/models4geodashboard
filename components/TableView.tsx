@@ -57,7 +57,7 @@ export default function TableView(props: Props) {
 
 	return (
 		<div className="leaflet-control bg-white h-1/2 px-5 pt-5 w-full pb-14 rounded-lg">
-			<OnViewDatasetDescription />
+			<OnViewDatasetDescription usedOnDifferenceOnlyView={props.usedOnDifferenceOnlyView ? true : false}/>
 			<div className="h-full w-full overflow-x-auto overflow-y-auto">
 				<table className="table-auto w-full grow whitespace-nowrap">
 					<TableHeader />
