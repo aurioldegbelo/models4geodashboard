@@ -24,16 +24,41 @@ interface Props {
 
 export default function GraphView(props: Props) {
 	const dataset = useSelectedDatasetStore((state) => state.dataset);
-
 	const comparisonFeature1 = useCompareFeaturesStore(
 		(state) => state.feature1
 	);
-
 	const comparisonFeature2 = useCompareFeaturesStore(
 		(state) => state.feature2
 	);
-
+	const selectionMode = useCompareFeaturesStore(
+		(state) => state.selectionMode
+	);
 	const selectedFeature = useSelectedFeatureStore((state) => state.feature);
+	const setSelectedFeature = useSelectedFeatureStore(
+		(state) => state.setFeature
+	);
+
+	const isFeatureArrayTypeGuard = (
+		arr: Feature[] | DifferenceFeature[]
+	): arr is Feature[] => {
+		return (arr as Feature[]).every((item) => "properties" in item);
+	};
+
+	const handleLineClick = (payload: any) => {
+		const clickedFeature = isFeatureArrayTypeGuard(props.features)
+			? props.features.find(
+					(feature) => feature.properties.NUTS_NAME == payload.dataKey
+			  )
+			: undefined;
+
+		if (clickedFeature) {
+			if (selectionMode) {
+				return;
+			} else {
+				setSelectedFeature(clickedFeature);
+			}
+		}
+	};
 
 	const lines = (features: Feature[] | DifferenceFeature[]) => {
 		const entries = transformData(features, dataset).map(
@@ -56,6 +81,11 @@ export default function GraphView(props: Props) {
 					stroke={getLineColor(key)}
 					dataKey={key}
 					key={index}
+					activeDot={{
+						onClick: (event, payload) => {
+							handleLineClick(payload);
+						},
+					}}
 				/>
 			);
 		});
@@ -75,7 +105,10 @@ export default function GraphView(props: Props) {
 			} else {
 				return "gray";
 			}
-		} else if (selectedFeature && selectedFeature.properties.NUTS_NAME == name) {
+		} else if (
+			selectedFeature &&
+			selectedFeature.properties.NUTS_NAME == name
+		) {
 			return "blue";
 		} else {
 			return "gray";

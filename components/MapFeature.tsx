@@ -91,18 +91,28 @@ export default function MapFeature(props: Props) {
 
 	const style = () => {
 		return {
-			fillColor: (isHovered || props.feature == selectedFeature)
-				? "blue"
-				: checkIfSelectedForComparison()
-				? "blue"
-				: "gray",
+			fillColor: getPolygonColor(),
 			weight: 1,
 			opacity: 1,
 			color: "white",
 			dashArray: "0",
-			fillOpacity: isHovered ? 0.6 : 0.5,
+			fillOpacity: isHovered ? 0.5 : 0.7,
 		};
 	};
+
+	const getPolygonColor = () => {
+		if (props.feature == selectedFeature) {
+			return "blue"
+		}
+		if (checkIfSelectedForComparison()) {
+			return "blue"
+		}
+		if (isHovered) {
+			return "#5c6bc0"
+		} else {
+			return "gray"
+		}
+	}
 
 	return (
 		<GeoJSON
