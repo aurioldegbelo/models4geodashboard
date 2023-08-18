@@ -1,4 +1,5 @@
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
+import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
 
 export default function ComparisonControl() {
 	const comparisonFeature1 = useCompareFeaturesStore(
@@ -16,21 +17,29 @@ export default function ComparisonControl() {
 	const selectionMode = useCompareFeaturesStore(
 		(state) => state.selectionMode
 	);
+	const setSelectedFeature = useSelectedFeatureStore(
+		(state) => state.setFeature
+	);
 	const setSelectionMode = useCompareFeaturesStore(
 		(state) => state.setSelectionMode
 	);
+	const handleStartComparisonProcess = () => {
+		setSelectedFeature(undefined);
+		setSelectionMode(true);
+	};
+
 	const handleStopComparisonProcess = () => {
-		setComparisonFeature1(undefined)
-		setComparisonFeature2(undefined)
-		setSelectionMode(false)
-	}
+		setComparisonFeature1(undefined);
+		setComparisonFeature2(undefined);
+		setSelectionMode(false);
+	};
 	return (
 		<>
 			<div className="leaflet-control bg-white rounded-lg w-52">
 				{selectionMode == false ? (
 					<div
 						className="flex items-center justify-center cursor-pointer text-md font-semibold w-full rounded-lg h-10 border-2 bg-white text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-white hover:bg-indigo-100 hover:ring-offset-indigo-600 hover:text-indigo-900 hover:ring-indigo-600 hover:border-indigo-600"
-						onClick={() => setSelectionMode(true)}
+						onClick={() => handleStartComparisonProcess()}
 					>
 						Start Comparison Process
 					</div>
@@ -47,8 +56,8 @@ export default function ComparisonControl() {
 						{comparisonFeature1 == undefined &&
 						comparisonFeature2 == undefined ? (
 							<p>
-								Please select features by clicking on
-								them on the map
+								Please select features by clicking on them on
+								the map
 							</p>
 						) : null}
 						{comparisonFeature1 != undefined ? (

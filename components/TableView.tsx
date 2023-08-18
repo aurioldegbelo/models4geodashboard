@@ -3,6 +3,7 @@ import TableHeader from "./TableHeader";
 import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
 import OnViewDatasetDescription from "./OnViewDatasetDescription";
+import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
 
 interface Props {
 	features: Feature[] | DifferenceFeature[];
@@ -19,6 +20,12 @@ export default function TableView(props: Props) {
 
 	const comparisonFeature2 = useCompareFeaturesStore(
 		(state) => state.feature2
+	);
+
+	const selectedFeature = useSelectedFeatureStore((state) => state.feature);
+
+	const setSelectedFeature = useSelectedFeatureStore(
+		(state) => state.setFeature
 	);
 
 	const allYears: YearType[] = [
@@ -47,6 +54,8 @@ export default function TableView(props: Props) {
 			(comparisonFeature1?.properties.NUTS_NAME == name ||
 				comparisonFeature2?.properties.NUTS_NAME == name)
 		) {
+			return "bg-indigo-200";
+		} else if (selectedFeature?.properties.NUTS_NAME == name ) {
 			return "bg-indigo-200";
 		} else {
 			if (index % 2 != 0) {

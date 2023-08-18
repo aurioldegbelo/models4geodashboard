@@ -2,6 +2,7 @@ import { Feature } from "@/types/types";
 import { useState } from "react";
 import { GeoJSON, Popup } from "react-leaflet";
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
+import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
 
 interface Props {
 	feature: Feature;
@@ -25,6 +26,11 @@ export default function MapFeature(props: Props) {
 	);
 	const selectionMode = useCompareFeaturesStore(
 		(state) => state.selectionMode
+	);
+
+	const selectedFeature = useSelectedFeatureStore((state) => state.feature);
+	const setSelectedFeature = useSelectedFeatureStore(
+		(state) => state.setFeature
 	);
 
 	const addToComparisonProcess = () => {
@@ -62,7 +68,7 @@ export default function MapFeature(props: Props) {
 		} else return false;
 	};
 
-	const handlePolygonClick = () => {
+	const handlePolygonClick = (event: any) => {
 		if (selectionMode) {
 			if (checkIfSelectedForComparison()) {
 				removeFromComparisonProcess();
@@ -70,6 +76,7 @@ export default function MapFeature(props: Props) {
 				addToComparisonProcess();
 			}
 		} else {
+			setSelectedFeature(props.feature)
 			setTooltipContent(true);
 		}
 	};
@@ -84,7 +91,7 @@ export default function MapFeature(props: Props) {
 
 	const style = () => {
 		return {
-			fillColor: isHovered
+			fillColor: (isHovered || props.feature == selectedFeature)
 				? "blue"
 				: checkIfSelectedForComparison()
 				? "blue"

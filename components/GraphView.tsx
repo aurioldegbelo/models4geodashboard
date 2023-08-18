@@ -4,7 +4,6 @@ import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
 import { DifferenceFeature, Feature, TransormedData } from "@/types/types";
 import {
 	CartesianGrid,
-	Label,
 	Line,
 	LineChart,
 	ResponsiveContainer,
@@ -14,6 +13,7 @@ import {
 } from "recharts";
 import OnViewDatasetDescription from "./OnViewDatasetDescription";
 import GraphViewHoverTooltip from "./GraphViewHoverTooltip";
+import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
 
 interface Props {
 	features: Feature[] | DifferenceFeature[];
@@ -33,6 +33,8 @@ export default function GraphView(props: Props) {
 		(state) => state.feature2
 	);
 
+	const selectedFeature = useSelectedFeatureStore((state) => state.feature);
+
 	const lines = (features: Feature[] | DifferenceFeature[]) => {
 		const entries = transformData(features, dataset).map(
 			(option: TransormedData) => {
@@ -51,13 +53,7 @@ export default function GraphView(props: Props) {
 			return (
 				<Line
 					type="monotone"
-					stroke={
-						props.usedOnHighlightingView &&
-						comparisonFeature1 &&
-						comparisonFeature2
-							? getHighlightColor(key)
-							: getRandomColor()
-					}
+					stroke={getLineColor(key)}
 					dataKey={key}
 					key={index}
 				/>
@@ -65,18 +61,21 @@ export default function GraphView(props: Props) {
 		});
 	};
 
-	const getRandomColor = () => {
-		return (
-			"#" +
-			((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0")
-		);
-	};
-
-	const getHighlightColor = (name: string) => {
-		if (comparisonFeature1?.properties.NUTS_NAME == name) {
-			return "blue";
-		}
-		if (comparisonFeature2?.properties.NUTS_NAME == name) {
+	const getLineColor = (name: string) => {
+		if (
+			comparisonFeature1 &&
+			comparisonFeature2 &&
+			props.usedOnHighlightingView
+		) {
+			if (comparisonFeature1?.properties.NUTS_NAME == name) {
+				return "blue";
+			}
+			if (comparisonFeature2?.properties.NUTS_NAME == name) {
+				return "blue";
+			} else {
+				return "gray";
+			}
+		} else if (selectedFeature && selectedFeature.properties.NUTS_NAME == name) {
 			return "blue";
 		} else {
 			return "gray";
@@ -85,7 +84,11 @@ export default function GraphView(props: Props) {
 
 	return (
 		<div className="leaflet-control bg-white h-1/2 p-5 pb-10 w-full rounded-lg mx-auto">
-			<OnViewDatasetDescription usedOnDifferenceOnlyView={props.usedOnDifferenceOnlyView ? true : false} />
+			<OnViewDatasetDescription
+				usedOnDifferenceOnlyView={
+					props.usedOnDifferenceOnlyView ? true : false
+				}
+			/>
 			<ResponsiveContainer height="100%" width="100%">
 				<LineChart
 					data={transformData(props.features, dataset)}
