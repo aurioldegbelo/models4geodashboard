@@ -24,8 +24,14 @@ export default function MapFeature(props: Props) {
 	const setComparisonFeature2 = useCompareFeaturesStore(
 		(state) => state.setFeature2
 	);
-	const selectionMode = useCompareFeaturesStore(
-		(state) => state.selectionMode
+	const comparisonFeature3 = useCompareFeaturesStore(
+		(state) => state.feature3
+	);
+	const setComparisonFeature3 = useCompareFeaturesStore(
+		(state) => state.setFeature3
+	);
+	const compareFeatureState = useCompareFeaturesStore(
+		(state) => state.compareFeatureState
 	);
 
 	const selectedFeature = useSelectedFeatureStore((state) => state.feature);
@@ -47,6 +53,12 @@ export default function MapFeature(props: Props) {
 			} else {
 				setComparisonFeature2(props.feature);
 			}
+		} else if (comparisonFeature3 == undefined) {
+			if (comparisonFeature3 == props.feature) {
+				return;
+			} else {
+				setComparisonFeature3(props.feature);
+			}
 		}
 	};
 
@@ -57,26 +69,30 @@ export default function MapFeature(props: Props) {
 		if (comparisonFeature2 == props.feature) {
 			setComparisonFeature2(undefined);
 		}
+		if (comparisonFeature3 == props.feature) {
+			setComparisonFeature3(undefined);
+		}
 	};
 
 	const checkIfSelectedForComparison = () => {
 		if (
 			props.feature == comparisonFeature1 ||
-			props.feature == comparisonFeature2
+			props.feature == comparisonFeature2 ||
+			props.feature == comparisonFeature3
 		) {
 			return true;
 		} else return false;
 	};
 
 	const handlePolygonClick = (event: any) => {
-		if (selectionMode) {
+		if (compareFeatureState == 'Selection') {
 			if (checkIfSelectedForComparison()) {
 				removeFromComparisonProcess();
 			} else {
 				addToComparisonProcess();
 			}
-		} else {
-			setSelectedFeature(props.feature)
+		} else if (compareFeatureState == 'Off') {
+			setSelectedFeature(props.feature);
 			setTooltipContent(true);
 		}
 	};
@@ -102,17 +118,17 @@ export default function MapFeature(props: Props) {
 
 	const getPolygonColor = () => {
 		if (props.feature == selectedFeature) {
-			return "blue"
+			return "blue";
 		}
 		if (checkIfSelectedForComparison()) {
-			return "blue"
+			return "blue";
 		}
 		if (isHovered) {
-			return "#5c6bc0"
+			return "#5c6bc0";
 		} else {
-			return "gray"
+			return "gray";
 		}
-	}
+	};
 
 	return (
 		<GeoJSON

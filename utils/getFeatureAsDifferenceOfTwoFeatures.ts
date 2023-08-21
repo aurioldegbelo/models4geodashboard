@@ -10,7 +10,7 @@ export function getFeatureAsDifferenceOfTwoFeatures(
 	feature1: Feature,
 	feature2: Feature,
 	dataset: Dataset
-): Array<DifferenceFeature> {
+): DifferenceFeature {
 	const differenceFeature: DifferenceFeature = {
 		type: "Feature",
 		featureName1: feature1.properties.NUTS_NAME,
@@ -90,7 +90,7 @@ export function getFeatureAsDifferenceOfTwoFeatures(
 		});
 	}
 
-	return [differenceFeature];
+	return differenceFeature;
 }
 
 export function roundFloatNumberToTwoDecimalPlaces(number: number): number {

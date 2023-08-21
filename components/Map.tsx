@@ -34,51 +34,54 @@ export default function Map(props: Props) {
 
 	const dataset = useSelectedDatasetStore((state) => state.dataset);
 
-	const selectionMode = useCompareFeaturesStore(
-		(state) => state.selectionMode
+	const compareFeatureState = useCompareFeaturesStore(
+		(state) => state.compareFeatureState
 	);
-
 	const comparisonFeature1 = useCompareFeaturesStore(
 		(state) => state.feature1
 	);
-
 	const comparisonFeature2 = useCompareFeaturesStore(
 		(state) => state.feature2
 	);
+	const comparisonFeature3 = useCompareFeaturesStore(
+		(state) => state.feature3
+	);
 
 	function correctLeftViewVariant(): React.ReactNode {
-		if (comparisonFeature1 && comparisonFeature2 && props.filteringOnly) {
+		if (
+			comparisonFeature1 &&
+			comparisonFeature2 &&
+			comparisonFeature3 == undefined &&
+			compareFeatureState == "Comparison"
+		) {
+			let features = [];
+			if (props.filteringOnly) {
+				features = [comparisonFeature1, comparisonFeature2];
+			} else if (props.differenceOnly) {
+				features = [
+					getFeatureAsDifferenceOfTwoFeatures(
+						comparisonFeature1,
+						comparisonFeature2,
+						dataset
+					),
+				];
+				console.log(features);
+			} else {
+				features = states.features;
+			}
+
 			return (
 				<>
 					<GraphView
-						features={[comparisonFeature1, comparisonFeature2]}
+						features={features}
 						allowEscapeViewBox
+						usedOnDifferenceOnlyView={props.filteringOnly}
+						usedOnHighlightingView={props.highlightingAndDifference}
 					/>
 					<TableView
-						features={[comparisonFeature1, comparisonFeature2]}
-					/>
-				</>
-			);
-		}
-		if (comparisonFeature1 && comparisonFeature2 && props.differenceOnly) {
-			return (
-				<>
-					<GraphView
-						features={getFeatureAsDifferenceOfTwoFeatures(
-							comparisonFeature1,
-							comparisonFeature2,
-							dataset
-						)}
-						usedOnDifferenceOnlyView
-						allowEscapeViewBox
-					/>
-					<TableView
-						features={getFeatureAsDifferenceOfTwoFeatures(
-							comparisonFeature1,
-							comparisonFeature2,
-							dataset
-						)}
-						usedOnDifferenceOnlyView
+						features={features}
+						usedOnDifferenceOnlyView={props.filteringOnly}
+						usedOnHighlightingView={props.highlightingAndDifference}
 					/>
 				</>
 			);
@@ -86,18 +89,50 @@ export default function Map(props: Props) {
 		if (
 			comparisonFeature1 &&
 			comparisonFeature2 &&
-			props.highlightingAndDifference
+			comparisonFeature3 &&
+			compareFeatureState == "Comparison"
 		) {
+			let features = [];
+			if (props.filteringOnly) {
+				features = [
+					comparisonFeature1,
+					comparisonFeature2,
+					comparisonFeature3,
+				];
+			} else if (props.differenceOnly) {
+				features = [
+					getFeatureAsDifferenceOfTwoFeatures(
+						comparisonFeature1,
+						comparisonFeature2,
+						dataset
+					),
+					getFeatureAsDifferenceOfTwoFeatures(
+						comparisonFeature1,
+						comparisonFeature3,
+						dataset
+					),
+					getFeatureAsDifferenceOfTwoFeatures(
+						comparisonFeature2,
+						comparisonFeature3,
+						dataset
+					),
+				];
+			} else {
+				features = states.features;
+			}
+
 			return (
 				<>
 					<GraphView
-						features={states.features}
-						usedOnHighlightingView
+						features={features}
 						allowEscapeViewBox
+						usedOnDifferenceOnlyView={props.differenceOnly}
+						usedOnHighlightingView={props.highlightingAndDifference}
 					/>
 					<TableView
-						features={states.features}
-						usedOnHighlightingView
+						features={features}
+						usedOnDifferenceOnlyView={props.differenceOnly}
+						usedOnHighlightingView={props.highlightingAndDifference}
 					/>
 				</>
 			);
@@ -109,6 +144,84 @@ export default function Map(props: Props) {
 				</>
 			);
 		}
+
+		// if (
+		// 	comparisonFeature1 &&
+		// 	comparisonFeature2 &&
+		// 	props.filteringOnly &&
+		// 	compareFeatureState == "Comparison"
+		// ) {
+		// 	return (
+		// 		<>
+		// 			<GraphView
+		// 				features={[comparisonFeature1, comparisonFeature2]}
+		// 				allowEscapeViewBox
+		// 			/>
+		// 			<TableView
+		// 				features={[comparisonFeature1, comparisonFeature2]}
+		// 			/>
+		// 		</>
+		// 	);
+		// }
+		// if (
+		// 	comparisonFeature1 &&
+		// 	comparisonFeature2 &&
+		// 	props.differenceOnly &&
+		// 	compareFeatureState == "Comparison"
+		// ) {
+		// 	return (
+		// 		<>
+		// 			<GraphView
+		// 				features={[
+		// 					getFeatureAsDifferenceOfTwoFeatures(
+		// 						comparisonFeature1,
+		// 						comparisonFeature2,
+		// 						dataset
+		// 					),
+		// 				]}
+		// 				usedOnDifferenceOnlyView
+		// 				allowEscapeViewBox
+		// 			/>
+		// 			<TableView
+		// 				features={[
+		// 					getFeatureAsDifferenceOfTwoFeatures(
+		// 						comparisonFeature1,
+		// 						comparisonFeature2,
+		// 						dataset
+		// 					),
+		// 				]}
+		// 				usedOnDifferenceOnlyView
+		// 			/>
+		// 		</>
+		// 	);
+		// }
+		// if (
+		// 	comparisonFeature1 &&
+		// 	comparisonFeature2 &&
+		// 	props.highlightingAndDifference &&
+		// 	compareFeatureState == "Comparison"
+		// ) {
+		// 	return (
+		// 		<>
+		// 			<GraphView
+		// 				features={states.features}
+		// 				usedOnHighlightingView
+		// 				allowEscapeViewBox
+		// 			/>
+		// 			<TableView
+		// 				features={states.features}
+		// 				usedOnHighlightingView
+		// 			/>
+		// 		</>
+		// 	);
+		// } else {
+		// 	return (
+		// 		<>
+		// 			<GraphView features={states.features} allowEscapeViewBox />
+		// 			<TableView features={states.features} />
+		// 		</>
+		// 	);
+		// }
 	}
 
 	return (
@@ -120,13 +233,16 @@ export default function Map(props: Props) {
 				/>
 			) : null}
 			<MapContainer
-				key={`causesRerender&CursorUpdate${selectionMode}`}
+				key={`causesRerender&CursorUpdate${compareFeatureState}`}
 				center={props.center}
 				zoom={6}
 				style={{
 					height: "calc(100vh - 65px)",
 					zIndex: 40,
-					cursor: selectionMode == true ? "pointer" : "default",
+					cursor:
+						compareFeatureState == "Selection"
+							? "pointer"
+							: "default",
 				}}
 				keyboard
 				minZoom={6}
@@ -158,27 +274,87 @@ export default function Map(props: Props) {
 				</div>
 				{props.highlightingAndDifference &&
 				comparisonFeature1 &&
-				comparisonFeature2 ? (
+				comparisonFeature2 &&
+				comparisonFeature3 &&
+				compareFeatureState == "Comparison" ? (
 					<div
 						className={`${POSITION_CLASSES.topright} h-full w-screen pb-8 flex`}
 					>
 						<div className="w-2/3"></div>
 						<div className="w-1/3">
 							<GraphView
-								features={getFeatureAsDifferenceOfTwoFeatures(
-									comparisonFeature1,
-									comparisonFeature2,
-									dataset
-								)}
-								usedOnDifferenceOnlyView
+								features={[
+									getFeatureAsDifferenceOfTwoFeatures(
+										comparisonFeature1,
+										comparisonFeature2,
+										dataset
+									),
+									getFeatureAsDifferenceOfTwoFeatures(
+										comparisonFeature1,
+										comparisonFeature3,
+										dataset
+									),
+									getFeatureAsDifferenceOfTwoFeatures(
+										comparisonFeature2,
+										comparisonFeature3,
+										dataset
+									),
+								]}
+								usedOnHighlightingView
 								allowEscapeViewBox={false}
 							/>
 							<TableView
-								features={getFeatureAsDifferenceOfTwoFeatures(
-									comparisonFeature1,
-									comparisonFeature2,
-									dataset
-								)}
+								features={[
+									getFeatureAsDifferenceOfTwoFeatures(
+										comparisonFeature1,
+										comparisonFeature2,
+										dataset
+									),
+									getFeatureAsDifferenceOfTwoFeatures(
+										comparisonFeature1,
+										comparisonFeature3,
+										dataset
+									),
+									getFeatureAsDifferenceOfTwoFeatures(
+										comparisonFeature2,
+										comparisonFeature3,
+										dataset
+									),
+								]}
+								usedOnHighlightingView
+							/>
+						</div>
+					</div>
+				) : null}
+				{props.highlightingAndDifference &&
+				comparisonFeature1 &&
+				comparisonFeature2 &&
+				comparisonFeature3 == undefined &&
+				compareFeatureState == "Comparison" ? (
+					<div
+						className={`${POSITION_CLASSES.topright} h-full w-screen pb-8 flex`}
+					>
+						<div className="w-2/3"></div>
+						<div className="w-1/3">
+							<GraphView
+								features={[
+									getFeatureAsDifferenceOfTwoFeatures(
+										comparisonFeature1,
+										comparisonFeature2,
+										dataset
+									),
+								]}
+								usedOnHighlightingView
+								allowEscapeViewBox={false}
+							/>
+							<TableView
+								features={[
+									getFeatureAsDifferenceOfTwoFeatures(
+										comparisonFeature1,
+										comparisonFeature2,
+										dataset
+									),
+								]}
 								usedOnDifferenceOnlyView
 							/>
 						</div>

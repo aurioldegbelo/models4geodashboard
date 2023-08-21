@@ -30,8 +30,11 @@ export default function GraphView(props: Props) {
 	const comparisonFeature2 = useCompareFeaturesStore(
 		(state) => state.feature2
 	);
-	const selectionMode = useCompareFeaturesStore(
-		(state) => state.selectionMode
+	const comparisonFeature3 = useCompareFeaturesStore(
+		(state) => state.feature3
+	);
+	const compareFeatureState = useCompareFeaturesStore(
+		(state) => state.compareFeatureState
 	);
 	const selectedFeature = useSelectedFeatureStore((state) => state.feature);
 	const setSelectedFeature = useSelectedFeatureStore(
@@ -52,7 +55,7 @@ export default function GraphView(props: Props) {
 			: undefined;
 
 		if (clickedFeature) {
-			if (selectionMode) {
+			if (compareFeatureState == 'Comparison' || compareFeatureState == 'Selection') {
 				return;
 			} else {
 				setSelectedFeature(clickedFeature);
@@ -93,15 +96,16 @@ export default function GraphView(props: Props) {
 
 	const getLineColor = (name: string) => {
 		if (
-			comparisonFeature1 &&
-			comparisonFeature2 &&
 			props.usedOnHighlightingView
 		) {
-			if (comparisonFeature1?.properties.NUTS_NAME == name) {
+			if (comparisonFeature1 && comparisonFeature1?.properties.NUTS_NAME == name) {
 				return "blue";
 			}
-			if (comparisonFeature2?.properties.NUTS_NAME == name) {
+			if (comparisonFeature2 && comparisonFeature2?.properties.NUTS_NAME == name) {
 				return "blue";
+			}
+			if (comparisonFeature3 && comparisonFeature3?.properties.NUTS_NAME == name) {
+					return "blue";
 			} else {
 				return "gray";
 			}
