@@ -1,6 +1,20 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "@/lib/mongodb";
 
+let cachedDb: any = null;
+
+export async function connectToDatabase() {
+	if (cachedDb) {
+		return cachedDb;
+	}
+
+	const client = await clientPromise;
+	const db = client.db("geo-dashboard");
+
+	cachedDb = db;
+	return db;
+}
+
 export default async function handler(
 	request: NextApiRequest,
 	response: NextApiResponse
@@ -9,17 +23,23 @@ export default async function handler(
 		if (request.method === "POST") {
 			const { activity } = request.body;
 
-			const MongoClient = await clientPromise;
+			const db = await connectToDatabase();
 
-			const db = MongoClient.db("geo-dashboard");
-			const collection = db.collection("activityLog");
+			const activites = db.collection("activities");
 
-			const result = await collection.insertOne({
+			const latestConnection = await activites
+				.find({})
+				.sort({ connection_id: -1 })
+				.limit(1)
+				.toArray();
+
+			const assignedConnectionID = latestConnection[0] ? latestConnection[0].connection_id : 0;
+
+			const result = await activites.insertOne({
 				timestamp: new Date(),
-				activity,
+				activity: activity,
+				connection_id: cachedDb == null ? assignedConnectionID + 1 : assignedConnectionID,
 			});
-
-			// MongoClient.close();
 
 			response
 				.status(200)
