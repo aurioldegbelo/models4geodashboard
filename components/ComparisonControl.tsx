@@ -96,12 +96,12 @@ export default function ComparisonControl() {
 		setCompareFeatureState("Off");
 	};
 
-	// document.addEventListener("keypress", (event) => {
-	// 	if (event.key == "q" && compareFeatureState == "Selection") {
-	// 		event.preventDefault();
-	// 		handleStopComparisonProcess();
-	// 	}
-	// });
+	document.addEventListener("keypress", (event) => {
+		if (event.key == "q" && compareFeatureState == "Selection") {
+			event.preventDefault();
+			handleStopComparisonProcess();
+		}
+	});
 
 	return (
 		<>
@@ -136,7 +136,7 @@ export default function ComparisonControl() {
 						comparisonFeature2 == undefined ? (
 							<p>
 								Please select features by clicking on them on
-								the map. Or press <b>'Q'</b> to quit.
+								the map. Or press <b>Q</b> to quit.
 							</p>
 						) : null}
 						{comparisonFeature1 != undefined ? (
