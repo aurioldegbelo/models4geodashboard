@@ -5,6 +5,8 @@ export type TransormedData = {
 	[name: string]: number | string;
 }
 
+export type Side = 'left' | 'right'
+
 export type States = {
 	type: string;
 	features: Feature[];

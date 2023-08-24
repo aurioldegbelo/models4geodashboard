@@ -1,5 +1,6 @@
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
 import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
+import { logUserActivity } from "@/utils/logUserActivity";
 import { toast } from "react-toastify";
 
 export default function ComparisonControl() {
@@ -38,6 +39,7 @@ export default function ComparisonControl() {
 
 	const handleStartComparisonProcess = () => {
 		if (minimumTwoOfThreeSelectedForComparison()) {
+			handleLogUserActivity();
 			setCompareFeatureState("Comparison");
 		} else {
 			toast("Please select a minimum of two features!", {
@@ -49,7 +51,7 @@ export default function ComparisonControl() {
 				draggable: true,
 				progress: undefined,
 				theme: "light",
-				type: 'error'
+				type: "error",
 			});
 		}
 	};
@@ -75,6 +77,18 @@ export default function ComparisonControl() {
 		}
 	};
 
+	const handleLogUserActivity = () => {
+		if (
+			comparisonFeature1 == undefined ||
+			comparisonFeature2 == undefined ||
+			comparisonFeature3 == undefined
+		) {
+			logUserActivity("M2");
+		} else {
+			logUserActivity("M3");
+		}
+	};
+
 	const handleStopComparisonProcess = () => {
 		setComparisonFeature1(undefined);
 		setComparisonFeature2(undefined);
@@ -82,12 +96,12 @@ export default function ComparisonControl() {
 		setCompareFeatureState("Off");
 	};
 
-	document.addEventListener('keypress', (event) => {
-		if(event.key == 'q' && compareFeatureState == "Selection") {
-			event.preventDefault()
-			handleStopComparisonProcess()
+	document.addEventListener("keypress", (event) => {
+		if (event.key == "q" && compareFeatureState == "Selection") {
+			event.preventDefault();
+			handleStopComparisonProcess();
 		}
-	})
+	});
 
 	return (
 		<>

@@ -1,7 +1,12 @@
 import { transformData } from "@/utils/transformDataSuitedForGraphView";
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
 import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
-import { DifferenceFeature, Feature, TransormedData } from "@/types/types";
+import {
+	DifferenceFeature,
+	Feature,
+	Side,
+	TransormedData,
+} from "@/types/types";
 import {
 	CartesianGrid,
 	Line,
@@ -14,12 +19,14 @@ import {
 import OnViewDatasetDescription from "./OnViewDatasetDescription";
 import GraphViewHoverTooltip from "./GraphViewHoverTooltip";
 import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
+import { logUserActivity } from "@/utils/logUserActivity";
 
 interface Props {
 	features: Feature[] | DifferenceFeature[];
 	usedOnHighlightingView?: boolean;
 	usedOnDifferenceOnlyView?: boolean;
 	allowEscapeViewBox?: boolean;
+	side?: Side;
 }
 
 export default function GraphView(props: Props) {
@@ -55,7 +62,10 @@ export default function GraphView(props: Props) {
 			: undefined;
 
 		if (clickedFeature) {
-			if (compareFeatureState == 'Comparison' || compareFeatureState == 'Selection') {
+			if (
+				compareFeatureState == "Comparison" ||
+				compareFeatureState == "Selection"
+			) {
 				return;
 			} else {
 				setSelectedFeature(clickedFeature);
@@ -95,17 +105,24 @@ export default function GraphView(props: Props) {
 	};
 
 	const getLineColor = (name: string) => {
-		if (
-			props.usedOnHighlightingView
-		) {
-			if (comparisonFeature1 && comparisonFeature1?.properties.NUTS_NAME == name) {
+		if (props.usedOnHighlightingView) {
+			if (
+				comparisonFeature1 &&
+				comparisonFeature1?.properties.NUTS_NAME == name
+			) {
 				return "blue";
 			}
-			if (comparisonFeature2 && comparisonFeature2?.properties.NUTS_NAME == name) {
+			if (
+				comparisonFeature2 &&
+				comparisonFeature2?.properties.NUTS_NAME == name
+			) {
 				return "blue";
 			}
-			if (comparisonFeature3 && comparisonFeature3?.properties.NUTS_NAME == name) {
-					return "blue";
+			if (
+				comparisonFeature3 &&
+				comparisonFeature3?.properties.NUTS_NAME == name
+			) {
+				return "blue";
 			} else {
 				return "gray";
 			}
@@ -120,7 +137,14 @@ export default function GraphView(props: Props) {
 	};
 
 	return (
-		<div className="leaflet-control bg-white h-1/2 p-5 pb-10 w-full rounded-lg mx-auto">
+		<div
+			className="leaflet-control bg-white h-1/2 p-5 pb-10 w-full rounded-lg mx-auto"
+			onMouseEnter={() => {
+				props.side == "right"
+					? logUserActivity("GR")
+					: logUserActivity("GL");
+			}}
+		>
 			<OnViewDatasetDescription
 				usedOnDifferenceOnlyView={
 					props.usedOnDifferenceOnlyView ? true : false

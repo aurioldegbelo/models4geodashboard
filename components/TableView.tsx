@@ -1,14 +1,16 @@
-import { DifferenceFeature, Feature, YearType } from "@/types/types";
+import { DifferenceFeature, Feature, Side, YearType } from "@/types/types";
 import TableHeader from "./TableHeader";
 import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
 import OnViewDatasetDescription from "./OnViewDatasetDescription";
 import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
+import { logUserActivity } from "@/utils/logUserActivity";
 
 interface Props {
 	features: Feature[] | DifferenceFeature[];
 	usedOnHighlightingView?: boolean;
 	usedOnDifferenceOnlyView?: boolean;
+	side?: Side
 }
 
 export default function TableView(props: Props) {
@@ -89,7 +91,7 @@ export default function TableView(props: Props) {
 	};
 
 	return (
-		<div className="leaflet-control bg-white h-1/2 px-5 pt-5 w-full pb-14 rounded-lg">
+		<div className="leaflet-control bg-white h-1/2 px-5 pt-5 w-full pb-14 rounded-lg" onMouseDown={() => props.side == 'right' ? logUserActivity('TR') : logUserActivity('TL')}>
 			<OnViewDatasetDescription
 				usedOnDifferenceOnlyView={
 					props.usedOnDifferenceOnlyView ? true : false

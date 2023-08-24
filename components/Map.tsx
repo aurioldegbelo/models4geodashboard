@@ -224,6 +224,7 @@ export default function Map(props: Props) {
 								]}
 								usedOnHighlightingView
 								allowEscapeViewBox={false}
+								side="right"
 							/>
 							<TableView
 								features={[
@@ -244,6 +245,7 @@ export default function Map(props: Props) {
 									),
 								]}
 								usedOnHighlightingView
+								side="right"
 							/>
 						</div>
 					</div>
@@ -268,6 +270,7 @@ export default function Map(props: Props) {
 								]}
 								usedOnHighlightingView
 								allowEscapeViewBox={false}
+								side="right"
 							/>
 							<TableView
 								features={[
@@ -278,6 +281,7 @@ export default function Map(props: Props) {
 									),
 								]}
 								usedOnDifferenceOnlyView
+								side="right"
 							/>
 						</div>
 					</div>

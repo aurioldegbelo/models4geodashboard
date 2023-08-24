@@ -5,7 +5,6 @@ export const logUserActivity = async (activity: any) => {
 
 	if (localStorage.getItem("token") != undefined) {
 		await getTokenOfLatestConnection().then((token) => {
-
 			if (token && localStorage.getItem("token") == token) {
 				connection_id = token;
 			}
@@ -15,7 +14,6 @@ export const logUserActivity = async (activity: any) => {
 		localStorage.setItem("token", sessionToken);
 		connection_id = sessionToken;
 	}
-
 
 	try {
 		const response = await fetch("/api/logUserActivity", {
