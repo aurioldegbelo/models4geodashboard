@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 
-const URI = process.env.MONGODB_URI;
+const URI = process.env.MONGODB_URI as string;
 const options = {};
 
 if (!URI) {
@@ -8,7 +8,11 @@ if (!URI) {
 }
 
 let client = new MongoClient(URI, options);
-let clientPromise;
+let clientPromise: Promise<any>;
+
+declare global {
+	var _mongoClientPromise: Promise<any>
+}
 
 if (process.env.NODE_ENV !== "production") {
 	if (!global._mongoClientPromise) {
