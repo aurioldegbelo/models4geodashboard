@@ -96,12 +96,12 @@ export default function ComparisonControl() {
 		setCompareFeatureState("Off");
 	};
 
-	document.addEventListener("keypress", (event) => {
-		if (event.key == "q" && compareFeatureState == "Selection") {
-			event.preventDefault();
-			handleStopComparisonProcess();
-		}
-	});
+	// document.addEventListener("keypress", (event) => {
+	// 	if (event.key == "q" && compareFeatureState == "Selection") {
+	// 		event.preventDefault();
+	// 		handleStopComparisonProcess();
+	// 	}
+	// });
 
 	return (
 		<>
