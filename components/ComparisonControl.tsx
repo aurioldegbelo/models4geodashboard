@@ -82,6 +82,13 @@ export default function ComparisonControl() {
 		setCompareFeatureState("Off");
 	};
 
+	document.addEventListener('keypress', (event) => {
+		if(event.key == 'q' && compareFeatureState == "Selection") {
+			event.preventDefault()
+			handleStopComparisonProcess()
+		}
+	})
+
 	return (
 		<>
 			<div className="leaflet-control bg-white rounded-lg w-52">
@@ -90,7 +97,7 @@ export default function ComparisonControl() {
 						className="flex items-center justify-center cursor-pointer text-md font-semibold w-full rounded-lg h-10 border-2 bg-white text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-white hover:bg-indigo-100 hover:ring-offset-indigo-600 hover:text-indigo-900 hover:ring-indigo-600 hover:border-indigo-600"
 						onClick={handleStartSelectionProcess}
 					>
-						Comparison
+						Select for comparison
 					</div>
 				) : null}
 				{compareFeatureState == "Selection" ? (
@@ -98,7 +105,7 @@ export default function ComparisonControl() {
 						className="flex items-center justify-center cursor-pointer text-md font-semibold w-full rounded-lg h-10 border-2 bg-white text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-white hover:bg-indigo-100 hover:ring-offset-indigo-600 hover:text-indigo-900 hover:ring-indigo-600 hover:border-indigo-600"
 						onClick={handleStartComparisonProcess}
 					>
-						Start Comparison Process
+						Start comparison process
 					</div>
 				) : null}
 				{compareFeatureState == "Comparison" ? (
@@ -115,7 +122,7 @@ export default function ComparisonControl() {
 						comparisonFeature2 == undefined ? (
 							<p>
 								Please select features by clicking on them on
-								the map
+								the map. Or press <b>'Q'</b> to quit.
 							</p>
 						) : null}
 						{comparisonFeature1 != undefined ? (
