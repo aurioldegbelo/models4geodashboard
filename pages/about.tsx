@@ -5,7 +5,6 @@ import LogUserActivitySwitch from "@/components/LogUserActivitySwitch";
 import { useLogUserActivityStore } from "@/store/logUserActivityStore";
 
 export default function about() {
-	
 	return (
 		<div className="w-screen flex justify-center">
 			<Card className="mt-16 w-2/3">
@@ -23,6 +22,22 @@ export default function about() {
 						application provides 3 different approaches for
 						comparing two spatial features.
 					</p>
+					<p className="font-bold text-lg mt-10 mb-5">Settings</p>
+					<div className="flex">
+						<div className="w-1/4 space-y-10">
+							<div>
+								<p>
+									Log user activity:
+									</p>
+									<p className="text-xs">(Development only)</p>
+								</div>
+							<p>Selected dataset:</p>
+						</div>
+						<div className="w-1/4 space-y-10">
+							<LogUserActivitySwitch />
+							<DatasetControl />
+						</div>
+					</div>
 					<p className="font-bold text-lg mt-10">Data</p>
 					<div>
 						<p>
@@ -52,34 +67,28 @@ export default function about() {
 								Bundesamt für Kartographie und Geodäsie
 							</a>
 						</p>
-						<div className="flex mt-10">
-							<div className="w-1/2">
-								<p className="font-bold text-sm">
-									Road Network Density
-								</p>
-								<p>
-									Measures the road network density per
-									overall land area. It is measured in km/km².
-								</p>
-								<p className="font-bold mt-2 text-sm">
-									Greenland Percentage
-								</p>
-								<p>
-									Measures the share of grassland in total
-									land area. It is measured in %.
-								</p>
-								<p className="font-bold mt-2 text-sm">
-									Woodland Percentage
-								</p>
-								<p>
-									Measures the share of woodland in total land
-									area. It is measured in %.
-								</p>
-							</div>
-							<div className="w-1/2 flex justify-center">
-								<DatasetControl />
-								<LogUserActivitySwitch />
-							</div>
+						<div className="mt-10">
+							<p className="font-bold text-sm">
+								Road Network Density
+							</p>
+							<p>
+								Measures the road network density per overall
+								land area. It is measured in km/km².
+							</p>
+							<p className="font-bold mt-2 text-sm">
+								Greenland Percentage
+							</p>
+							<p>
+								Measures the share of grassland in total land
+								area. It is measured in %.
+							</p>
+							<p className="font-bold mt-2 text-sm">
+								Woodland Percentage
+							</p>
+							<p>
+								Measures the share of woodland in total land
+								area. It is measured in %.
+							</p>
 						</div>
 					</div>
 				</div>
