@@ -1,5 +1,6 @@
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
 import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
+import { minimumTwoOfThreeSelectedForComparison } from "@/utils/minimumTwoOfThreeSelectedForComparison";
 
 interface Props {
 	usedOnDifferenceOnlyView: boolean;
@@ -16,12 +17,19 @@ export default function OnViewDatasetDescription(props: Props) {
 		(state) => state.feature2
 	);
 
+	const comparisonFeature3 = useCompareFeaturesStore(
+		(state) => state.feature3
+	);
+
 	const getHeadingString = (): string => {
 		let labelString = "";
 		if (dataset == "roadnetworkdensity") {
 			if (
-				comparisonFeature1 &&
-				comparisonFeature2 &&
+				minimumTwoOfThreeSelectedForComparison(
+					comparisonFeature1,
+					comparisonFeature2,
+					comparisonFeature3
+				) &&
 				props.usedOnDifferenceOnlyView
 			) {
 				labelString = "Difference in road network density per area |";
@@ -30,8 +38,11 @@ export default function OnViewDatasetDescription(props: Props) {
 			}
 		} else if (dataset == "greenlandpercentage") {
 			if (
-				comparisonFeature1 &&
-				comparisonFeature2 &&
+				minimumTwoOfThreeSelectedForComparison(
+					comparisonFeature1,
+					comparisonFeature2,
+					comparisonFeature3
+				) &&
 				props.usedOnDifferenceOnlyView
 			) {
 				labelString =
@@ -41,8 +52,11 @@ export default function OnViewDatasetDescription(props: Props) {
 			}
 		} else if (dataset == "woodlandpercentage") {
 			if (
-				comparisonFeature1 &&
-				comparisonFeature2 &&
+				minimumTwoOfThreeSelectedForComparison(
+					comparisonFeature1,
+					comparisonFeature2,
+					comparisonFeature3
+				) &&
 				props.usedOnDifferenceOnlyView
 			) {
 				labelString = "Difference in share of woodland in total area |";

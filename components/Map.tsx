@@ -65,7 +65,6 @@ export default function Map(props: Props) {
 						dataset
 					),
 				];
-				console.log(features);
 			} else {
 				features = states.features;
 			}
@@ -75,12 +74,12 @@ export default function Map(props: Props) {
 					<GraphView
 						features={features}
 						allowEscapeViewBox
-						usedOnDifferenceOnlyView={props.filteringOnly}
+						usedOnDifferenceOnlyView={props.differenceOnly}
 						usedOnHighlightingView={props.highlightingAndDifference}
 					/>
 					<TableView
 						features={features}
-						usedOnDifferenceOnlyView={props.filteringOnly}
+						usedOnDifferenceOnlyView={props.differenceOnly}
 						usedOnHighlightingView={props.highlightingAndDifference}
 					/>
 				</>
@@ -222,7 +221,7 @@ export default function Map(props: Props) {
 										dataset
 									),
 								]}
-								usedOnHighlightingView
+								usedOnDifferenceOnlyView
 								allowEscapeViewBox={false}
 								side="right"
 							/>
@@ -244,7 +243,7 @@ export default function Map(props: Props) {
 										dataset
 									),
 								]}
-								usedOnHighlightingView
+								usedOnDifferenceOnlyView
 								side="right"
 							/>
 						</div>
@@ -268,7 +267,7 @@ export default function Map(props: Props) {
 										dataset
 									),
 								]}
-								usedOnHighlightingView
+								usedOnDifferenceOnlyView
 								allowEscapeViewBox={false}
 								side="right"
 							/>

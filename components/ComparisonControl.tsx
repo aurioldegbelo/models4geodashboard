@@ -1,6 +1,7 @@
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
 import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
 import { logUserActivity } from "@/utils/logUserActivity";
+import { minimumTwoOfThreeSelectedForComparison } from "@/utils/minimumTwoOfThreeSelectedForComparison";
 import { toast } from "react-toastify";
 
 export default function ComparisonControl() {
@@ -38,7 +39,7 @@ export default function ComparisonControl() {
 	};
 
 	const handleStartComparisonProcess = () => {
-		if (minimumTwoOfThreeSelectedForComparison()) {
+		if (minimumTwoOfThreeSelectedForComparison(comparisonFeature1, comparisonFeature2, comparisonFeature3)) {
 			handleLogUserActivity();
 			setCompareFeatureState("Comparison");
 		} else {
@@ -53,27 +54,6 @@ export default function ComparisonControl() {
 				theme: "light",
 				type: "error",
 			});
-		}
-	};
-
-	const minimumTwoOfThreeSelectedForComparison = (): boolean => {
-		if (
-			comparisonFeature1 != undefined &&
-			comparisonFeature2 != undefined
-		) {
-			return true;
-		} else if (
-			comparisonFeature2 != undefined &&
-			comparisonFeature3 != undefined
-		) {
-			return true;
-		} else if (
-			comparisonFeature1 != undefined &&
-			comparisonFeature3 != undefined
-		) {
-			return true;
-		} else {
-			return false;
 		}
 	};
 
