@@ -1,7 +1,8 @@
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
+import { useLogUserActivityStore } from "@/store/logUserActivityStore";
 import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
-import { logUserActivity } from "@/utils/logUserActivity";
 import { minimumTwoOfThreeSelectedForComparison } from "@/utils/minimumTwoOfThreeSelectedForComparison";
+import { logUserActivity } from "@/utils/logUserActivity";
 import { toast } from "react-toastify";
 
 export default function ComparisonControl() {
@@ -32,6 +33,9 @@ export default function ComparisonControl() {
 	const setSelectedFeature = useSelectedFeatureStore(
 		(state) => state.setFeature
 	);
+	const shouldLogUserActivity = useLogUserActivityStore(
+		(state) => state.logUserActivity
+	);
 
 	const handleStartSelectionProcess = () => {
 		setSelectedFeature(undefined);
@@ -39,7 +43,13 @@ export default function ComparisonControl() {
 	};
 
 	const handleStartComparisonProcess = () => {
-		if (minimumTwoOfThreeSelectedForComparison(comparisonFeature1, comparisonFeature2, comparisonFeature3)) {
+		if (
+			minimumTwoOfThreeSelectedForComparison(
+				comparisonFeature1,
+				comparisonFeature2,
+				comparisonFeature3
+			)
+		) {
 			handleLogUserActivity();
 			setCompareFeatureState("Comparison");
 		} else {
@@ -63,9 +73,9 @@ export default function ComparisonControl() {
 			comparisonFeature2 == undefined ||
 			comparisonFeature3 == undefined
 		) {
-			logUserActivity("M2");
+			logUserActivity("M2", shouldLogUserActivity);
 		} else {
-			logUserActivity("M3");
+			logUserActivity("M3", shouldLogUserActivity);
 		}
 	};
 

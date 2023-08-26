@@ -1,10 +1,11 @@
 import PrimaryButton from "@/components/Button/PrimaryButton";
 import Card from "@/components/Card";
 import DatasetControl from "@/components/DatasetControl";
-import { logUserActivity } from "@/utils/logUserActivity";
+import LogUserActivitySwitch from "@/components/LogUserActivitySwitch";
+import { useLogUserActivityStore } from "@/store/logUserActivityStore";
 
 export default function about() {
-
+	
 	return (
 		<div className="w-screen flex justify-center">
 			<Card className="mt-16 w-2/3">
@@ -77,12 +78,7 @@ export default function about() {
 							</div>
 							<div className="w-1/2 flex justify-center">
 								<DatasetControl />
-								<PrimaryButton
-									onClick={() => logUserActivity('click')}
-									uppercase
-								>
-									Log Activity
-								</PrimaryButton>
+								<LogUserActivitySwitch />
 							</div>
 						</div>
 					</div>

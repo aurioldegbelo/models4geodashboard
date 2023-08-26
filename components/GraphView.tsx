@@ -20,6 +20,7 @@ import OnViewDatasetDescription from "./OnViewDatasetDescription";
 import GraphViewHoverTooltip from "./GraphViewHoverTooltip";
 import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
 import { logUserActivity } from "@/utils/logUserActivity";
+import { useLogUserActivityStore } from "@/store/logUserActivityStore";
 
 interface Props {
 	features: Feature[] | DifferenceFeature[];
@@ -46,6 +47,9 @@ export default function GraphView(props: Props) {
 	const selectedFeature = useSelectedFeatureStore((state) => state.feature);
 	const setSelectedFeature = useSelectedFeatureStore(
 		(state) => state.setFeature
+	);
+	const shouldLogUserActivity = useLogUserActivityStore(
+		(state) => state.logUserActivity
 	);
 
 	const isFeatureArrayTypeGuard = (
@@ -141,8 +145,8 @@ export default function GraphView(props: Props) {
 			className="leaflet-control bg-white h-1/2 p-5 pb-10 w-full rounded-lg mx-auto"
 			onMouseEnter={() => {
 				props.side == "right"
-					? logUserActivity("GR")
-					: logUserActivity("GL");
+					? logUserActivity("GR", shouldLogUserActivity)
+					: logUserActivity("GL", shouldLogUserActivity);
 			}}
 		>
 			<OnViewDatasetDescription
