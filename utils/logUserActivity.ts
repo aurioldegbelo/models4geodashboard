@@ -5,7 +5,8 @@ export const logUserActivity = async (
 	shouldLogUserActivity: boolean
 ) => {
 	if (shouldLogUserActivity) {
-		let connection_id: string = "";
+		let connection_id = "";
+		
 		if (localStorage.getItem("token") != undefined) {
 			await getTokenOfLatestConnection().then((token) => {
 				if (token && localStorage.getItem("token") == token) {
