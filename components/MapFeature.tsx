@@ -6,6 +6,7 @@ import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
 
 interface Props {
 	feature: Feature;
+	usedOnHighlighting2View: boolean;
 }
 
 export default function MapFeature(props: Props) {
@@ -121,7 +122,19 @@ export default function MapFeature(props: Props) {
 			return "blue";
 		}
 		if (checkIfSelectedForComparison()) {
-			return "blue";
+			if (props.usedOnHighlighting2View) {
+				if (props.feature == comparisonFeature1) {
+					return "blue"
+				}
+				if (props.feature == comparisonFeature2) {
+					return "green"
+				}
+				if (props.feature == comparisonFeature3) {
+					return "orange"
+				}
+			} else {
+				return "blue";
+			}
 		}
 		if (isHovered) {
 			return "#5c6bc0";

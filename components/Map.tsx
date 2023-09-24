@@ -17,9 +17,10 @@ import ComparisonControl from "./ComparisonControl";
 interface Props {
 	bounds: number[][];
 	center: number[];
-	filteringOnly: boolean;
-	differenceOnly: boolean;
-	highlightingAndDifference: boolean;
+	filtering: boolean;
+	highlighting_1: boolean;
+	highlighting_2: boolean;
+	difference: boolean;
 }
 
 const POSITION_CLASSES = {
@@ -55,16 +56,8 @@ export default function Map(props: Props) {
 			compareFeatureState == "Comparison"
 		) {
 			let features = [];
-			if (props.filteringOnly) {
+			if (props.filtering) {
 				features = [comparisonFeature1, comparisonFeature2];
-			} else if (props.differenceOnly) {
-				features = [
-					getFeatureAsDifferenceOfTwoFeatures(
-						comparisonFeature1,
-						comparisonFeature2,
-						dataset
-					),
-				];
 			} else {
 				features = states.features;
 			}
@@ -74,13 +67,13 @@ export default function Map(props: Props) {
 					<GraphView
 						features={features}
 						allowEscapeViewBox
-						usedOnDifferenceOnlyView={props.differenceOnly}
-						usedOnHighlightingView={props.highlightingAndDifference}
+						usedOnHighlighting1View={props.highlighting_1}
+						usedOnHighlighting2View={props.highlighting_2}
 					/>
 					<TableView
 						features={features}
-						usedOnDifferenceOnlyView={props.differenceOnly}
-						usedOnHighlightingView={props.highlightingAndDifference}
+						usedOnHighlighting1View={props.highlighting_1}
+						usedOnHighlighting2View={props.highlighting_2}
 					/>
 				</>
 			);
@@ -92,29 +85,11 @@ export default function Map(props: Props) {
 			compareFeatureState == "Comparison"
 		) {
 			let features = [];
-			if (props.filteringOnly) {
+			if (props.filtering) {
 				features = [
 					comparisonFeature1,
 					comparisonFeature2,
 					comparisonFeature3,
-				];
-			} else if (props.differenceOnly) {
-				features = [
-					getFeatureAsDifferenceOfTwoFeatures(
-						comparisonFeature1,
-						comparisonFeature2,
-						dataset
-					),
-					getFeatureAsDifferenceOfTwoFeatures(
-						comparisonFeature1,
-						comparisonFeature3,
-						dataset
-					),
-					getFeatureAsDifferenceOfTwoFeatures(
-						comparisonFeature2,
-						comparisonFeature3,
-						dataset
-					),
 				];
 			} else {
 				features = states.features;
@@ -125,13 +100,13 @@ export default function Map(props: Props) {
 					<GraphView
 						features={features}
 						allowEscapeViewBox
-						usedOnDifferenceOnlyView={props.differenceOnly}
-						usedOnHighlightingView={props.highlightingAndDifference}
+						usedOnHighlighting1View={props.highlighting_1}
+						usedOnHighlighting2View={props.highlighting_2}
 					/>
 					<TableView
 						features={features}
-						usedOnDifferenceOnlyView={props.differenceOnly}
-						usedOnHighlightingView={props.highlightingAndDifference}
+						usedOnHighlighting1View={props.highlighting_1}
+						usedOnHighlighting2View={props.highlighting_2}
 					/>
 				</>
 			);
@@ -177,7 +152,7 @@ export default function Map(props: Props) {
 				/>
 
 				{states.features.map((state: Feature, index: number) => (
-					<MapFeature key={index} feature={state} />
+					<MapFeature key={index} feature={state} usedOnHighlighting2View={props.highlighting_2} />
 				))}
 
 				<div
@@ -190,10 +165,10 @@ export default function Map(props: Props) {
 				>
 					<div className="w-1/3"></div>
 					<div className="mx-3 w-1/3 h-fit flex">
-						<ComparisonControl />
+						<ComparisonControl usedOnHighlighting2View={props.highlighting_2} />
 					</div>
 				</div>
-				{props.highlightingAndDifference &&
+				{props.difference &&
 				comparisonFeature1 &&
 				comparisonFeature2 &&
 				comparisonFeature3 &&
@@ -221,7 +196,7 @@ export default function Map(props: Props) {
 										dataset
 									),
 								]}
-								usedOnDifferenceOnlyView
+								usedAsDifferenceView
 								allowEscapeViewBox={false}
 								side="right"
 							/>
@@ -243,13 +218,13 @@ export default function Map(props: Props) {
 										dataset
 									),
 								]}
-								usedOnDifferenceOnlyView
+								usedAsDifferenceView
 								side="right"
 							/>
 						</div>
 					</div>
 				) : null}
-				{props.highlightingAndDifference &&
+				{props.difference &&
 				comparisonFeature1 &&
 				comparisonFeature2 &&
 				comparisonFeature3 == undefined &&
@@ -267,7 +242,7 @@ export default function Map(props: Props) {
 										dataset
 									),
 								]}
-								usedOnDifferenceOnlyView
+								usedAsDifferenceView
 								allowEscapeViewBox={false}
 								side="right"
 							/>
@@ -279,7 +254,7 @@ export default function Map(props: Props) {
 										dataset
 									),
 								]}
-								usedOnDifferenceOnlyView
+								usedAsDifferenceView
 								side="right"
 							/>
 						</div>

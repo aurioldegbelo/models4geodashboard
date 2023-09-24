@@ -6,7 +6,7 @@ const MapWithNoSSR = dynamic(() => import("../../components/Map"), {
 	ssr: false,
 });
 
-export default function v3() {
+export default function v6() {
 	return (
 		<MapWithNoSSR
 			bounds={[
@@ -17,7 +17,7 @@ export default function v3() {
 			filtering={false}
 			highlighting_1={false}
 			highlighting_2={true}
-			difference={false}
+            difference={true}
 		/>
 	);
 }

@@ -10,13 +10,14 @@ export default function v2() {
 	return (
 		<MapWithNoSSR
 			bounds={[
-				[58.0, 20.0],
+				[58.0, 40.0],
 				[40.0, -20.0],
 			]}
-			center={[51.5, 0.0]}
-			filteringOnly={false}
-			differenceOnly={true}
-			highlightingAndDifference={false}
+			center={[51.5, 10.0]}
+			filtering={false}
+			highlighting_1={true}
+			highlighting_2={false}
+			difference={false}
 		/>
 	);
 }

@@ -9,8 +9,9 @@ import { useLogUserActivityStore } from "@/store/logUserActivityStore";
 
 interface Props {
 	features: Feature[] | DifferenceFeature[];
-	usedOnHighlightingView?: boolean;
-	usedOnDifferenceOnlyView?: boolean;
+	usedOnHighlighting1View?: boolean;
+	usedOnHighlighting2View?: boolean;
+	usedAsDifferenceView?: boolean;
 	side?: Side;
 }
 
@@ -56,12 +57,16 @@ export default function TableView(props: Props) {
 
 	const colorizeRow = (name: string, index: number) => {
 		if (
-			props.usedOnHighlightingView &&
+			props.usedOnHighlighting1View &&
 			(comparisonFeature1?.properties.NUTS_NAME == name ||
 				comparisonFeature2?.properties.NUTS_NAME == name ||
 				comparisonFeature3?.properties.NUTS_NAME == name)
 		) {
 			return "bg-indigo-400 hover:bg-indigo-200";
+		} else if (props.usedOnHighlighting2View) {
+			if (comparisonFeature1?.properties.NUTS_NAME == name) return 'bg-indigo-400 hover:bg-indigo-200'
+			if (comparisonFeature2?.properties.NUTS_NAME == name) return 'bg-green-500 hover:bg-green-300'
+			if (comparisonFeature3?.properties.NUTS_NAME == name) return 'bg-yellow-400 hover:bg-yellow-200'
 		} else if (selectedFeature?.properties.NUTS_NAME == name) {
 			return "bg-indigo-400 hover:bg-indigo-200";
 		} else {
@@ -105,7 +110,7 @@ export default function TableView(props: Props) {
 		>
 			<OnViewDatasetDescription
 				usedOnDifferenceOnlyView={
-					props.usedOnDifferenceOnlyView ? true : false
+					props.usedAsDifferenceView ? true : false
 				}
 			/>
 			<div className="h-full w-full overflow-x-auto overflow-y-auto">

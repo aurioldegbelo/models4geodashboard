@@ -24,8 +24,9 @@ import { useLogUserActivityStore } from "@/store/logUserActivityStore";
 
 interface Props {
 	features: Feature[] | DifferenceFeature[];
-	usedOnHighlightingView?: boolean;
-	usedOnDifferenceOnlyView?: boolean;
+	usedOnHighlighting2View?: boolean;
+	usedOnHighlighting1View?: boolean;
+	usedAsDifferenceView?: boolean;
 	allowEscapeViewBox?: boolean;
 	side?: Side;
 }
@@ -109,7 +110,7 @@ export default function GraphView(props: Props) {
 	};
 
 	const getLineColor = (name: string) => {
-		if (props.usedOnHighlightingView) {
+		if (props.usedOnHighlighting1View) {
 			if (
 				comparisonFeature1 &&
 				comparisonFeature1?.properties.NUTS_NAME == name
@@ -127,6 +128,27 @@ export default function GraphView(props: Props) {
 				comparisonFeature3?.properties.NUTS_NAME == name
 			) {
 				return "blue";
+			} else {
+				return "gray";
+			}
+		} else if (props.usedOnHighlighting2View) {
+			if (
+				comparisonFeature1 &&
+				comparisonFeature1?.properties.NUTS_NAME == name
+			) {
+				return "blue";
+			}
+			if (
+				comparisonFeature2 &&
+				comparisonFeature2?.properties.NUTS_NAME == name
+			) {
+				return "green";
+			}
+			if (
+				comparisonFeature3 &&
+				comparisonFeature3?.properties.NUTS_NAME == name
+			) {
+				return "orange";
 			} else {
 				return "gray";
 			}
@@ -151,7 +173,7 @@ export default function GraphView(props: Props) {
 		>
 			<OnViewDatasetDescription
 				usedOnDifferenceOnlyView={
-					props.usedOnDifferenceOnlyView ? true : false
+					props.usedAsDifferenceView ? true : false
 				}
 			/>
 			<ResponsiveContainer height="100%" width="100%">

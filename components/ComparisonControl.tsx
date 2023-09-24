@@ -4,8 +4,13 @@ import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
 import { minimumTwoOfThreeSelectedForComparison } from "@/utils/minimumTwoOfThreeSelectedForComparison";
 import { logUserActivity } from "@/utils/logUserActivity";
 import { toast } from "react-toastify";
+import { Feature } from "@/types/types";
 
-export default function ComparisonControl() {
+interface Props {
+	usedOnHighlighting2View: boolean;
+}
+
+export default function ComparisonControl(props: Props) {
 	const comparisonFeature1 = useCompareFeaturesStore(
 		(state) => state.feature1
 	);
@@ -130,17 +135,35 @@ export default function ComparisonControl() {
 							</p>
 						) : null}
 						{comparisonFeature1 != undefined ? (
-							<p className="bg-indigo-300 px-2 py-1 rounded-xl text-indigo-800 w-fit">
+							<p
+								className={`px-2 py-1 rounded-xl w-fit ${
+									props.usedOnHighlighting2View == true
+										? "text-indigo-800 bg-indigo-300"
+										: "text-indigo-800 bg-indigo-300"
+								}`}
+							>
 								{comparisonFeature1.properties.NUTS_NAME}
 							</p>
 						) : null}
 						{comparisonFeature2 != undefined ? (
-							<p className="bg-indigo-300 px-2 py-1 rounded-xl text-indigo-800 w-fit">
+							<p
+							className={`px-2 py-1 rounded-xl w-fit ${
+								props.usedOnHighlighting2View == true
+									? "text-green-700 bg-green-200"
+									: "text-indigo-800 bg-indigo-300"
+							}`}
+						>
 								{comparisonFeature2.properties.NUTS_NAME}
 							</p>
 						) : null}
 						{comparisonFeature3 != undefined ? (
-							<p className="bg-indigo-300 px-2 py-1 rounded-xl text-indigo-800 w-fit">
+							<p
+							className={`px-2 py-1 rounded-xl w-fit ${
+								props.usedOnHighlighting2View == true
+									? "text-yellow-800 bg-yellow-400"
+									: "text-indigo-800 bg-indigo-300"
+							}`}
+						>
 								{comparisonFeature3.properties.NUTS_NAME}
 							</p>
 						) : null}

@@ -47,6 +47,30 @@ export default function AppLayout(props: Props) {
 						</div>
 						<div className="flex sm:ml-10">
 							<NavLink
+								href="/dashboard/v4"
+								active={router.pathname == "/dashboard/v4"}
+							>
+								Version 4
+							</NavLink>
+						</div>
+						<div className="flex sm:ml-10">
+							<NavLink
+								href="/dashboard/v5"
+								active={router.pathname == "/dashboard/v5"}
+							>
+								Version 5
+							</NavLink>
+						</div>
+						<div className="flex sm:ml-10">
+							<NavLink
+								href="/dashboard/v6"
+								active={router.pathname == "/dashboard/v6"}
+							>
+								Version 6
+							</NavLink>
+						</div>
+						<div className="flex sm:ml-10">
+							<NavLink
 								href="/about"
 								active={router.pathname == "/about"}
 							>
