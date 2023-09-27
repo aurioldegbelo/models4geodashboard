@@ -87,6 +87,13 @@ export default function about() {
 								Measures the share of woodland in total land
 								area. It is measured in %.
 							</p>
+							<p className="font-bold mt-2 text-sm">
+								Agricultural Area Percentage
+							</p>
+							<p>
+								Measures the share of agricultural area in total land
+								area. It is measured in %.
+							</p>
 						</div>
 					</div>
 				</div>

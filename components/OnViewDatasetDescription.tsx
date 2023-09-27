@@ -63,6 +63,20 @@ export default function OnViewDatasetDescription(props: Props) {
 			} else {
 				labelString = "Share of woodland in total area |";
 			}
+		} else if (dataset == "agriculturallandpercentage") {
+			if (
+				minimumTwoOfThreeSelectedForComparison(
+					comparisonFeature1,
+					comparisonFeature2,
+					comparisonFeature3
+				) &&
+				props.usedOnDifferenceOnlyView
+			) {
+				labelString =
+					"Difference in share of agricultural land in total area |";
+			} else {
+				labelString = "Share of agricultural land in total area |";
+			}
 		}
 		return labelString;
 	};
@@ -74,6 +88,8 @@ export default function OnViewDatasetDescription(props: Props) {
 		} else if (dataset == "greenlandpercentage") {
 			unitString = "%";
 		} else if (dataset == "woodlandpercentage") {
+			unitString = "%";
+		} else if (dataset == "agriculturallandpercentage") {
 			unitString = "%";
 		}
 		return unitString;
