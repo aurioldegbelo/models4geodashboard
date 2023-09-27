@@ -3,7 +3,6 @@ import {
 	DifferenceFeature,
 	Feature,
 	YearType,
-	YearValuePairs,
 } from "@/types/types";
 
 export function getFeatureAsDifferenceOfTwoFeatures(
@@ -71,6 +70,23 @@ export function getFeatureAsDifferenceOfTwoFeatures(
 					"2021": 0,
 					"2022": 0,
 				},
+				agriculturallandpercentage: {
+					"2008": 0,
+					"2009": 0,
+					"2010": 0,
+					"2011": 0,
+					"2012": 0,
+					"2013": 0,
+					"2014": 0,
+					"2015": 0,
+					"2016": 0,
+					"2017": 0,
+					"2018": 0,
+					"2019": 0,
+					"2020": 0,
+					"2021": 0,
+					"2022": 0,
+				}
 			},
 		},
 	};

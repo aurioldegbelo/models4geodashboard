@@ -1,4 +1,3 @@
-import { states } from "@/data/states";
 import { Feature } from "@/types/types";
 import { create } from "zustand";
 

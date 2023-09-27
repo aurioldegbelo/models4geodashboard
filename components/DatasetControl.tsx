@@ -19,6 +19,7 @@ export default function DatasetControl() {
 							{dataset == 'roadnetworkdensity' ? 'Road Network Density': ''}
                             {dataset == 'greenlandpercentage' ? 'Greenland Percentage': ''}
                             {dataset == 'woodlandpercentage' ? 'Woodland Percentage': ''}
+							{dataset == 'agriculturallandpercentage' ? 'Agricultural Area Percentage': ''}
 						</span>
 					</Listbox.Button>
 					<Transition
@@ -91,6 +92,28 @@ export default function DatasetControl() {
 											}`}
 										>
 											{'Woodland Percentage'}
+										</span>
+									)}
+								</Listbox.Option>
+								<Listbox.Option
+									className={({ active }) =>
+										`relative cursor-default select-none py-2 px-4  ${
+											active
+												? "bg-indigo-300 text-indigo-900"
+												: "text-gray-900"
+										}`
+									}
+									value={'agriculturallandpercentage'}
+								>
+									{({ selected }) => (
+										<span
+											className={`block truncate ${
+												selected
+													? "font-medium"
+													: "font-normal"
+											}`}
+										>
+											{'Agricultural Area Percentage'}
 										</span>
 									)}
 								</Listbox.Option>

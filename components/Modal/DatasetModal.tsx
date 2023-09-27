@@ -74,6 +74,16 @@ export default function DatasetInformationModal(props: Props) {
 								</small>
 							</>
 						)}
+						{dataset == "agriculturallandpercentage" && (
+							<>
+								<h1 className="text-lg">
+									Share of agricultural land in total area
+								</h1>
+								<small className="self-end pb-1">
+									measured in: %
+								</small>
+							</>
+						)}
 					</div>
 				</div>
 				<div className="px-6 py-4 bg-gray-100 text-right rounded-b-lg">

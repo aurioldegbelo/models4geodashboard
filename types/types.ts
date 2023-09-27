@@ -1,11 +1,15 @@
-export type Dataset = 'roadnetworkdensity' | 'woodlandpercentage' | 'greenlandpercentage'
+export type Dataset =
+	| "roadnetworkdensity"
+	| "woodlandpercentage"
+	| "greenlandpercentage"
+	| "agriculturallandpercentage";
 
 export type TransormedData = {
 	year: string;
 	[name: string]: number | string;
-}
+};
 
-export type Side = 'left' | 'right'
+export type Side = "left" | "right";
 
 export type States = {
 	type: string;
@@ -16,7 +20,7 @@ export type DifferenceFeature = {
 	properties: Properties;
 	featureName1: string;
 	featureName2: string;
-}
+};
 export type Feature = {
 	id?: number;
 	type: string;
@@ -37,10 +41,11 @@ export type Properties = {
 };
 
 export type Values = {
-	roadnetworkdensity: YearValuePairs,
-	woodlandpercentage: YearValuePairs,
-	greenlandpercentage: YearValuePairs,
-}
+	roadnetworkdensity: YearValuePairs;
+	woodlandpercentage: YearValuePairs;
+	greenlandpercentage: YearValuePairs;
+	agriculturallandpercentage: YearValuePairs;
+};
 
 export type YearValuePairs = Record<YearType, number>;
 

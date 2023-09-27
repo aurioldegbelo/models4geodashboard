@@ -64,9 +64,12 @@ export default function TableView(props: Props) {
 		) {
 			return "bg-indigo-400 hover:bg-indigo-200";
 		} else if (props.usedOnHighlighting2View) {
-			if (comparisonFeature1?.properties.NUTS_NAME == name) return 'bg-indigo-400 hover:bg-indigo-200'
-			if (comparisonFeature2?.properties.NUTS_NAME == name) return 'bg-green-500 hover:bg-green-300'
-			if (comparisonFeature3?.properties.NUTS_NAME == name) return 'bg-yellow-400 hover:bg-yellow-200'
+			if (comparisonFeature1?.properties.NUTS_NAME == name)
+				return "bg-indigo-400 hover:bg-indigo-200";
+			if (comparisonFeature2?.properties.NUTS_NAME == name)
+				return "bg-green-500 hover:bg-green-300";
+			if (comparisonFeature3?.properties.NUTS_NAME == name)
+				return "bg-yellow-400 hover:bg-yellow-200";
 		} else if (selectedFeature?.properties.NUTS_NAME == name) {
 			return "bg-indigo-400 hover:bg-indigo-200";
 		} else {
@@ -153,6 +156,12 @@ export default function TableView(props: Props) {
 													]}
 												{dataset ==
 													"woodlandpercentage" &&
+													feature.properties.values
+														.woodlandpercentage[
+														year
+													]}
+												{dataset ==
+													"agriculturallandpercentage" &&
 													feature.properties.values
 														.woodlandpercentage[
 														year

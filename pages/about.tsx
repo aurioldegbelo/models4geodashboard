@@ -1,8 +1,6 @@
-import PrimaryButton from "@/components/Button/PrimaryButton";
 import Card from "@/components/Card";
 import DatasetControl from "@/components/DatasetControl";
 import LogUserActivitySwitch from "@/components/LogUserActivitySwitch";
-import { useLogUserActivityStore } from "@/store/logUserActivityStore";
 
 export default function about() {
 	return (

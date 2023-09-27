@@ -53,11 +53,12 @@ if __name__ == "__main__":
     initiate_empty_dataset_name(combined_states_data, 'roadnetworkdensity')
     initiate_empty_dataset_name(combined_states_data, 'greenlandpercentage')
     initiate_empty_dataset_name(combined_states_data, 'woodlandpercentage')
+    initiate_empty_dataset_name(combined_states_data, 'agriculturallandpercentage')
     for year in range(2008, 2023):
         add_values_to_dictionary(combined_states_data, f'{year}', 'roadnetworkdensity', 'roadnetworkdensity/roadnetworkdensity_states_', 0)
         add_values_to_dictionary(combined_states_data, f'{year}', 'greenlandpercentage', 'greenlandpercentage/greenlandpercentage_states_', 1)
         add_values_to_dictionary(combined_states_data, f'{year}', 'woodlandpercentage', 'woodlandpercentage/woodlandpercentage_states_', 1)
-
+        add_values_to_dictionary(combined_states_data, f'{year}', 'agriculturallandpercentage', 'agriculturallandpercentage/agriculturallandpercentage_states_', 1)
     
     
     with open('combined_states.json', 'w', encoding='utf-8') as file:
