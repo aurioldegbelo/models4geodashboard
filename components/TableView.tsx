@@ -38,21 +38,21 @@ export default function TableView(props: Props) {
 	);
 
 	const allYears: YearType[] = [
-		"2022",
-		"2021",
-		"2020",
-		"2019",
-		"2018",
-		"2017",
-		"2016",
-		"2015",
-		"2014",
-		"2013",
-		"2012",
-		"2011",
-		"2010",
-		"2009",
 		"2008",
+		"2009",
+		"2010",
+		"2011",
+		"2012",
+		"2013",
+		"2014",
+		"2015",
+		"2016",
+		"2017",
+		"2018",
+		"2019",
+		"2020",
+		"2021",
+		"2022",
 	];
 
 	const colorizeRow = (name: string, index: number) => {
@@ -63,7 +63,12 @@ export default function TableView(props: Props) {
 				comparisonFeature3?.properties.NUTS_NAME == name)
 		) {
 			return "bg-indigo-400 hover:bg-indigo-200";
-		} else if (props.usedOnHighlighting2View) {
+		} else if (
+			props.usedOnHighlighting2View &&
+			(comparisonFeature1?.properties.NUTS_NAME == name ||
+				comparisonFeature2?.properties.NUTS_NAME == name ||
+				comparisonFeature3?.properties.NUTS_NAME == name)
+		) {
 			if (comparisonFeature1?.properties.NUTS_NAME == name)
 				return "bg-indigo-400 hover:bg-indigo-200";
 			if (comparisonFeature2?.properties.NUTS_NAME == name)
@@ -163,7 +168,7 @@ export default function TableView(props: Props) {
 												{dataset ==
 													"agriculturallandpercentage" &&
 													feature.properties.values
-														.woodlandpercentage[
+														.agriculturallandpercentage[
 														year
 													]}
 											</th>

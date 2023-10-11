@@ -3,6 +3,7 @@ import NavLink from "./NavLink";
 import { useRouter } from "next/router";
 import classNames from "classnames";
 import ResponsiveNavLink from "./ResponsiveNavLink";
+import DatasetControl from "./DatasetControl";
 
 interface Props {
 	children: JSX.Element;

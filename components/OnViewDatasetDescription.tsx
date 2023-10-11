@@ -97,11 +97,11 @@ export default function OnViewDatasetDescription(props: Props) {
 
 	return (
 		<div className="flex mb-2">
-			<div className="flex gap-2">
-				<h1 className="text-lg">{getHeadingString()}</h1>
-				<small className="self-end pb-1">
+			<div className="flex gap-1 items-center">
+				<p className="text-md font-bold">{getHeadingString()}</p>
+				<p className="text-xs">
 					measured in: {getCorrectUnit()}
-				</small>
+				</p>
 			</div>
 		</div>
 	);

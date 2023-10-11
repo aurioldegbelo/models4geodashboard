@@ -6,7 +6,7 @@ interface LogUserActivity {
 }
 
 export const useLogUserActivityStore = create<LogUserActivity>((set) => ({
-	logUserActivity: true,
+	logUserActivity: false,
 	setLogUserActivity: (shouldLogUserActivity: boolean) =>
 		set((state) => ({ ...state, logUserActivity: shouldLogUserActivity })),
 }));
