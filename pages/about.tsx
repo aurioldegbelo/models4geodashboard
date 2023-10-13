@@ -1,9 +1,7 @@
 import Card from "@/components/Card";
 import DatasetControl from "@/components/DatasetControl";
-import useTranslation from 'next-translate/useTranslation'
 
 export default function about() {
-	let { t } = useTranslation('common')
 	return (
 		<div className="w-screen flex justify-center">
 			<Card className="mt-16 w-2/3">

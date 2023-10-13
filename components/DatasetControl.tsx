@@ -1,14 +1,11 @@
 import { Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
-import useTranslation from 'next-translate/useTranslation'
 
 export default function DatasetControl() {
 	
     const dataset = useSelectedDatasetStore((state) => state.dataset);
     const setDataset = useSelectedDatasetStore((state) => state.setDataset);
-
-	let { t } = useTranslation('common')
 
 	return (
 		<div className="leaflet-control bg-white rounded-lg w-64">
@@ -16,10 +13,10 @@ export default function DatasetControl() {
 				<div className="">
 					<Listbox.Button className="w-full rounded-lg h-10 border-2 bg-white text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-white hover:bg-indigo-100 hover:ring-offset-indigo-600 hover:text-indigo-900 hover:ring-indigo-600 hover:border-indigo-600">
 						<span className="block truncate text-md font-semibold">
-							{dataset == 'roadnetworkdensity' ? t('roadnetworkdensity'): ''}
-                            {dataset == 'greenlandpercentage' ? t('greenlandpercentage'): ''}
-                            {dataset == 'woodlandpercentage' ? t('woodlandpercentage'): ''}
-							{dataset == 'agriculturallandpercentage' ? t('agriculturallandpercentage'): ''}
+							{dataset == 'roadnetworkdensity' ? 'Straßennetzdichte': ''}
+                            {dataset == 'greenlandpercentage' ? 'Anteil Grünlandfläche': ''}
+                            {dataset == 'woodlandpercentage' ? 'Anteil Waldfläche': ''}
+							{dataset == 'agriculturallandpercentage' ? 'Anteil Landwirtschaftsfläche': ''}
 						</span>
 					</Listbox.Button>
 					<Transition

@@ -78,8 +78,7 @@ export default function AppLayout(props: Props) {
 						</div>
 					</div>
 
-					<div className="self-center flex items-center gap-2">
-					<LanguageSwitcher />
+					<div className="self-center flex items-center">
 						<a
 							className="text-gray-500 hover:text-indigo-600"
 							href="https://github.com/SimonMeissner/geo-dashboard"
