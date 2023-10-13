@@ -131,6 +131,20 @@ export default function GraphView(props: Props) {
 			} else {
 				return "gray";
 			}
+		} else if (
+			props.usedAsDifferenceView === true &&
+			props.usedOnHighlighting2View === true
+		) {
+			if (props.features[0].properties.NUTS_NAME == name) {
+				return "#a8a29e";
+			}
+			if (props.features[1].properties.NUTS_NAME == name) {
+				return "black";
+				// return 'purple';
+			}
+			if (props.features[2].properties.NUTS_NAME == name) {
+				return "#64748b";
+			}
 		} else if (props.usedOnHighlighting2View) {
 			if (
 				comparisonFeature1 &&

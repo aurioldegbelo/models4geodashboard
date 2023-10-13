@@ -1,9 +1,7 @@
 import { useState } from "react";
 import NavLink from "./NavLink";
 import { useRouter } from "next/router";
-import classNames from "classnames";
-import ResponsiveNavLink from "./ResponsiveNavLink";
-import DatasetControl from "./DatasetControl";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 interface Props {
 	children: JSX.Element;
@@ -80,7 +78,8 @@ export default function AppLayout(props: Props) {
 						</div>
 					</div>
 
-					<div className="items-center self-center">
+					<div className="self-center flex items-center gap-2">
+					<LanguageSwitcher />
 						<a
 							className="text-gray-500 hover:text-indigo-600"
 							href="https://github.com/SimonMeissner/geo-dashboard"

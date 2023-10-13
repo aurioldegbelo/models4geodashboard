@@ -197,6 +197,7 @@ export default function Map(props: Props) {
 									),
 								]}
 								usedAsDifferenceView
+								usedOnHighlighting2View={props.highlighting_2}
 								allowEscapeViewBox={false}
 								side="right"
 							/>
@@ -219,6 +220,7 @@ export default function Map(props: Props) {
 									),
 								]}
 								usedAsDifferenceView
+								usedOnHighlighting2View={props.highlighting_2}
 								side="right"
 							/>
 						</div>
@@ -243,6 +245,7 @@ export default function Map(props: Props) {
 									),
 								]}
 								usedAsDifferenceView
+								usedOnHighlighting2View={props.highlighting_2}
 								allowEscapeViewBox={false}
 								side="right"
 							/>
@@ -255,6 +258,7 @@ export default function Map(props: Props) {
 									),
 								]}
 								usedAsDifferenceView
+								usedOnHighlighting2View={props.highlighting_2}
 								side="right"
 							/>
 						</div>

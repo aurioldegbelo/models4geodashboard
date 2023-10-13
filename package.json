@@ -21,6 +21,7 @@
     "leaflet-defaulticon-compatibility": "^0.1.1",
     "mongodb": "^5.7.0",
     "next": "13.4.1",
+    "next-translate-plugin": "^2.6.0",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
