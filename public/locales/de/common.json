@@ -1,3 +1,45 @@
 {
-    "roadnetworkdensity": "Straßennetzdichte"
+	"roadnetworkdensity": "Straßennetzdichte",
+	"greenlandpercentage": "Anteil Grünlandfläche",
+	"woodlandpercentage": "Anteil Waldfläche",
+	"agriculturallandpercentage": "Anteil Landwirtschaftsfläche",
+	"description": {
+		"roadnetworkdensity": "Straßennetzdichte in Gebietsfläche |",
+		"greenlandpercentage": "Anteil von Gründland in Gebietsfläche |",
+		"woodlandpercentage": "Anteil von Wald in Gebietsfläche |",
+		"agriculturallandpercentage": "Anteil von landwirtschaftlicher Fläche in Gebietsfläche |",
+        "roadnetworkdensityDiff": "Differenzen von Straßennetzdichte in Gebietsfläche |",
+		"greenlandpercentageDiff": "Differenzen im Anteil von Gründland in Gebietsfläche |",
+		"woodlandpercentageDiff": "Differenzen im Anteil von Wald in Gebietsfläche |",
+		"agriculturallandpercentageDiff": "Differenzen im Anteil von landwirtschaftlicher Fläche in Gebietsfläche |",
+        "measured": "Einheit:"
+	},
+    "settings": {
+		"title": "Einstellungen",
+		"selectDataset": "Wähle einen Datensatz aus:",
+        "language": "Wähle eine Sprache aus:"
+	},
+	"purpose": {
+		"title": "Zweck",
+		"body": "Diese Arbeit stellt den Implementierungsteil meiner Bachelor-Thesis dar. Sie diente der Durchführung einer Studie über verschiedene Interface-Designs im Kontext von Geodashboards. Genauer gesagt ging es um die besondere Interaktionsstrategie des Vergleichs. Man möchte die Unterschiede zwischen zwei räumlichen Merkmalen des Datensatzes kennen. Was sind gängige Interface-Designs, um dieses Problem im Kontext von Geodashboards zu lösen? Die Anwendung bietet 6 verschiedene Ansätze für den Vergleich von zwei oder drei räumlichen Merkmalen."
+	},
+	"data": {
+		"title": "Daten",
+		"body": "Die Anwendung verwendet vier verschiedene Datensätze. Dies war erforderlich, um den Lerneffekt für die Studienteilnehmer bei der Nutzung der Dashboards zu verringern. Alle vier Datensätze bestehen aus Werten aus den Jahren 2008 bis 2022. Die Verwendung komplexer räumlich-zeitlicher Daten rechtfertigt die Verwendung mehrerer koordinierter Ansichten. In unserem Fall sind dies: Karte, Grafik, Tabelle. Alle Datensätze sind frei und offen zu verwenden und wurden zur Verfügung gestellt von",
+        "body2": "Die frei verwendbaren Geodaten für die deutschen Bundesländer stammen aus dem"
+    },
+	"aboutPageDescriptions": {
+		"roadnetworkdensity": "Misst die Straßennetzdichte der Gesamtfläche. Es wird in km/km² gemessen.",
+		"greenlandpercentage": "Misst den Anteil an Grünfläche der Gesamtfläche. Es wird in % gemessen.",
+		"woodlandpercentage": "Misst den Anteil an Waldfläche der Gesamtfläche. Es wird in % gemessen.",
+		"agriculturallandpercentage": "Misst den landwirtschaftlich genutzten Anteil der Gesamtfläche. Es wird in % gemessen."
+	},
+    "comparisonControl": {
+        "compareFeatureStateOff": "Vergleichen",
+        "compareFeatureStateSelection": "Starte den Vergleich",
+        "compareFeatureStateComparison": "Stop den Vergleich",
+        "compareFeatureStateSelectionText": "Bitte wähle Bundesländer durch Klicken auf der Karte aus. Oder beende den Prozess durch drücken von",
+        "compareFeatureStateSelectionText2": "",
+        "toastErrorSelectMin2Features": "Bitte wähle mindestens 2 Bundesländer aus!"
+    }
 }

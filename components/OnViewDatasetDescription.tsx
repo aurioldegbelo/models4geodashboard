@@ -1,12 +1,14 @@
 import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
 import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
 import { minimumTwoOfThreeSelectedForComparison } from "@/utils/minimumTwoOfThreeSelectedForComparison";
+import { useTranslation } from "next-i18next";
 
 interface Props {
 	usedOnDifferenceOnlyView: boolean;
 }
 
 export default function OnViewDatasetDescription(props: Props) {
+	const { t } = useTranslation("common");
 
 	const dataset = useSelectedDatasetStore((state) => state.dataset);
 
@@ -33,9 +35,9 @@ export default function OnViewDatasetDescription(props: Props) {
 				) &&
 				props.usedOnDifferenceOnlyView
 			) {
-				labelString = 'Differenzen von Straßennetzdichte in Gebietsfläche |';
+				labelString = t("description.roadnetworkdensityDiff");
 			} else {
-				labelString = 'Straßennetzdichte in Gebietsfläche |';
+				labelString = t("description.roadnetworkdensity");
 			}
 		} else if (dataset == "greenlandpercentage") {
 			if (
@@ -46,9 +48,9 @@ export default function OnViewDatasetDescription(props: Props) {
 				) &&
 				props.usedOnDifferenceOnlyView
 			) {
-				labelString = 'Differenzen im Anteil von Gründland in Gebietsfläche |';
+				labelString = t("description.greenlandpercentageDiff");
 			} else {
-				labelString = 'Anteil von Gründland in Gebietsfläche |';
+				labelString = t("description.greenlandpercentage");
 			}
 		} else if (dataset == "woodlandpercentage") {
 			if (
@@ -59,9 +61,9 @@ export default function OnViewDatasetDescription(props: Props) {
 				) &&
 				props.usedOnDifferenceOnlyView
 			) {
-				labelString = 'Differenzen im Anteil von Wald in Gebietsfläche |';
+				labelString = t("description.woodlandpercentageDiff");
 			} else {
-				labelString = 'Anteil von Wald in Gebietsfläche |';
+				labelString = t("description.woodlandpercentage");
 			}
 		} else if (dataset == "agriculturallandpercentage") {
 			if (
@@ -72,9 +74,9 @@ export default function OnViewDatasetDescription(props: Props) {
 				) &&
 				props.usedOnDifferenceOnlyView
 			) {
-				labelString = 'Differenzen im Anteil von landwirtschaftlicher Fläche in Gebietsfläche |';
+				labelString = t("description.agriculturallandpercentageDiff");
 			} else {
-				labelString = 'Anteil von landwirtschaftlicher Fläche in Gebietsfläche |';
+				labelString = t("description.agriculturallandpercentage");
 			}
 		}
 		return labelString;
@@ -98,7 +100,7 @@ export default function OnViewDatasetDescription(props: Props) {
 		<div className="flex mb-2">
 			<div className="flex gap-1 items-center">
 				<p className="text-md font-bold">{getHeadingString()}</p>
-				<p className="text-xs">Einheit: {getCorrectUnit()}</p>
+				<p className="text-xs">{t('description.measured')} {getCorrectUnit()}</p>
 			</div>
 		</div>
 	);

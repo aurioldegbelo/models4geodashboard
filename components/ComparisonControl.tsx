@@ -4,13 +4,15 @@ import { useSelectedFeatureStore } from "@/store/selectedFeatureStore";
 import { minimumTwoOfThreeSelectedForComparison } from "@/utils/minimumTwoOfThreeSelectedForComparison";
 import { logUserActivity } from "@/utils/logUserActivity";
 import { toast } from "react-toastify";
-import { Feature } from "@/types/types";
+import { useTranslation } from "next-i18next";
 
 interface Props {
 	usedOnHighlighting2View: boolean;
 }
 
 export default function ComparisonControl(props: Props) {
+	const { t } = useTranslation("common");
+
 	const comparisonFeature1 = useCompareFeaturesStore(
 		(state) => state.feature1
 	);
@@ -58,7 +60,7 @@ export default function ComparisonControl(props: Props) {
 			handleLogUserActivity();
 			setCompareFeatureState("Comparison");
 		} else {
-			toast("Please select a minimum of two features!", {
+			toast(t('comparisonControl.toastErrorSelectMin2Features'), {
 				position: "top-right",
 				autoClose: 3000,
 				hideProgressBar: false,
@@ -106,7 +108,7 @@ export default function ComparisonControl(props: Props) {
 						className="flex items-center justify-center cursor-pointer text-md font-semibold w-full rounded-lg h-10 border-2 bg-white text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-white hover:bg-indigo-100 hover:ring-offset-indigo-600 hover:text-indigo-900 hover:ring-indigo-600 hover:border-indigo-600"
 						onClick={handleStartSelectionProcess}
 					>
-						Select for comparison
+						{t('comparisonControl.compareFeatureStateOff')}
 					</div>
 				) : null}
 				{compareFeatureState == "Selection" ? (
@@ -114,7 +116,7 @@ export default function ComparisonControl(props: Props) {
 						className="flex items-center justify-center cursor-pointer text-md font-semibold w-full rounded-lg h-10 border-2 bg-white text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-white hover:bg-indigo-100 hover:ring-offset-indigo-600 hover:text-indigo-900 hover:ring-indigo-600 hover:border-indigo-600"
 						onClick={handleStartComparisonProcess}
 					>
-						Start comparison process
+						{t('comparisonControl.compareFeatureStateSelection')}
 					</div>
 				) : null}
 				{compareFeatureState == "Comparison" ? (
@@ -122,7 +124,7 @@ export default function ComparisonControl(props: Props) {
 						className="flex items-center justify-center cursor-pointer text-md font-semibold w-full rounded-lg h-10 border-2 bg-white text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-white hover:bg-indigo-100 hover:ring-offset-indigo-600 hover:text-indigo-900 hover:ring-indigo-600 hover:border-indigo-600"
 						onClick={handleStopComparisonProcess}
 					>
-						Stop Comparison Process
+						{t('comparisonControl.compareFeatureStateComparison')}
 					</div>
 				) : null}
 				{compareFeatureState == "Selection" ? (
@@ -130,8 +132,13 @@ export default function ComparisonControl(props: Props) {
 						{comparisonFeature1 == undefined &&
 						comparisonFeature2 == undefined ? (
 							<p>
-								Please select features by clicking on them on
-								the map. Or press <b>Q</b> to quit.
+								{t(
+									"comparisonControl.compareFeatureStateSelectionText"
+								)}
+								<b> Q </b>
+								{t(
+									"comparisonControl.compareFeatureStateSelectionText2"
+								)}
 							</p>
 						) : null}
 						{comparisonFeature1 != undefined ? (
@@ -147,23 +154,23 @@ export default function ComparisonControl(props: Props) {
 						) : null}
 						{comparisonFeature2 != undefined ? (
 							<p
-							className={`px-2 py-1 rounded-xl w-fit ${
-								props.usedOnHighlighting2View == true
-									? "text-green-700 bg-green-200"
-									: "text-indigo-800 bg-indigo-300"
-							}`}
-						>
+								className={`px-2 py-1 rounded-xl w-fit ${
+									props.usedOnHighlighting2View == true
+										? "text-green-700 bg-green-200"
+										: "text-indigo-800 bg-indigo-300"
+								}`}
+							>
 								{comparisonFeature2.properties.NUTS_NAME}
 							</p>
 						) : null}
 						{comparisonFeature3 != undefined ? (
 							<p
-							className={`px-2 py-1 rounded-xl w-fit ${
-								props.usedOnHighlighting2View == true
-									? "text-yellow-800 bg-yellow-400"
-									: "text-indigo-800 bg-indigo-300"
-							}`}
-						>
+								className={`px-2 py-1 rounded-xl w-fit ${
+									props.usedOnHighlighting2View == true
+										? "text-yellow-800 bg-yellow-400"
+										: "text-indigo-800 bg-indigo-300"
+								}`}
+							>
 								{comparisonFeature3.properties.NUTS_NAME}
 							</p>
 						) : null}

@@ -17,9 +17,9 @@ export default function DatasetControl() {
 					<Listbox.Button className="w-full rounded-lg h-10 border-2 bg-white text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-white hover:bg-indigo-100 hover:ring-offset-indigo-600 hover:text-indigo-900 hover:ring-indigo-600 hover:border-indigo-600">
 						<span className="block truncate text-md font-semibold">
 							{dataset == 'roadnetworkdensity' ? t('roadnetworkdensity'): ''}
-                            {dataset == 'greenlandpercentage' ? 'Anteil Grünlandfläche': ''}
-                            {dataset == 'woodlandpercentage' ? 'Anteil Waldfläche': ''}
-							{dataset == 'agriculturallandpercentage' ? 'Anteil Landwirtschaftsfläche': ''}
+                            {dataset == 'greenlandpercentage' ? t('greenlandpercentage'): ''}
+                            {dataset == 'woodlandpercentage' ? t('woodlandpercentage'): ''}
+							{dataset == 'agriculturallandpercentage' ? t('agriculturallandpercentage'): ''}
 						</span>
 					</Listbox.Button>
 					<Transition
@@ -47,7 +47,7 @@ export default function DatasetControl() {
 													: "font-normal"
 											}`}
 										>
-											{'Straßennetzdichte'}
+											{t('roadnetworkdensity')}
 										</span>
 									)}
 								</Listbox.Option>
@@ -69,7 +69,7 @@ export default function DatasetControl() {
 													: "font-normal"
 											}`}
 										>
-											{'Anteil Grünlandfläche'}
+											{t('greenlandpercentage')}
 										</span>
 									)}
 								</Listbox.Option>
@@ -91,7 +91,7 @@ export default function DatasetControl() {
 													: "font-normal"
 											}`}
 										>
-											{'Anteil Waldfläche'}
+											{t('woodlandpercentage')}
 										</span>
 									)}
 								</Listbox.Option>
@@ -113,7 +113,7 @@ export default function DatasetControl() {
 													: "font-normal"
 											}`}
 										>
-											{'Anteil Landwirtschaftsfläche'}
+											{t('agriculturallandpercentage')}
 										</span>
 									)}
 								</Listbox.Option>

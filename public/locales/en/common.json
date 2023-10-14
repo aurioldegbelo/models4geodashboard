@@ -1,3 +1,45 @@
 {
-    "roadnetworkdensity": "Road Network Density"
+	"roadnetworkdensity": "Roadnetwork density",
+	"greenlandpercentage": "Share of greenland",
+	"woodlandpercentage": "Share of woodland",
+	"agriculturallandpercentage": "Share of agricultural area",
+	"description": {
+		"roadnetworkdensity": "Roadnetwork density in toal area |",
+		"greenlandpercentage": "Share of Greenland in total area |",
+		"woodlandpercentage": "Share of Woodland in total area |",
+		"agriculturallandpercentage": "Share of agricultural land in total area |",
+		"roadnetworkdensityDiff": "Differences in roadnetwork density in total area |",
+		"greenlandpercentageDiff": "Differences in share of greenland in total area |",
+		"woodlandpercentageDiff": "Differences in share of woodland in total area |",
+		"agriculturallandpercentageDiff": "Differences in share of agricultural land in total area |",
+		"measured": "measured in:"
+	},
+	"settings": {
+		"title": "Settings",
+		"selectDataset": "Select dataset:",
+        "language": "Select language"
+	},
+	"purpose": {
+		"title": "Purpose",
+		"body": "This work provides the implementation part of my bachelor-thesis. It was used to conduct a study about different interface designs in the context of geodashboards. More specifically it was about the particular interaction strategy of comparison. One wants to know the differences between two spatial features of the dataset. What are common interface design to face this issue in the context of geodashboards? The application provides 6 different approaches for comparing two or three spatial features."
+	},
+	"data": {
+		"title": "Data",
+		"body": "The application uses four different datasets. It was required to reduce learning effects for the study participants when using the dashboards. All four datasets consist of values from the years of 2008 to 2022. The use of complex spatial-temporal data justifies the use of multiple coordinated views. In our case: Map, Graph, Table. All datasets are free and open to use and were provided by",
+        "body2": "The free to use geographic data for the german states was provide from the"
+    },
+	"aboutPageDescriptions": {
+		"roadnetworkdensity": "Measures the road network density per overall land area. It is measured in km/km².",
+		"greenlandpercentage": "Measures the share of grassland in total land area. It is measured in %.",
+		"woodlandpercentage": "Measures the share of woodland in total land area. It is measured in %.",
+		"agriculturallandpercentage": "Measures the share of agricultural area in total land area. It is measured in %."
+	},
+    "comparisonControl": {
+        "compareFeatureStateOff": "Select for Comparison",
+        "compareFeatureStateSelection": "Start comparison process",
+        "compareFeatureStateComparison": "Stop Comparison Process",
+        "compareFeatureStateSelectionText": "Please select features by clicking on them on the map. Or press",
+        "compareFeatureStateSelectionText2": "to quit.",
+        "toastErrorSelectMin2Features": "Please select a minimum of two features!"
+    }
 }
