@@ -3,7 +3,7 @@ import DatasetControl from "@/components/DatasetControl";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from 'next-i18next'
 
-const about = () => {
+const About = () => {
 
 	const { t } = useTranslation('common')
 
@@ -111,4 +111,4 @@ export async function getStaticProps({ locale }: any) {
 	};
 }
 
-export default about
+export default About
