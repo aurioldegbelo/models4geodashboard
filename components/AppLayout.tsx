@@ -1,7 +1,7 @@
 import { useState } from "react";
 import NavLink from "./NavLink";
 import { useRouter } from "next/router";
-import LanguageSwitcher from "./LanguageSwitcher";
+import LocalesSwitcher from "./LocalesSwitcher";
 
 interface Props {
 	children: JSX.Element;
@@ -78,7 +78,8 @@ export default function AppLayout(props: Props) {
 						</div>
 					</div>
 
-					<div className="self-center flex items-center">
+					<div className="self-center flex items-center gap-2">
+						<LocalesSwitcher />
 						<a
 							className="text-gray-500 hover:text-indigo-600"
 							href="https://github.com/SimonMeissner/geo-dashboard"

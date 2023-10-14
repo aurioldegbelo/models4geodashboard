@@ -1,7 +1,12 @@
 import Card from "@/components/Card";
 import DatasetControl from "@/components/DatasetControl";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from 'next-i18next'
 
-export default function about() {
+const about = () => {
+
+	const { t } = useTranslation('common')
+
 	return (
 		<div className="w-screen flex justify-center">
 			<Card className="mt-16 w-2/3">
@@ -63,7 +68,7 @@ export default function about() {
 						</p>
 						<div className="mt-10">
 							<p className="font-bold text-sm">
-								Road Network Density
+								{t('roadnetworkdensity')}
 							</p>
 							<p>
 								Measures the road network density per overall
@@ -97,3 +102,13 @@ export default function about() {
 		</div>
 	);
 }
+export async function getStaticProps({ locale }: any) {
+	return {
+		props: {
+			...(await serverSideTranslations(locale, ["common"])),
+			// Will be passed to the page component as props
+		},
+	};
+}
+
+export default about

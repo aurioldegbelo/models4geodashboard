@@ -2,10 +2,10 @@ import AppLayout from "@/components/AppLayout";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { ToastContainer } from "react-toastify";
-
+import { appWithTranslation } from 'next-i18next'
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
 	return (
 		<AppLayout>
 			<>
@@ -15,3 +15,5 @@ export default function App({ Component, pageProps }: AppProps) {
 		</AppLayout>
 	);
 }
+
+export default appWithTranslation(App)
