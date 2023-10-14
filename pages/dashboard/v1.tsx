@@ -1,12 +1,13 @@
 import Loader from "@/components/Loader";
 import dynamic from "next/dynamic";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const MapWithNoSSR = dynamic(() => import("../../components/Map"), {
 	loading: () => <Loader />,
 	ssr: false,
 });
 
-export default function v1() {
+const V1 = () => {
 	return (
 		<MapWithNoSSR
 			bounds={[
@@ -20,4 +21,15 @@ export default function v1() {
 			difference={false}
 		/>
 	);
+};
+
+export async function getStaticProps({ locale }: any) {
+	return {
+		props: {
+			...(await serverSideTranslations(locale, ["common"])),
+			// Will be passed to the page component as props
+		},
+	};
 }
+
+export default V1;
