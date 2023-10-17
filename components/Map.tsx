@@ -13,6 +13,7 @@ import { useCompareFeaturesStore } from "@/store/compareFeaturesStore";
 import { getFeatureAsDifferenceOfTwoFeatures } from "@/utils/getFeatureAsDifferenceOfTwoFeatures";
 import { useSelectedDatasetStore } from "@/store/selectedDatasetStore";
 import ComparisonControl from "./ComparisonControl";
+import DatasetControl from "./DatasetControl";
 
 interface Props {
 	bounds: number[][];
@@ -166,6 +167,7 @@ export default function Map(props: Props) {
 					<div className="w-1/3"></div>
 					<div className="mx-3 w-1/3 h-fit flex">
 						<ComparisonControl usedOnHighlighting2View={props.highlighting_2} />
+						<DatasetControl />
 					</div>
 				</div>
 				{props.difference &&

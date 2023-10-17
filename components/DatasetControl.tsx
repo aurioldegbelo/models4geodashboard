@@ -11,7 +11,7 @@ export default function DatasetControl() {
 	const { t } = useTranslation('common')
 
 	return (
-		<div className="leaflet-control bg-white rounded-lg w-64">
+		<div className="leaflet-control bg-white rounded-lg w-56">
 			<Listbox value={dataset} onChange={setDataset}>
 				<div className="">
 					<Listbox.Button className="w-full rounded-lg h-10 border-2 bg-white text-center focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-white hover:bg-indigo-100 hover:ring-offset-indigo-600 hover:text-indigo-900 hover:ring-indigo-600 hover:border-indigo-600">
