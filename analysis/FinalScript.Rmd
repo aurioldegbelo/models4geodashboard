@@ -1,0 +1,485 @@
+---
+title: "FinalScript"
+author: "Simon Meißner"
+date: "2023-11-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# for reproducibility
+wd = getwd()
+setwd(wd)
+
+data <- read.table("userperformance.csv", sep=",", header = TRUE )
+
+library(Rmisc)
+library(dplyr)
+library(ggplot2)
+library(rpart)
+library(car)
+library(emmeans)
+
+# calculate distraction index
+data <- data %>% mutate(
+  DistractionLL = n_distr_similar_ll * distr_multiplier_similar + n_dist_background_ll * distr_multiplier_background,
+  DistractionUL = n_distr_similar_ul * distr_multiplier_similar + n_distr_background_ul * distr_multiplier_background, 
+  DistractionLR = n_distr_similar_lr * distr_multiplier_similar + n_distr_background_lr * distr_multiplier_background, 
+  DistractionUR = n_distr_similar_ur * distr_multiplier_similar + n_distr_background_ur * distr_multiplier_background
+)
+
+data <- data %>% mutate(
+  DistractionIndex = (DistractionLL + DistractionUL + DistractionLR + DistractionUR) / 2
+)
+
+```
+
+###Answer time
+
+```{r}
+# Analysis with no tranformation of aggregated variables
+
+data <- data %>% mutate(
+  q_view_inverse = (1/q_view),
+  n_view_inverse = (1/n_view)
+)
+
+
+original <- subset(data, select = c("Time_meas", "Accuracy", "n_view_inverse", "q_view_inverse", "DistractionIndex"))
+
+original_corr_matrix <- rcorr(as.matrix(original), type = "pearson")
+print(original_corr_matrix)
+
+boxplot(Time_meas ~ n_view_inverse, data=data)
+
+boxplot(Time_meas ~ q_view_inverse, data=data)
+
+boxplot(Time_meas ~ DistractionIndex, data=data)
+
+original_lm <- lm(Time_meas ~ n_view_inverse + q_view_inverse + DistractionIndex, data = data)
+summary(original_lm)
+
+original_lm_Nview <- lm(Time_meas ~ n_view_inverse, data = data)
+summary(original_lm_Nview)
+
+original_lm_Qview <- lm(Time_meas ~ q_view_inverse, data = data)
+summary(original_lm_Qview)
+
+original_lm_DI <- lm(Time_meas ~ DistractionIndex, data = data)
+summary(original_lm_DI)
+
+```
+
+```{r}
+# transformation of view distraction
+
+# Needed for log transformation because log(0) is -Inf
+data <- data %>% mutate(
+  DistractionLL_logE = case_when(DistractionLL == 0 ~ 0, TRUE ~ log(DistractionLL)),
+  DistractionUL_logE = case_when(DistractionUL == 0 ~ 0, TRUE ~ log(DistractionUL)),
+  DistractionLR_logE = case_when(DistractionLR == 0 ~ 0, TRUE ~ log(DistractionLR)),
+  DistractionUR_logE = case_when(DistractionUR == 0 ~ 0, TRUE ~ log(DistractionUR)),
+  DistractionLL_log2 = case_when(DistractionLL == 0 ~ 0, TRUE ~ log2(DistractionLL)),
+  DistractionUL_log2 = case_when(DistractionUL == 0 ~ 0, TRUE ~ log2(DistractionUL)),
+  DistractionLR_log2 = case_when(DistractionLR == 0 ~ 0, TRUE ~ log2(DistractionLR)),
+  DistractionUR_log2 = case_when(DistractionUR == 0 ~ 0, TRUE ~ log2(DistractionUR)),
+  DistractionLL_log10 = case_when(DistractionLL == 0 ~ 0, TRUE ~ log10(DistractionLL)),
+  DistractionUL_log10 = case_when(DistractionUL == 0 ~ 0, TRUE ~ log10(DistractionUL)),
+  DistractionLR_log10 = case_when(DistractionLR == 0 ~ 0, TRUE ~ log10(DistractionLR)),
+  DistractionUR_log10 = case_when(DistractionUR == 0 ~ 0, TRUE ~ log10(DistractionUR)),
+)
+
+
+data <- data %>% mutate(
+  vd_exp_e = ((exp(DistractionLL) + exp(DistractionUL) + exp(DistractionLR) + exp(DistractionUR)) / 2),
+  vd_exp_2 = (2^DistractionLL + 2^DistractionUL + 2^DistractionLR + 2^DistractionUR) / 2,
+  vd_exp_3 = (3^DistractionLL + 3^DistractionUL + 3^DistractionLR + 3^DistractionUR) / 2,
+  vd_sqrt = (sqrt(DistractionLL) + sqrt(DistractionUL) + sqrt(DistractionLR) + sqrt(DistractionUR)) / 2,
+  vd_pow_2 = (DistractionLL^2 + DistractionUL^2 + DistractionLR^2 + DistractionUR^2) / 2,
+  vd_pow_3 = (DistractionLL^3 + DistractionUL^3 + DistractionLR^3 + DistractionUR^3) / 2,
+  vd_logE = (DistractionLL_logE + DistractionUL_logE + DistractionLR_logE + DistractionUR_logE) / 2,
+  vd_log2 = (DistractionLL_log2 + DistractionUL_log2 + DistractionLR_log2 + DistractionUR_log2) / 2,
+  vd_log10 = (DistractionLL_log10 + DistractionUL_log10 + DistractionLR_log10 + DistractionUR_log10) / 2,
+)
+
+
+man_ViewDistraction <-  subset(data, select = c("Time_meas", "DistractionIndex", "vd_exp_e", "vd_exp_2", "vd_exp_3", "vd_sqrt", "vd_pow_2", "vd_pow_3", "vd_logE", "vd_log2", "vd_log10")) 
+
+man_ViewDistraction_Corr <- rcorr(as.matrix(man_ViewDistraction))
+man_ViewDistraction_Corr
+
+lm_vd_logE <- lm(Time_meas ~ vd_logE, data = data)
+summary(lm_vd_logE)
+lm_vd_log2 <- lm(Time_meas ~ vd_log2, data = data)
+summary(lm_vd_log2)
+lm_vd_log10 <- lm(Time_meas ~ vd_log10, data = data)
+summary(lm_vd_log10)
+
+lm_vd_sqrt <- lm(Time_meas ~ vd_sqrt, data = data)
+summary(lm_vd_sqrt)
+lm_vd_pow2 <- lm(Time_meas ~ vd_pow_2, data = data)
+summary(lm_vd_pow2)
+lm_vd_pow3 <- lm(Time_meas ~ vd_pow_3, data = data)
+summary(lm_vd_pow3)
+
+lm_vd_exp_e <- lm(Time_meas ~ vd_exp_e, data = data)
+summary(lm_vd_exp_e)
+lm_vd_exp_2 <- lm(Time_meas ~ vd_exp_2, data = data)
+summary(lm_vd_exp_2)
+lm_vd_exp_3 <- lm(Time_meas ~ vd_exp_3, data = data)
+summary(lm_vd_exp_3)
+
+# multiple linear regression with transformed view distraction of all 4 views. Testing exp(x), x^2 and x^3
+m_lm_vd_expE <- lm(Time_meas ~ n_view_inverse + q_view_inverse + vd_exp_e, data = data)
+summary(m_lm_vd_expE)
+m_lm_vd_exp2 <- lm(Time_meas ~ n_view_inverse + q_view_inverse + vd_exp_2, data = data)
+summary(m_lm_vd_exp2)
+m_lm_vd_exp3 <- lm(Time_meas ~ n_view_inverse + q_view_inverse + vd_exp_3, data = data)
+summary(m_lm_vd_exp3)
+
+```
+
+
+
+
+
+```{r}
+# transformation of distraction index
+data <- data %>% mutate(
+  di_log_original = log(DistractionIndex),
+  di_log2_original = log2(DistractionIndex),
+  di_log10_original = log10(DistractionIndex),
+  di_sqrt_original = sqrt(DistractionIndex),
+  di_pow2_original = DistractionIndex^2,
+  di_pow3_original = DistractionIndex^3,
+  di_expE_original = exp(DistractionIndex),
+  di_exp2_original = 2^DistractionIndex,
+  di_exp3_original = 3^DistractionIndex,
+  
+  # diC_test = 4^((DistractionLL + DistractionUL + DistractionLR + DistractionUR) / 2),
+)
+
+man_DistractionIndex <-  subset(data, select = c("Time_meas", "DistractionIndex", "di_log_original", "di_log2_original", "di_log10_original", "di_sqrt_original", "di_pow2_original", "di_pow3_original", "di_expE_original", "di_exp2_original", "di_exp3_original")) 
+
+man_DistractionIndex_Corr <- rcorr(as.matrix(man_DistractionIndex))
+man_DistractionIndex_Corr
+
+lm_di_log_original <- lm(Time_meas ~ di_log_original, data = data)
+summary(lm_di_log_original)
+lm_di_log2_original <- lm(Time_meas ~ di_log2_original, data = data)
+summary(lm_di_log2_original)
+lm_di_log10_original <- lm(Time_meas ~ di_log10_original, data = data)
+summary(lm_di_log10_original)
+
+lm_di_sqrt_original <- lm(Time_meas ~ di_sqrt_original, data = data)
+summary(lm_di_sqrt_original)
+lm_di_pow2_original <- lm(Time_meas ~ di_pow2_original, data = data)
+summary(lm_di_pow2_original)
+lm_di_pow3_original <- lm(Time_meas ~ di_pow3_original, data = data)
+summary(lm_di_pow3_original)
+
+lm_di_expE_original <- lm(Time_meas ~ di_expE_original, data = data)
+summary(lm_di_expE_original)
+lm_di_exp2_original <- lm(Time_meas ~ di_exp2_original, data = data)
+summary(lm_di_exp2_original)
+lm_di_exp3_original <- lm(Time_meas ~ di_exp3_original, data = data)
+summary(lm_di_exp3_original)
+
+# multiple linear regression with transformations of original distraction index using exp(x), x^2 and x^3
+m_lm_di_expE <- lm(Time_meas ~ n_view_inverse + q_view_inverse + di_expE_original, data = data)
+summary(m_lm_di_expE)
+m_lm_di_exp2 <- lm(Time_meas ~ n_view_inverse + q_view_inverse + di_exp2_original, data = data)
+summary(m_lm_di_exp2)
+m_lm_di_exp3 <- lm(Time_meas ~ n_view_inverse + q_view_inverse + di_exp3_original, data = data)
+summary(m_lm_di_exp3)
+
+```
+
+
+```{r}
+# transformation of distraction index WITH view distraction transformation using e^x
+
+data <- data %>% mutate(
+  di_log_expE = log(vd_exp_e),
+  di_log2_expE = log2(vd_exp_e),
+  di_log10_expE = log10(vd_exp_e),
+  
+  di_pow0125_expE = vd_exp_e^(1/8),
+  di_pow025_expE = vd_exp_e^(1/4),
+  di_sqrt_expE = sqrt(vd_exp_e),
+  di_pow2_expE = vd_exp_e^2, # -> values to high for lm
+  di_pow3_expE = vd_exp_e^3, # -> values to high for lm
+  
+  #diC_expE_expE = exp(di_exp_e), -> values to high for lm
+  #diC_exp2_expE = 2^di_exp_e, -> values to high for lm
+  #diC_exp3_expE = 3^di_exp_e, -> values to high for lm
+)
+
+man_DistractionIndexANDViewDistraction <-  subset(data, select = c("Time_meas", "DistractionIndex", "di_log_expE", "di_log2_expE", "di_log10_expE", "di_pow0125_expE", "di_pow025_expE", "di_sqrt_expE", "di_pow2_expE", "di_pow3_expE")) 
+
+man_DistractionIndexANDViewDistraction_Corr <- rcorr(as.matrix(man_DistractionIndexANDViewDistraction))
+man_DistractionIndexANDViewDistraction_Corr
+
+lm_di_log_expE <- lm(Time_meas ~ di_log_expE, data = data)
+summary(lm_di_log_expE)
+lm_di_log2_expE <- lm(Time_meas ~ di_log2_expE, data = data)
+summary(lm_di_log2_expE)
+lm_di_log10_expE <- lm(Time_meas ~ di_log10_expE, data = data)
+summary(lm_di_log10_expE)
+
+lm_di_pow0125_expE <- lm(Time_meas ~ di_pow0125_expE, data = data)
+summary(lm_di_pow0125_expE)
+lm_di_pow025_expE <- lm(Time_meas ~ di_pow025_expE, data = data)
+summary(lm_di_pow025_expE)
+lm_di_sqrt_expE <- lm(Time_meas ~ di_sqrt_expE, data = data)
+summary(lm_di_sqrt_expE)
+
+# multiple linear regression with exp(x) view distraction transformation and sqrt(x) and x^1/4 transformation of distraction index
+m_lm_di_vd_sqrt_expE <- lm(Time_meas ~ n_view_inverse + q_view_inverse + di_sqrt_expE, data = data)
+summary(m_lm_di_vd_sqrt_expE)
+m_lm_di_vd_powe025_expE <- lm(Time_meas ~ n_view_inverse + q_view_inverse + di_pow025_expE, data = data)
+summary(m_lm_di_vd_powe025_expE)
+
+```
+
+
+```{r}
+# transformation of difficulty index
+
+data <- data %>% mutate(
+  diff_logE = log(n_view_inverse + q_view_inverse + DistractionIndex),
+  diff_log2 = log2(n_view_inverse + q_view_inverse + DistractionIndex),
+  diff_log10 = log10(n_view_inverse + q_view_inverse + DistractionIndex),
+  diff_expE = exp(n_view_inverse + q_view_inverse + DistractionIndex),
+  diff_exp2 = 2^(n_view_inverse + q_view_inverse + DistractionIndex),
+  diff_exp3 = 3^(n_view_inverse + q_view_inverse + DistractionIndex),
+  diff_sqrt = sqrt(n_view_inverse + q_view_inverse + DistractionIndex),
+  diff_pow2 = (n_view_inverse + q_view_inverse + DistractionIndex)^2,
+  diff_pow3 = (n_view_inverse + q_view_inverse + DistractionIndex)^3,
+  
+  diff_expE_di_exp3 = (n_view_inverse + q_view_inverse + di_exp3_original)^3,
+)
+
+man_DifficultyIndex <-  subset(data, select = c("Time_meas", "diff_logE", "diff_log2", "diff_log10", "diff_expE", "diff_exp2", "diff_exp3", "diff_sqrt", "diff_pow2", "diff_pow3", "diff_expE_di_exp3")) 
+
+man_DifficultyIndex_Corr <- rcorr(as.matrix(man_DifficultyIndex))
+man_DifficultyIndex_Corr
+
+lm_diff_logE <- lm(Time_meas ~ diff_logE, data = data)
+summary(lm_diff_logE)
+lm_diff_log2 <- lm(Time_meas ~ diff_log2, data = data)
+summary(lm_diff_log2)
+lm_diff_log10 <- lm(Time_meas ~ diff_log10, data = data)
+summary(lm_diff_log10)
+
+lm_diff_sqrt <- lm(Time_meas ~ diff_sqrt, data = data)
+summary(lm_diff_sqrt)
+lm_diff_pow2 <- lm(Time_meas ~ diff_pow2, data = data)
+summary(lm_diff_pow2)
+lm_diff_pow3 <- lm(Time_meas ~ diff_pow3, data = data)
+summary(lm_diff_pow3)
+
+lm_diff_expE <- lm(Time_meas ~ diff_expE, data = data)
+summary(lm_diff_expE)
+lm_diff_exp2 <- lm(Time_meas ~ diff_exp2, data = data)
+summary(lm_diff_exp2)
+lm_diff_exp3 <- lm(Time_meas ~ diff_exp3, data = data)
+summary(lm_diff_exp3)
+
+
+#lm_diff_expE_di_exp3 <- lm(Time_meas ~ diff_expE_di_exp3, data = data)
+#summary(lm_diff_expE_di_exp3)
+
+```
+
+
+```{r}
+# grouping the data by multiple variables and calculate mean or median of answer time
+
+
+#groupAnswerTime <- aggregate(data$Time_meas, by = list(n_view_inverse = data$n_view_inverse, q_view_inverse = data$q_view_inverse, di_expE_original = data$di_expE_original), FUN = function(x) c(median = median(x),mean = mean(x), count = length(x)))
+
+groupAnswerTime <- summarySE(data = data, measurevar = "Time_meas", groupvars = c("n_view_inverse", "q_view_inverse", "interaction.technique","Question_type","Comparison.Targets", "di_exp3_original", "DistractionIndex"))
+
+
+mlr_rawDistractionIndex <- lm(Time_meas ~ n_view_inverse + q_view_inverse + DistractionIndex, data = groupAnswerTime)
+summary(mlr_rawDistractionIndex)
+
+mlr_transformedDistractionIndex <- lm(Time_meas ~ n_view_inverse + q_view_inverse + di_exp3_original, data = groupAnswerTime)
+summary(mlr_transformedDistractionIndex)
+
+mlr_transformedDistractionIndexNoNview <- lm(Time_meas ~ q_view_inverse + di_exp3_original, data = groupAnswerTime)
+summary(mlr_transformedDistractionIndexNoNview)
+```
+
+
+
+```{r}
+# Surprise analysis of root variables
+png(file="/Users/simonmeissner/Documents/thesis/images/boxplots.png",
+    width=1080, height=720)
+par(mfrow=c(2,2))
+
+
+boxplot1 <- boxplot(Time_meas ~ n_view, data=data)
+boxplot2 <- boxplot(Time_meas ~ interaction.technique, data=data)
+boxplot3 <- boxplot(Time_meas ~ Comparison.Targets, data=data)
+boxplot4 <- boxplot(Time_meas ~ Question_type, data=data)
+dev.off()
+```
+
+
+###Answer accuracy
+
+```{r}
+data <- data %>% mutate(
+  DisI_di_original = (1/(1 + DistractionIndex)),
+  DisI_di_log = log(1/(1 + DistractionIndex)),
+  DisI_di_log2 = log2(1/(1 + DistractionIndex)),
+  DisI_di_log10 = log10(1/(1 + DistractionIndex)),
+  DisI_di_sqrt = sqrt(1/(1 + DistractionIndex)),
+  DisI_di_pow2 = (1/(1 + DistractionIndex))^2,
+  DisI_di_pow3 = (1/(1 + DistractionIndex))^3,
+  DisI_di_expE = exp(1/(1 + DistractionIndex)),
+  DisI_di_exp2 = 2^(1/(1 + DistractionIndex)),
+  DisI_di_exp3 = 3^(1/(1 + DistractionIndex)),
+  DisI_di_exp3_original = (1/(1 + di_exp3_original)),
+)
+
+
+discriminabilty_subset <-  subset(data, select = c("Accuracy", "DistractionIndex","DisI_di_original", "DisI_di_log", "DisI_di_log2", "DisI_di_log10", "DisI_di_sqrt","DisI_di_pow2", "DisI_di_pow3", "DisI_di_expE", "DisI_di_exp2", "DisI_di_exp3", "DisI_di_exp3_original")) 
+
+discriminabilty_corr <- rcorr(as.matrix(discriminabilty_subset), type = "pearson")
+discriminabilty_corr
+
+
+glm_DisI_equal_DI <- glm(Accuracy ~ DistractionIndex, data = discriminabilty_subset, family = "binomial")
+summary(glm_DisI_equal_DI)
+glm_DisI_di_original <- glm(Accuracy ~ DisI_di_original, data = discriminabilty_subset, family = "binomial")
+summary(glm_DisI_di_original)
+glm_DisI_di_log <- glm(Accuracy ~ DisI_di_log, data = discriminabilty_subset, family = "binomial")
+summary(glm_DisI_di_log)
+glm_DisI_di_log2 <- glm(Accuracy ~ DisI_di_log2, data = discriminabilty_subset, family = "binomial")
+summary(glm_DisI_di_log2)
+glm_DisI_di_log10 <- glm(Accuracy ~ DisI_di_log10, data = discriminabilty_subset, family = "binomial")
+summary(glm_DisI_di_log10)
+glm_DisI_di_sqrt <- glm(Accuracy ~ DisI_di_sqrt, data = discriminabilty_subset, family = "binomial")
+summary(glm_DisI_di_sqrt)
+
+glm_DisI_di_pow2 <- glm(Accuracy ~ DisI_di_pow2, data = discriminabilty_subset, family = "binomial")
+summary(glm_DisI_di_pow2)
+glm_DisI_di_pow3 <- glm(Accuracy ~ DisI_di_pow3, data = discriminabilty_subset, family = "binomial")
+summary(glm_DisI_di_pow3)
+glm_DisI_di_expE <- glm(Accuracy ~ DisI_di_expE, data = discriminabilty_subset, family = "binomial")
+summary(glm_DisI_di_expE)
+glm_DisI_di_exp2 <- glm(Accuracy ~ DisI_di_exp2, data = discriminabilty_subset, family = "binomial")
+summary(glm_DisI_di_exp2)
+glm_DisI_di_exp3 <- glm(Accuracy ~ DisI_di_exp3, data = discriminabilty_subset, family = "binomial")
+summary(glm_DisI_di_exp3)
+
+glm_DisI_di_exp3_original <- glm(Accuracy ~ DisI_di_exp3_original, data = discriminabilty_subset, family = "binomial")
+summary(glm_DisI_di_exp3_original)
+
+```
+
+### Analysis of raw study variables
+
+
+
+```{r}
+# Testing raw study variables on answer time using anova
+
+# Bedingungen für anova!!
+# abhängige variable ist ratio- oder intervall skaliert
+# Die Daten von jeder Gruppe stammen aus Zufallsstichprobe
+# Varianzen jeder gruppe sind gleich (Homoskedastizität)
+# Daten innerhalb jeder Gruppe sind normalverteilt
+
+# no significance
+anovaInteractiontechnique = aov(Time_meas ~ interaction.technique, data = data)
+car::leveneTest(residuals(anovaInteractiontechnique) ~ as.factor(interaction.technique), data = data)
+summary(anovaInteractiontechnique)
+
+# no significance
+anovaNview = aov(Time_meas ~ n_view, data = data)
+car::leveneTest(residuals(anovaNview) ~ as.factor(n_view), data = data)
+summary(anovaNview)
+
+
+# log transformation of answer time to get better homogeneity of variance
+anovaNtargets = aov(log10(Time_meas) ~ as.factor(Comparison.Targets), data = data)
+summary(anovaNtargets)
+car::leveneTest(residuals(anovaNtargets) ~ as.factor(Comparison.Targets), data = data)
+plot(anovaNtargets, which = 1) 
+
+
+# log transformation of answer time to get better homogeneity of variance
+anovaQtype = aov(log10(Time_meas) ~ as.factor(Question_type), data = data)
+summary(anovaQtype)
+car::leveneTest(residuals(anovaQtype) ~ as.factor(Question_type), data = data)
+plot(anovaQtype, which = 1) 
+
+
+```
+
+
+```{r}
+
+# Testing raw study variables on answer accuracy using chi squared and fisher's exact test
+data$AccuracyFactor <- as.factor(data$Accuracy)
+
+data$Question_typeFactor <- as.factor(data$Question_type)
+data$Comparison.TargetsFactor <- as.factor(data$Comparison.Targets)
+data$n_viewFactor <- as.factor(data$n_view)
+
+# Perform the chi-square test
+# independence of observations check
+# categorial data check
+# expected cell frequency sometimes below 5, but okay
+# random sampling check
+# mutual exclusivity(an observation falls in exactly one category) check
+chi_squared_QuestionType <- chisq.test(table(data$Question_typeFactor, data$AccuracyFactor))
+chi_squared_QuestionType
+any(chi_squared_QuestionType$expected < 1) # no expected frequency below 1 check
+
+fisher_QuestionType <- fisher.test(table(data$Question_typeFactor, data$AccuracyFactor))
+fisher_QuestionType
+
+chi_squared_Comparison.Targets<- chisq.test(table(data$Comparison.TargetsFactor, data$AccuracyFactor))
+chi_squared_Comparison.Targets
+any(chi_squared_Comparison.Targets$expected < 1) # no expected frequency below 1 check
+
+fisher_Comparison.Targets <- fisher.test(table(data$Comparison.TargetsFactor, data$AccuracyFactor))
+fisher_Comparison.Targets
+
+chi_squared_Nview<- chisq.test(table(data$n_viewFactor, data$AccuracyFactor))
+chi_squared_Nview
+any(chi_squared_Nview$expected < 1) # no expected frequency below 1 check
+
+fisher_Nview <- fisher.test(table(data$n_viewFactor, data$AccuracyFactor))
+fisher_Nview
+```
+
+
+```{r}
+png(file="/Users/simonmeissner/Documents/thesis/images/boxplots.png",
+    width=900, height=700)
+par(mfrow=c(2,2))
+
+
+boxplot1 <- boxplot(Time_meas ~ n_view, data=data)
+boxplot2 <- boxplot(Time_meas ~ interaction.technique, data=data)
+boxplot3 <- boxplot(Time_meas ~ Comparison.Targets, data=data)
+boxplot4 <- boxplot(Time_meas ~ Question_type, data=data)
+dev.off()
+```
+
+```{r}
+test <- aov(log10(Time_meas) ~ q_view_inverse,data= data)
+summary(test)
+car::leveneTest(residuals(test) ~ as.factor(q_view_inverse), data = data)
+plot(test, which = 1) 
+```
+
+
