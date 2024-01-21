@@ -484,3 +484,92 @@ plot(test, which = 1)
 ```
 
 
+## Added on January 21, 2024
+
+
+
+```{r}
+# Discriminability vs Time/Accuracy
+
+data <- data %>% mutate(
+  disc_di_original = 1/(1 + DistractionIndex),
+  disc_di_log = 1/(1 + di_log_original),
+  disc_di_log2 = 1/(1 + di_log2_original),
+  disc_di_log10 = 1/(1 + di_log10_original),
+  disc_di_sqrt = 1/(1 + di_sqrt_original),
+  disc_di_pow2 = 1/(1 + di_pow2_original),
+  disc_di_pow3 = 1/(1 + di_pow3_original),
+  disc_di_expE = 1/(1 + di_expE_original),
+  disc_di_exp2 = 1/(1 + di_exp2_original),
+  disc_di_exp3 = 1/(1 + di_exp3_original),
+  #disc_di_exp3_original = 1/(1 + di_exp3_original),
+)
+
+
+discriminabilty_subset2 <-  subset(data, select = c("Accuracy", "DistractionIndex","disc_di_original", "disc_di_log", "disc_di_log2", "disc_di_log10", "disc_di_sqrt","disc_di_pow2", "disc_di_pow3", "disc_di_expE", "disc_di_exp2", "disc_di_exp3")) 
+
+discriminabilty_corr <- rcorr(as.matrix(discriminabilty_subset2), type = "pearson")
+discriminabilty_corr
+
+m1_a <- lm(Accuracy ~ DistractionIndex, data = discriminabilty_subset2)
+summary(m1_a)
+m2_a <- lm(Accuracy ~ disc_di_original, data = discriminabilty_subset2)
+summary(m2_a)
+m3_a <- lm(Accuracy ~ disc_di_log, data = discriminabilty_subset2)
+summary(m3_a)
+m4_a <- lm(Accuracy ~ disc_di_log2, data = discriminabilty_subset2)
+summary(m4_a)
+m5_a <- lm(Accuracy ~ disc_di_log10, data = discriminabilty_subset2)
+summary(m5_a)
+m6_a <- lm(Accuracy ~ disc_di_sqrt, data = discriminabilty_subset2)
+summary(m6_a)
+
+m7_a <- lm(Accuracy ~ disc_di_pow2, data = discriminabilty_subset2)
+summary(m7_a)
+m8_a <- lm(Accuracy ~ disc_di_pow3, data = discriminabilty_subset2)
+summary(m8_a)
+m9_a <- lm(Accuracy ~ disc_di_expE, data = discriminabilty_subset2)
+summary(m9_a)
+m10_a <- lm(Accuracy ~ disc_di_exp2, data = discriminabilty_subset2)
+summary(m10_a)
+m11_a <- lm(Accuracy ~ disc_di_exp3, data = discriminabilty_subset2)
+summary(m11_a)
+```
+
+```{r}
+
+discriminabilty_subset2$AccuracyFactor <- as.factor(discriminabilty_subset2$Accuracy)
+
+fisher.test(discriminabilty_subset2$AccuracyFactor, discriminabilty_subset2$DistractionIndex)
+
+fisher.test(discriminabilty_subset2$AccuracyFactor, discriminabilty_subset2$disc_di_log)
+
+fisher.test(discriminabilty_subset2$AccuracyFactor, discriminabilty_subset2$disc_di_log2)
+
+fisher.test(discriminabilty_subset2$AccuracyFactor, discriminabilty_subset2$disc_di_log10)
+
+fisher.test(discriminabilty_subset2$AccuracyFactor, discriminabilty_subset2$disc_di_sqrt)
+
+fisher.test(discriminabilty_subset2$AccuracyFactor, discriminabilty_subset2$disc_di_pow2)
+
+fisher.test(discriminabilty_subset2$AccuracyFactor, discriminabilty_subset2$disc_di_pow3)
+
+fisher.test(discriminabilty_subset2$AccuracyFactor, discriminabilty_subset2$disc_di_exp2)
+
+fisher.test(discriminabilty_subset2$AccuracyFactor, discriminabilty_subset2$disc_di_exp3)
+
+
+```
+
+```{r}
+
+# distraction vs accuracy (as numerical variable)
+
+distraction_subset3 <- subset(data, select = c("Accuracy", "DistractionIndex", "di_log_original", "di_log2_original", "di_log10_original", "di_sqrt_original", "di_pow2_original", "di_pow3_original", "di_expE_original", "di_exp2_original", "di_exp3_original"))
+
+distraction_corr <- rcorr(as.matrix(distraction_subset3), type = "pearson")
+distraction_corr
+```
+
+
+
